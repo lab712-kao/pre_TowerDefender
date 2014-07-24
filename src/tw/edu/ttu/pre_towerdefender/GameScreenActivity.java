@@ -13,7 +13,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.Button;
-
+//ya
 public class GameScreenActivity extends ARViewActivity {
 
 	private IGeometry tower_1, tower_2;
