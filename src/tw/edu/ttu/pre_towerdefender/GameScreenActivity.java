@@ -3,6 +3,7 @@ package tw.edu.ttu.pre_towerdefender;
 import java.io.IOException;
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
+import com.metaio.sdk.jni.ArelCall;
 import com.metaio.sdk.jni.IGeometry;
 import com.metaio.sdk.jni.IMetaioSDKCallback;
 import com.metaio.sdk.jni.Rotation;
@@ -16,7 +17,7 @@ import android.widget.Button;
 //ya
 public class GameScreenActivity extends ARViewActivity {
 
-	private IGeometry tower_1, tower_2;
+	private IGeometry tower_1, tower_2,tank;
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,25 +57,37 @@ public class GameScreenActivity extends ARViewActivity {
 			
 			String towerModel1 = AssetsManager.getAssetPath("saintriqT3DS.obj");
 			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
+			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
 			
 			if ((towerModel1 != null) && (towerModel2 != null)) {
 				
-				tower_1 = metaioSDK.createGeometry(towerModel1);
+//				tower_1 = metaioSDK.createGeometry(towerModel1);
 				tower_2 = metaioSDK.createGeometry(towerModel2);
+				tank = metaioSDK.createGeometry(tankModel);
 				
-				if(tower_1 != null) {
-					tower_1.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
-					tower_1.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
-					tower_1.setCoordinateSystemID(1);
+				if(tank!=null){
+					tank.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
+					tank.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
+					
+					tank.setCoordinateSystemID(1);
 				}
 				else {
-					MetaioDebug.log(Log.ERROR, "Error loading geometry: " + towerModel1);
+					MetaioDebug.log(Log.ERROR, "Error loading geometry: " + tank);
 				}
+				
+//				if(tower_1 != null) {
+//					tower_1.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
+//					tower_1.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
+//					tower_1.setCoordinateSystemID(1);
+//				}
+//				else {
+//					MetaioDebug.log(Log.ERROR, "Error loading geometry: " + towerModel1);
+//				}
 				
 				if(tower_2 != null) {
 					tower_2.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
-					tower_1.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
-					tower_1.setCoordinateSystemID(2);
+					tower_2.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
+					tower_2.setCoordinateSystemID(2);
 				}
 				else {
 					MetaioDebug.log(Log.ERROR, "Error loading geometry: " + towerModel2);
