@@ -1,0 +1,31 @@
+package gameObject.tower;
+
+import android.R.raw;
+import android.util.Log;
+
+import com.metaio.sdk.MetaioDebug;
+import com.metaio.sdk.jni.IGeometry;
+import com.metaio.sdk.jni.IMetaioSDKAndroid;
+import com.metaio.sdk.jni.Rotation;
+import com.metaio.sdk.jni.Vector3d;
+import com.metaio.tools.io.AssetsManager;
+
+public class tower extends object{
+	
+	private float atk;
+	public tower(IGeometry model, float x, float y, float health) {
+		super(model, x, y, health);
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void attack(object other){
+		if(other.getHealth()-atk<=0){
+			other.dead();
+			other.setHealth((float) 0.0);
+		}else{
+			other.setHealth(other.getHealth()-atk);
+		}
+		
+	}
+
+}

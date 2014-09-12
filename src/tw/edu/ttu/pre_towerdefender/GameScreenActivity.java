@@ -85,7 +85,7 @@ public class GameScreenActivity extends ARViewActivity {
 				tower_1.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
 				tower_1.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 				tower_1.setCoordinateSystemID(2);
-				T= new tower(tower_1);
+				
 			}
 		}
 		catch (Exception e) {

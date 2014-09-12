@@ -30,13 +30,14 @@ public class tank extends moveObject{
 		this.atk = atk;
 	}
 	
-	public float attack(object other){
+	public void attack(object other){
 		if(other.getHealth()-atk<=0){
 			other.dead();
-			return (float) 0.0;
+			other.setHealth((float) 0.0);
 		}else{
-			return other.getHealth()-atk;
+			other.setHealth(other.getHealth()-atk);
 		}
 		
 	}
+
 }
