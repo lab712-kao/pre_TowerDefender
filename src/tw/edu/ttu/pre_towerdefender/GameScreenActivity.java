@@ -1,11 +1,16 @@
 package tw.edu.ttu.pre_towerdefender;
 
+import gameObject.tower.tank;
+import gameObject.tower.tower;
+
 import java.io.IOException;
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.ArelCall;
 import com.metaio.sdk.jni.IGeometry;
+import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.IMetaioSDKCallback;
+import com.metaio.sdk.jni.MetaioSDK;
 import com.metaio.sdk.jni.Rotation;
 import com.metaio.sdk.jni.Vector3d;
 import com.metaio.tools.io.AssetsManager;
@@ -15,10 +20,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.widget.Button;
 //ya
-public class GameScreenActivity extends ARViewActivity {
 
+public class GameScreenActivity extends ARViewActivity {
 	private IGeometry tower_1, tower_2,tank;
-	
+	private tower T;
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -59,39 +64,28 @@ public class GameScreenActivity extends ARViewActivity {
 			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
 			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
 			
-			if ((towerModel1 != null) && (towerModel2 != null)) {
+			if (tankModel != null) {
 				
-//				tower_1 = metaioSDK.createGeometry(towerModel1);
-				tower_2 = metaioSDK.createGeometry(towerModel2);
 				tank = metaioSDK.createGeometry(tankModel);
-				
 				if(tank!=null){
 					tank.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
 					tank.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 					
-					tank.setCoordinateSystemID(1);
+
+					tank.setCoordinateSystemID(1);					
+					
 				}
 				else {
 					MetaioDebug.log(Log.ERROR, "Error loading geometry: " + tank);
 				}
 				
-//				if(tower_1 != null) {
-//					tower_1.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
-//					tower_1.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
-//					tower_1.setCoordinateSystemID(1);
-//				}
-//				else {
-//					MetaioDebug.log(Log.ERROR, "Error loading geometry: " + towerModel1);
-//				}
-				
-				if(tower_2 != null) {
-					tower_2.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
-					tower_2.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
-					tower_2.setCoordinateSystemID(2);
-				}
-				else {
-					MetaioDebug.log(Log.ERROR, "Error loading geometry: " + towerModel2);
-				}
+			}
+			if(towerModel1 != null){
+				tower_1 = metaioSDK.createGeometry(towerModel1);
+				tower_1.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
+				tower_1.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
+				tower_1.setCoordinateSystemID(2);
+				T= new tower(tower_1);
 			}
 		}
 		catch (Exception e) {
@@ -101,7 +95,7 @@ public class GameScreenActivity extends ARViewActivity {
 
 	@Override
 	protected void onGeometryTouched(IGeometry geometry) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
 		
 	}
 
