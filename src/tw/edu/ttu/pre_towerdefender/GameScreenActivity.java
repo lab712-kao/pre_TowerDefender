@@ -1,6 +1,6 @@
 package tw.edu.ttu.pre_towerdefender;
 
-import gameObject.tower.tank;
+import gameObject.tower.Tank;
 import gameObject.tower.tower;
 
 import java.io.IOException;
@@ -66,18 +66,19 @@ public class GameScreenActivity extends ARViewActivity {
 			
 			if (tankModel != null) {
 				
-				tank = metaioSDK.createGeometry(tankModel);
-				if(tank!=null){
-					tank.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
-					tank.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
-					
-
-					tank.setCoordinateSystemID(1);					
-					
-				}
-				else {
-					MetaioDebug.log(Log.ERROR, "Error loading geometry: " + tank);
-				}
+//				tank = metaioSDK.createGeometry(tankModel);
+				Tank tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100);
+//				if(tank!=null){
+//					tank.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
+//					tank.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
+//					
+//
+//					tank.setCoordinateSystemID(1);					
+//					
+//				}
+//				else {
+//					MetaioDebug.log(Log.ERROR, "Error loading geometry: " + tank);
+//				}
 				
 			}
 			if(towerModel1 != null){
