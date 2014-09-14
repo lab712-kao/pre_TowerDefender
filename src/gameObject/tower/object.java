@@ -86,5 +86,8 @@ public abstract class object {
 			model = null;
 		}		
 	}
-	
+	public Boolean isDead(){
+		if(model!=null)return false;
+		else return true;
+	}
 }

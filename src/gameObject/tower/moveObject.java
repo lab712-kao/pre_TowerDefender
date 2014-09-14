@@ -27,14 +27,14 @@ public abstract class moveObject extends object {
 	}
 	public moveObject(IGeometry model,int coordinateSystemID, Vector3d size, float x, float y,float health, float faceAngle) {
 		super(model, coordinateSystemID,size,x, y, health,faceAngle);
-		this.moveSpeed = 1;
-		this.moveAngle = 0;
+		this.moveSpeed = 10;
+		this.moveAngle =  (float)(Math.PI/2);
 		// TODO Auto-generated constructor stub
 	}
 	public moveObject(IGeometry model, int coordinateSystemID,  Vector3d size, float x, float y,float health) {
 		super(model, coordinateSystemID,size,x, y, health);
-		this.moveSpeed = 1;
-		this.moveAngle = 0;
+		this.moveSpeed = 10;
+		this.moveAngle =  (float)(Math.PI/2);
 		// TODO Auto-generated constructor stub
 	}
 	public moveObject(IGeometry model, int coordinateSystemID, Vector3d size,Vector3d position, float faceAngle,float moveSpeed,float moveAngle,float health) {
@@ -51,22 +51,22 @@ public abstract class moveObject extends object {
 	}
 	public moveObject(IGeometry model,int coordinateSystemID, Vector3d size, Vector3d position,float health, float faceAngle) {
 		super(model, coordinateSystemID,size,position, health,faceAngle);
-		this.moveSpeed = 1;
-		this.moveAngle = 0;
+		this.moveSpeed = 10;
+		this.moveAngle =  (float)(Math.PI/2);
 		// TODO Auto-generated constructor stub
 	}
 	public moveObject(IGeometry model, int coordinateSystemID,  Vector3d size, Vector3d position, float health) {
 		super(model, coordinateSystemID,size,position, health);
-		this.moveSpeed = 1;
-		this.moveAngle = 0;
+		this.moveSpeed = 10;
+		this.moveAngle =  (float)(Math.PI/2);
 		// TODO Auto-generated constructor stub
 	}
 	public void move() {
-		float speedX = (float)(moveSpeed*Math.sin(moveAngle));
-		float speedY = (float)(moveSpeed*Math.cos(moveAngle));
+		float speedX = (float)(moveSpeed*Math.sin(moveAngle)+position.getX());
+		float speedY = (float)(moveSpeed*Math.cos(moveAngle)+position.getY());
 		
-		this.position.setX(speedX+this.position.getX());
-		this.position.setY(speedY+this.position.getY());
+		position = new Vector3d(speedX, speedY, 0);
+		model.setTranslation(position);
 
 	}
 }

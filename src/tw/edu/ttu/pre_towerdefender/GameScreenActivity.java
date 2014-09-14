@@ -4,6 +4,8 @@ import gameObject.tower.Tank;
 import gameObject.tower.tower;
 
 import java.io.IOException;
+import java.util.concurrent.Executor;
+
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.ArelCall;
@@ -23,6 +25,7 @@ import android.widget.Button;
 
 public class GameScreenActivity extends ARViewActivity {
 	private IGeometry tower_1, tower_2,tank;
+	Tank tanks;
 	private tower T;
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,20 +68,7 @@ public class GameScreenActivity extends ARViewActivity {
 			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
 			
 			if (tankModel != null) {
-				
-//				tank = metaioSDK.createGeometry(tankModel);
-				Tank tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100);
-//				if(tank!=null){
-//					tank.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
-//					tank.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
-//					
-//
-//					tank.setCoordinateSystemID(1);					
-//					
-//				}
-//				else {
-//					MetaioDebug.log(Log.ERROR, "Error loading geometry: " + tank);
-//				}
+				tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
 				
 			}
 			if(towerModel1 != null){
@@ -97,7 +87,10 @@ public class GameScreenActivity extends ARViewActivity {
 	@Override
 	protected void onGeometryTouched(IGeometry geometry) {
 		// TODO Auto-generated method stub	
+		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
+		new Thread(tanks).start() ;
 		
+//		tanks.move();
 	}
 
 }
