@@ -62,8 +62,8 @@ public abstract class moveObject extends object {
 		// TODO Auto-generated constructor stub
 	}
 	public void move() {
-		float speedX = (float)(moveSpeed*Math.sin(moveAngle)+position.getX());
-		float speedY = (float)(moveSpeed*Math.cos(moveAngle)+position.getY());
+		float speedX = (float)(moveSpeed*Math.cos(moveAngle)+position.getX());
+		float speedY = (float)(moveSpeed*Math.sin(moveAngle)+position.getY());
 		
 		position = new Vector3d(speedX, speedY, 0);
 		model.setTranslation(position);
