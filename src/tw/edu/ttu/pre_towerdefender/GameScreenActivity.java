@@ -2,10 +2,8 @@ package tw.edu.ttu.pre_towerdefender;
 
 import gameObject.tower.Tank;
 import gameObject.tower.tower;
-
 import java.io.IOException;
 import java.util.concurrent.Executor;
-
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.ArelCall;
@@ -71,6 +69,7 @@ public class GameScreenActivity extends ARViewActivity {
 				tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
 				
 			}
+			
 			if(towerModel1 != null){
 				tower_1 = metaioSDK.createGeometry(towerModel1);
 				tower_1.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
@@ -78,6 +77,7 @@ public class GameScreenActivity extends ARViewActivity {
 				tower_1.setCoordinateSystemID(2);
 				
 			}
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
