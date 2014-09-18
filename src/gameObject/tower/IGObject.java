@@ -7,15 +7,12 @@ public class IGObject extends IGeometry{
 	
 	protected float health;
 	protected float faceAngle;
-	protected int coordinateSystemID;
-	protected Vector3d size;
-	protected Vector3d position;
 	
 	public IGObject(long cPtr, boolean cMemoryOwn) {
 		super(cPtr, cMemoryOwn);
 		// TODO Auto-generated constructor stub
 	}
-
+/*
 	public float getHealth() {
 		return health;
 	}
@@ -30,5 +27,5 @@ public class IGObject extends IGeometry{
 	public void setFaceAngle(float faceangle) {
 		this.faceAngle = faceangle;
 	}
-	
+	*/
 }
