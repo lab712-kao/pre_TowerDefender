@@ -1,5 +1,7 @@
 package tw.edu.ttu.pre_towerdefender;
 
+import gameObject.tower.IGObject;
+import gameObject.tower.IGSoldier;
 import gameObject.tower.Tank;
 import gameObject.tower.tower;
 import java.io.IOException;
@@ -23,6 +25,8 @@ import android.widget.Button;
 
 public class GameScreenActivity extends ARViewActivity {
 	private IGeometry tower_1, tower_2,tank;
+	private IGObject soldier;
+	
 	Tank tanks;
 	private tower T;
 	@Override
@@ -66,8 +70,14 @@ public class GameScreenActivity extends ARViewActivity {
 			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
 			
 			if (tankModel != null) {
-				tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
-				
+//				tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
+				Log.d("soldier", "setting");
+				soldier = (IGObject) metaioSDK.createGeometry(tankModel);
+				Log.d("soldier", "creat over");
+				soldier.setScale(new Vector3d(300.0f, 300.0f, 300.0f));
+				Log.d("soldier", "" + soldier.getScale().getX());
+				soldier.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
+				soldier.setCoordinateSystemID(1);
 			}
 			
 			if(towerModel1 != null){
@@ -75,7 +85,6 @@ public class GameScreenActivity extends ARViewActivity {
 				tower_1.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
 				tower_1.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 				tower_1.setCoordinateSystemID(2);
-				
 			}
 			
 		}
@@ -88,7 +97,7 @@ public class GameScreenActivity extends ARViewActivity {
 	protected void onGeometryTouched(IGeometry geometry) {
 		// TODO Auto-generated method stub	
 		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
-		new Thread(tanks).start() ;
+		//new Thread(tanks).start() ;
 		
 //		tanks.move();
 	}
