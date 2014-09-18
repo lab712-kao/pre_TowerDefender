@@ -8,7 +8,7 @@ import com.metaio.sdk.jni.IGeometry;
 import com.metaio.sdk.jni.LLACoordinate;
 import com.metaio.sdk.jni.Vector3d;
 
-public class Tank extends moveObject implements Runnable{
+public class Tank extends MovingObject implements Runnable{
 	
 	private float atk;
 	private float atkRange;
@@ -81,7 +81,7 @@ public class Tank extends moveObject implements Runnable{
 	}
 	
 	//--------------------------------construct end---------------------------------------------------//
-	public void attack(object other){
+	public void attack(Object other){
 		if(other.getHealth()-atk<=0){
 			other.dead();
 			other.setHealth((float) 0.0);
