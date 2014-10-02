@@ -2,6 +2,7 @@ package tw.edu.ttu.pre_towerdefender;
 
 import gameObject.tower.Tank;
 import gameObject.tower.tower;
+import gameSystem.gameObjectSystem.ObjectHandler;
 
 import java.io.IOException;
 import java.util.concurrent.Executor;
@@ -25,7 +26,8 @@ import android.widget.Button;
 
 public class GameScreenActivity extends ARViewActivity {
 	private IGeometry tower_1, tower_2,tank;
-	Tank tanks;
+//	private ObjectHandler objectHandler;
+//	Tank tanks;
 	private tower T;
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,9 +68,10 @@ public class GameScreenActivity extends ARViewActivity {
 			String towerModel1 = AssetsManager.getAssetPath("saintriqT3DS.obj");
 			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
 			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-			
+//			objectHandler = new ObjectHandler();
 			if (tankModel != null) {
-				tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
+//				objectHandler.createObject("tank", metaioSDK.createGeometry(tankModel), 1, 0, 0);
+//				tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
 				
 			}
 			if(towerModel1 != null){
@@ -88,7 +91,7 @@ public class GameScreenActivity extends ARViewActivity {
 	protected void onGeometryTouched(IGeometry geometry) {
 		// TODO Auto-generated method stub	
 		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
-		new Thread(tanks).start() ;
+//		new Thread(tanks).start() ;
 		
 //		tanks.move();
 	}

@@ -3,7 +3,7 @@ package gameSystem.gameObjectSystem.gameObjectInfo;
 import android.R.integer;
 
 public class ObjectInfo {
-	enum TYPE{Soldier,Tower};
+	public enum TYPE{Soldier,Tower};
 	private TYPE type;
 	private int hp;
 	private int atk;
