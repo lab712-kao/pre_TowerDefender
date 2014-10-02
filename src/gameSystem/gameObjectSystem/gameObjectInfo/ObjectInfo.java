@@ -24,11 +24,6 @@ public class ObjectInfo {
 		this.name = name;
 	}
 	
-	public ObjectInfo(TYPE type) {
-		super();
-		this.type = type;
-	}
-	
 	public TYPE getType() {
 		return type;
 	}

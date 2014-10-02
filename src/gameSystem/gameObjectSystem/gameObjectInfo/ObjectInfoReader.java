@@ -49,44 +49,9 @@ public class ObjectInfoReader {
                     break;
                 case XmlPullParser.START_TAG:
                     name = parser.getName();//get the name of tag
-                    if(name == "soldier") {//start of <soldier>
-                    	currentObjectInfo = new ObjectInfo(TYPE.Soldier);
-                    }else if(name == "tower") {//start of <tower>
-                    	currentObjectInfo = new ObjectInfo(TYPE.Tower);
-                    }else if(currentObjectInfo != null) {//maybe soldier or tower
-                    	if(currentObjectInfo.getType() == TYPE.Soldier) {
-                    		if(name == "soldierName") {
-                    			currentObjectInfo.setName(parser.nextText());
-                    		}else if(name == "soldierHealth") {
-                    			currentObjectInfo.setHp(Integer.parseInt(parser.nextText()));
-                    		}else if(name == "soldierAttack") {
-                    			currentObjectInfo.setAtk(Integer.parseInt(parser.nextText()));
-                    		}else if(name == "soldierAtkRange") {
-                    			currentObjectInfo.setRange(Float.parseFloat(parser.nextText()));
-                    		}else if(name == "soldierSpeed") {
-                    			currentObjectInfo.setSpeed(Integer.parseInt(parser.nextText()));
-                    		}else if(name == "modlePath") {
-                    			currentObjectInfo.setPath(parser.nextText());
-                    		}                                                 
-                    	}
-                    	else if(currentObjectInfo.getType() == TYPE.Tower){
-                    		if(name == "towerName") {
-                    			currentObjectInfo.setName(parser.nextText());
-                    		}else if(name == "towerHealth") {
-                    			currentObjectInfo.setHp(Integer.parseInt(parser.nextText()));
-                    		}else if(name == "modlePath") {
-                    			currentObjectInfo.setPath(parser.nextText());
-                    		}
-                    	}
-                    }
                     break;
                 case XmlPullParser.END_TAG:
                     name = parser.getName();
-                    if (name.equalsIgnoreCase("soldier") && currentObjectInfo != null) {
-                    	SoldierInfo.add(currentObjectInfo);
-                    }else if(name.equalsIgnoreCase("tower") && currentObjectInfo != null) {
-                    	TowerInfo.add(currentObjectInfo);
-                    }
                     break;
                     
             }
@@ -94,23 +59,11 @@ public class ObjectInfoReader {
         }
 	}
 	
-	public ObjectInfo getSoldierInfoByName(String name) {
-		
-		for(ObjectInfo matchObjectInfo : SoldierInfo) {
-			if(matchObjectInfo.getName().equals(name)) {
-				return matchObjectInfo;
-			}
-		}
+	public ObjectInfo getSoldierInfoByName() {
 		return null;
 	}
 	
-	public ObjectInfo getTowerInfoByName(String name) {
-		
-		for(ObjectInfo matchObjectInfo : SoldierInfo) {
-			if(matchObjectInfo.getName().equals(name)) {
-				return matchObjectInfo;
-			}
-		}
+	public ObjectInfo getTowerInfoByName() {
 		return null;
 	}
 }
