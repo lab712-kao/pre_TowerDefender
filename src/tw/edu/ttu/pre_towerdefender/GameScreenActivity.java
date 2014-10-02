@@ -4,23 +4,24 @@ import gameObject.tower.Tank;
 import gameObject.tower.tower;
 
 import java.io.IOException;
-import java.util.concurrent.Executor;
-
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
-import com.metaio.sdk.jni.ArelCall;
+
 import com.metaio.sdk.jni.IGeometry;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.IMetaioSDKCallback;
-import com.metaio.sdk.jni.MetaioSDK;
 import com.metaio.sdk.jni.Rotation;
+import com.metaio.sdk.jni.Vector2di;
 import com.metaio.sdk.jni.Vector3d;
+import com.metaio.tools.SystemInfo;
 import com.metaio.tools.io.AssetsManager;
-import android.os.Bundle;
-import android.app.Activity;
+
+import android.annotation.SuppressLint;
+import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
+import android.hardware.Camera.Parameters;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.Button;
 //ya
 
 public class GameScreenActivity extends ARViewActivity {
@@ -33,7 +34,34 @@ public class GameScreenActivity extends ARViewActivity {
 		getMenuInflater().inflate(R.menu.game_screen, menu);
 		return true;
 	}
-
+	
+	@Override
+	protected void startCamera() {
+		// Select the back facing camera by default
+		final int cameraIndex = SystemInfo.getCameraIndex(CameraInfo.CAMERA_FACING_BACK);
+		Vector2di mCameraResolution = metaioSDK.startCamera(cameraIndex, 1280, 760);
+	}
+	/*
+	@SuppressLint("InlinedApi")
+	@Override
+	public void onSurfaceCreated() {
+		// Setup auto-focus
+        Camera camera = IMetaioSDKAndroid.getCamera(this);
+        Camera.Parameters params = camera.getParameters();
+        params.setFocusMode(Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        camera.setParameters(params);
+	}
+	
+	@SuppressLint("InlinedApi")
+	@Override
+	public void onSurfaceChanged(int width, int height)
+	{
+	     Camera camera = IMetaioSDKAndroid.getCamera(this);
+	     Parameters params = camera.getParameters();
+	     params.setFocusMode(Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+	     camera.setParameters(params);
+	}
+	*/
 	@Override
 	protected int getGUILayout() {
 		// TODO Auto-generated method stub

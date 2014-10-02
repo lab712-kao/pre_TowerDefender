@@ -22,7 +22,6 @@ public class MainActivity extends Activity {
 		}
 		else {
 			startBtn.setOnClickListener(new Button.OnClickListener(){
-
 				@Override
 				public void onClick(View v) {
 					gotoGameActivity(v);
