@@ -98,20 +98,7 @@ public class GameScreenActivity extends ARViewActivity {
 			
 			if (tankModel != null) {
 				tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
-				this.mSurfaceView.queueEvent(new Runnable() {
-					String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						for (int i = 0; i < 10; i++) {
-
-							new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(i*10, i*10, i*10), 100,  100, 20);
-						}
-						
-						
-					}
-				});
+				
 			}
 			if(towerModel1 != null){
 				tower_1 = metaioSDK.createGeometry(towerModel1);
@@ -131,7 +118,15 @@ public class GameScreenActivity extends ARViewActivity {
 		// TODO Auto-generated method stub	
 		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
 		new Thread(tanks).start() ;
-		
+		this.mSurfaceView.queueEvent(new Runnable() {
+			
+			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub 
+				new Thread(new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20)).start();
+			}
+		});
 //		tanks.move();
 	}
 
