@@ -32,6 +32,7 @@ public class GameScreenActivity extends ARViewActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.game_screen, menu);
+		
 		return true;
 	}
 	
@@ -97,7 +98,20 @@ public class GameScreenActivity extends ARViewActivity {
 			
 			if (tankModel != null) {
 				tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
-				
+				this.mSurfaceView.queueEvent(new Runnable() {
+					String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						for (int i = 0; i < 10; i++) {
+
+							new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(i*10, i*10, i*10), 100,  100, 20);
+						}
+						
+						
+					}
+				});
 			}
 			if(towerModel1 != null){
 				tower_1 = metaioSDK.createGeometry(towerModel1);
