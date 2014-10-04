@@ -1,9 +1,14 @@
 package tw.edu.ttu.pre_towerdefender;
 
+import gameObject.tower.IGObject;
+import gameObject.tower.IGSoldier;
 import gameObject.tower.Tank;
 import gameObject.tower.tower;
-
 import java.io.IOException;
+<<<<<<< HEAD
+=======
+import java.util.concurrent.Executor;
+>>>>>>> branch 'master' of https://github.com/lab712-kao/pre_TowerDefender.git
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 
@@ -26,6 +31,8 @@ import android.view.Menu;
 
 public class GameScreenActivity extends ARViewActivity {
 	private IGeometry tower_1, tower_2,tank;
+	private IGObject soldier;
+	
 	Tank tanks;
 	private tower T;
 	@Override
@@ -113,13 +120,14 @@ public class GameScreenActivity extends ARViewActivity {
 					}
 				});
 			}
+			
 			if(towerModel1 != null){
 				tower_1 = metaioSDK.createGeometry(towerModel1);
 				tower_1.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
 				tower_1.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 				tower_1.setCoordinateSystemID(2);
-				
 			}
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -130,7 +138,7 @@ public class GameScreenActivity extends ARViewActivity {
 	protected void onGeometryTouched(IGeometry geometry) {
 		// TODO Auto-generated method stub	
 		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
-		new Thread(tanks).start() ;
+		//new Thread(tanks).start() ;
 		
 //		tanks.move();
 	}
