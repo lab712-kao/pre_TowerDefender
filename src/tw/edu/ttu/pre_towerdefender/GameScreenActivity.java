@@ -11,7 +11,6 @@ import java.util.concurrent.Executor;
 >>>>>>> branch 'master' of https://github.com/lab712-kao/pre_TowerDefender.git
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
-
 import com.metaio.sdk.jni.IGeometry;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.IMetaioSDKCallback;
@@ -20,7 +19,6 @@ import com.metaio.sdk.jni.Vector2di;
 import com.metaio.sdk.jni.Vector3d;
 import com.metaio.tools.SystemInfo;
 import com.metaio.tools.io.AssetsManager;
-
 import android.annotation.SuppressLint;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
@@ -49,6 +47,7 @@ public class GameScreenActivity extends ARViewActivity {
 		final int cameraIndex = SystemInfo.getCameraIndex(CameraInfo.CAMERA_FACING_BACK);
 		Vector2di mCameraResolution = metaioSDK.startCamera(cameraIndex, 1280, 760);
 	}
+	
 	/*
 	@SuppressLint("InlinedApi")
 	@Override
@@ -70,6 +69,7 @@ public class GameScreenActivity extends ARViewActivity {
 	     camera.setParameters(params);
 	}
 	*/
+	
 	@Override
 	protected int getGUILayout() {
 		// TODO Auto-generated method stub
@@ -92,6 +92,8 @@ public class GameScreenActivity extends ARViewActivity {
 		}
 		setRequestedOrientation(0);
 		
+		
+		
 		try {
 			String trackingConfigFile = AssetsManager.getAssetPath("TrackingData_MarkerlessFast.xml");
 			boolean result = metaioSDK.setTrackingConfiguration(trackingConfigFile); 
@@ -105,20 +107,7 @@ public class GameScreenActivity extends ARViewActivity {
 			
 			if (tankModel != null) {
 				tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
-				this.mSurfaceView.queueEvent(new Runnable() {
-					String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
 
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						for (int i = 0; i < 10; i++) {
-
-							new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(i*10, i*10, i*10), 100,  100, 20);
-						}
-						
-						
-					}
-				});
 			}
 			
 			if(towerModel1 != null){
@@ -138,9 +127,20 @@ public class GameScreenActivity extends ARViewActivity {
 	protected void onGeometryTouched(IGeometry geometry) {
 		// TODO Auto-generated method stub	
 		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
-		//new Thread(tanks).start() ;
-		
+
+		new Thread(tanks).start() ;
+		this.mSurfaceView.queueEvent(new Runnable() {
+			
+			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub 
+				new Thread(new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20)).start();
+			}
+		});
+
 //		tanks.move();
 	}
 
+	//button event(call handler new igometry <- this )
 }
