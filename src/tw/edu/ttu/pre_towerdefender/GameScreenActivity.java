@@ -2,11 +2,9 @@ package tw.edu.ttu.pre_towerdefender;
 
 import gameObject.tower.Tank;
 import gameObject.tower.tower;
-
 import java.io.IOException;
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
-
 import com.metaio.sdk.jni.IGeometry;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.IMetaioSDKCallback;
@@ -15,7 +13,6 @@ import com.metaio.sdk.jni.Vector2di;
 import com.metaio.sdk.jni.Vector3d;
 import com.metaio.tools.SystemInfo;
 import com.metaio.tools.io.AssetsManager;
-
 import android.annotation.SuppressLint;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
@@ -42,6 +39,7 @@ public class GameScreenActivity extends ARViewActivity {
 		final int cameraIndex = SystemInfo.getCameraIndex(CameraInfo.CAMERA_FACING_BACK);
 		Vector2di mCameraResolution = metaioSDK.startCamera(cameraIndex, 1280, 760);
 	}
+	
 	/*
 	@SuppressLint("InlinedApi")
 	@Override
@@ -63,6 +61,7 @@ public class GameScreenActivity extends ARViewActivity {
 	     camera.setParameters(params);
 	}
 	*/
+	
 	@Override
 	protected int getGUILayout() {
 		// TODO Auto-generated method stub
@@ -84,6 +83,8 @@ public class GameScreenActivity extends ARViewActivity {
 			e1.printStackTrace();
 		}
 		setRequestedOrientation(0);
+		
+		
 		
 		try {
 			String trackingConfigFile = AssetsManager.getAssetPath("TrackingData_MarkerlessFast.xml");
@@ -130,4 +131,5 @@ public class GameScreenActivity extends ARViewActivity {
 //		tanks.move();
 	}
 
+	//button event(call handler new igometry <- this )
 }
