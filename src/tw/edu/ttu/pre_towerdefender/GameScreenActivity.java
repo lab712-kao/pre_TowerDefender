@@ -28,6 +28,7 @@ public class GameScreenActivity extends ARViewActivity {
 	private IGeometry tower_1, tower_2,tank;
 	Tank tanks;
 	private tower T;
+	int j=0;
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
