@@ -4,11 +4,10 @@ import gameObject.tower.IGObject;
 import gameObject.tower.IGSoldier;
 import gameObject.tower.Tank;
 import gameObject.tower.tower;
+import gameSystem.gameObjectSystem.ObjectHandler;
+
 import java.io.IOException;
-<<<<<<< HEAD
-=======
-import java.util.concurrent.Executor;
->>>>>>> branch 'master' of https://github.com/lab712-kao/pre_TowerDefender.git
+
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
@@ -29,10 +28,10 @@ import android.view.Menu;
 
 public class GameScreenActivity extends ARViewActivity {
 	private IGeometry tower_1, tower_2,tank;
-	private IGObject soldier;
 	
 	Tank tanks;
 	private tower T;
+	private ObjectHandler OBHL;
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -47,29 +46,7 @@ public class GameScreenActivity extends ARViewActivity {
 		final int cameraIndex = SystemInfo.getCameraIndex(CameraInfo.CAMERA_FACING_BACK);
 		Vector2di mCameraResolution = metaioSDK.startCamera(cameraIndex, 1280, 760);
 	}
-	
-	/*
-	@SuppressLint("InlinedApi")
-	@Override
-	public void onSurfaceCreated() {
-		// Setup auto-focus
-        Camera camera = IMetaioSDKAndroid.getCamera(this);
-        Camera.Parameters params = camera.getParameters();
-        params.setFocusMode(Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-        camera.setParameters(params);
-	}
-	
-	@SuppressLint("InlinedApi")
-	@Override
-	public void onSurfaceChanged(int width, int height)
-	{
-	     Camera camera = IMetaioSDKAndroid.getCamera(this);
-	     Parameters params = camera.getParameters();
-	     params.setFocusMode(Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-	     camera.setParameters(params);
-	}
-	*/
-	
+		
 	@Override
 	protected int getGUILayout() {
 		// TODO Auto-generated method stub
@@ -92,8 +69,8 @@ public class GameScreenActivity extends ARViewActivity {
 		}
 		setRequestedOrientation(0);
 		
-		
-		
+		OBHL = new ObjectHandler(metaioSDK, mSurfaceView);
+
 		try {
 			String trackingConfigFile = AssetsManager.getAssetPath("TrackingData_MarkerlessFast.xml");
 			boolean result = metaioSDK.setTrackingConfiguration(trackingConfigFile); 
@@ -104,19 +81,7 @@ public class GameScreenActivity extends ARViewActivity {
 			String towerModel1 = AssetsManager.getAssetPath("saintriqT3DS.obj");
 			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
 			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-			
-			if (tankModel != null) {
-				tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
-
-			}
-			
-			if(towerModel1 != null){
-				tower_1 = metaioSDK.createGeometry(towerModel1);
-				tower_1.setScale(new Vector3d(35.0f, 35.0f, 35.0f));
-				tower_1.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
-				tower_1.setCoordinateSystemID(2);
-			}
-			
+			tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -127,17 +92,18 @@ public class GameScreenActivity extends ARViewActivity {
 	protected void onGeometryTouched(IGeometry geometry) {
 		// TODO Auto-generated method stub	
 		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
-
-		new Thread(tanks).start() ;
-		this.mSurfaceView.queueEvent(new Runnable() {
-			
-			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub 
-				new Thread(new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20)).start();
-			}
-		});
+		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+		OBHL.creatObject("qwe",metaioSDK.createGeometry(tankModel),1, 0, 0);
+//		new Thread(tanks).start() ;
+//		this.mSurfaceView.queueEvent(new Runnable() {
+//			
+//			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub 
+//				new Thread(new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20)).start();
+//			}
+//		});
 
 //		tanks.move();
 	}
