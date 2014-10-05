@@ -5,10 +5,7 @@ import gameObject.tower.IGSoldier;
 import gameObject.tower.Tank;
 import gameObject.tower.tower;
 import java.io.IOException;
-<<<<<<< HEAD
-=======
 import java.util.concurrent.Executor;
->>>>>>> branch 'master' of https://github.com/lab712-kao/pre_TowerDefender.git
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
