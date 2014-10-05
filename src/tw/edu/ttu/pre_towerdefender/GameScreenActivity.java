@@ -92,7 +92,8 @@ public class GameScreenActivity extends ARViewActivity {
 		// TODO Auto-generated method stub	
 		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
 		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-		OBHL.creatObject("qwe",metaioSDK.createGeometry(tankModel),1, 0, 0);
+		OBHL.creatObject("qwe", tankModel,1, 0, 0);
+		
 //		new Thread(tanks).start() ;
 //		this.mSurfaceView.queueEvent(new Runnable() {
 //			
