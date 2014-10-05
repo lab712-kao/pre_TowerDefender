@@ -34,7 +34,7 @@ public class ObjectHandler {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				objects.add(new Tank(model, coordinateSystemID, new Vector3d(3.5f), x, y,3.5f , 3.5f, 100, 100, 3.5f));
+				//objects.add(new Tank(model, coordinateSystemID, new Vector3d(3.5f), x, y,3.5f , 3.5f, 100, 100, 3.5f));
 
 			}
 			
