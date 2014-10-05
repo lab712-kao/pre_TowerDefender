@@ -1,13 +1,12 @@
 package tw.edu.ttu.pre_towerdefender;
-
 import gameObject.tower.IGObject;
 import gameObject.tower.IGSoldier;
 import gameObject.tower.Tank;
 import gameObject.tower.tower;
-import gameSystem.gameObjectSystem.ObjectHandler;
-
 import java.io.IOException;
-
+import java.util.concurrent.Executor;
+import gameSystem.gameObjectSystem.ObjectHandler;
+import java.io.IOException;
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
@@ -93,7 +92,8 @@ public class GameScreenActivity extends ARViewActivity {
 		// TODO Auto-generated method stub	
 		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
 		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-		OBHL.creatObject("qwe",metaioSDK.createGeometry(tankModel),1, 0, 0);
+		OBHL.creatObject("qwe", tankModel,1, 0, 0);
+		
 //		new Thread(tanks).start() ;
 //		this.mSurfaceView.queueEvent(new Runnable() {
 //			
