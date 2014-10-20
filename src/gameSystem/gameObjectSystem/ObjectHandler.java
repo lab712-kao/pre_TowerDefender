@@ -26,12 +26,12 @@ public class ObjectHandler  {
 	public IMetaioSDKAndroid sdk;
 	public MetaioSurfaceView view;
 	public ObjectCreator test;
-	public Handler creatorHandler;
+	
 	public ObjectHandler(IMetaioSDKAndroid sdk, MetaioSurfaceView view) {
 		OIR = new ObjectInfoReader();
 		this.sdk = sdk;
 		this.view = view;
-		creatorHandler = new Handler();
+		
 
 	}
 

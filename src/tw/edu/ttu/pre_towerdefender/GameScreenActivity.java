@@ -13,6 +13,8 @@ import com.metaio.sdk.jni.IGeometry;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.IMetaioSDKCallback;
 import com.metaio.sdk.jni.Rotation;
+import com.metaio.sdk.jni.TrackingValues;
+import com.metaio.sdk.jni.TrackingValuesVector;
 import com.metaio.sdk.jni.Vector2di;
 import com.metaio.sdk.jni.Vector3d;
 import com.metaio.tools.SystemInfo;
@@ -21,6 +23,7 @@ import android.annotation.SuppressLint;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 //ya
@@ -31,6 +34,23 @@ public class GameScreenActivity extends ARViewActivity {
 	Tank tanks;
 	private tower T;
 	private ObjectHandler OBHL;
+	private MetaioSDKCallbackHandler mMetaioHandler;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) 
+	{
+		super.onCreate(savedInstanceState);
+		
+		mMetaioHandler = new MetaioSDKCallbackHandler();		
+	}
+	
+	@Override
+	protected void onDestroy() 
+	{
+		super.onDestroy();
+		mMetaioHandler = null;
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -55,7 +75,8 @@ public class GameScreenActivity extends ARViewActivity {
 	@Override
 	protected IMetaioSDKCallback getMetaioSDKCallbackHandler() {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return mMetaioHandler;
 	}
 
 	@Override
@@ -69,7 +90,7 @@ public class GameScreenActivity extends ARViewActivity {
 		setRequestedOrientation(0);
 		
 		OBHL = new ObjectHandler(metaioSDK, mSurfaceView);
-
+		
 		try {
 			String trackingConfigFile = AssetsManager.getAssetPath("TrackingData_MarkerlessFast.xml");
 			boolean result = metaioSDK.setTrackingConfiguration(trackingConfigFile); 
@@ -106,6 +127,24 @@ public class GameScreenActivity extends ARViewActivity {
 //		});
 
 //		tanks.move();
+	}
+	
+	final class MetaioSDKCallbackHandler extends IMetaioSDKCallback
+	{
+		
+		@Override
+		public void onTrackingEvent(TrackingValuesVector trackingValues)
+		{
+			//Log.d("pre-dd", "Tracking Event");
+			for (int i=0; i<trackingValues.size(); i++)
+			{
+				final TrackingValues v = trackingValues.get(i);
+				//MetaioDebug.log("Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
+				//System.out.println("Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
+				Log.d("pre-dd", "Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
+			}
+		}
+
 	}
 
 	//button event(call handler new igometry <- this )

@@ -87,7 +87,7 @@ public class Tank extends MovingObject implements Runnable{
 			other.setHealth((float) 0.0);
 		}else{
 			other.setHealth(other.getHealth()-atk);
-		}		
+		}
 	}
 	
 
