@@ -13,29 +13,42 @@ import com.metaio.sdk.jni.Vector3d;
 
 import android.R.integer;
 import android.R.string;
+import android.graphics.drawable.Drawable.Callback;
+import android.os.Handler;
 import gameObject.tower.Object;
 import gameObject.tower.Tank;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
 
-public class ObjectHandler {
-	
+public class ObjectHandler  {
+
 	public Vector<Object> objects;
 	public ObjectInfoReader OIR;
 	public IMetaioSDKAndroid sdk;
 	public MetaioSurfaceView view;
 	public ObjectCreator test;
-	
-	
-	public ObjectHandler(IMetaioSDKAndroid sdk, MetaioSurfaceView view){
-		OIR =new ObjectInfoReader();
+	public Handler creatorHandler;
+	public ObjectHandler(IMetaioSDKAndroid sdk, MetaioSurfaceView view) {
+		OIR = new ObjectInfoReader();
 		this.sdk = sdk;
 		this.view = view;
-		
-	}	
-	public boolean creatObject(String name,String modelPath, int coordinateSystemID, int x, int y) {
-		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID));
-		return false;
-		
+		creatorHandler = new Handler();
+
 	}
-		
+
+	public boolean creatObject(String name, String modelPath,
+			int coordinateSystemID, int x, int y) {
+		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
+				objects, x, y));
+		return false;
+
+	}
+
+	public boolean creatObject(String name, String modelPath,
+			int coordinateSystemID) {
+		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
+				objects));
+		return false;
+
+	}
+
 }
