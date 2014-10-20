@@ -21,24 +21,25 @@ import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
 
 public class ObjectHandler  {
 
-	public Vector<Object> objects;
-	public ObjectInfoReader OIR;
-	public IMetaioSDKAndroid sdk;
-	public MetaioSurfaceView view;
-	public ObjectCreator test;
-	public Handler creatorHandler;
+	private Vector<Object> objects;
+	private ObjectInfoReader OIR;
+	private IMetaioSDKAndroid sdk;
+	private MetaioSurfaceView view;
+	
+	
 	public ObjectHandler(IMetaioSDKAndroid sdk, MetaioSurfaceView view) {
 		OIR = new ObjectInfoReader();
 		this.sdk = sdk;
 		this.view = view;
-		creatorHandler = new Handler();
-
+		
 	}
 
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID, int x, int y) {
+		
+		OIR.getSoldierInfoByName(name);
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
-				objects, x, y));
+				objects, OIR.getSoldierInfoByName(name),x, y));
 		return false;
 
 	}
@@ -46,7 +47,7 @@ public class ObjectHandler  {
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID) {
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
-				objects));
+				objects,OIR.getSoldierInfoByName(name)));
 		return false;
 
 	}
