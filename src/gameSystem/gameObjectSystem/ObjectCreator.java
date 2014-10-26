@@ -12,20 +12,13 @@ import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.Vector3d;
 
 public class ObjectCreator implements Runnable {
-<<<<<<< HEAD
-	public Vector<Object> objects;
-	public ObjectInfoReader OIR;
-	public IMetaioSDKAndroid sdk;
-	public int x, y;
-	public int coordinateSystemID;
-	
-=======
+
 	private Vector<Object> objects;
 	private IMetaioSDKAndroid sdk;
 	private int x, y;
 	private ObjectInfo objectInfo;
 	private int coordinateSystemID;
->>>>>>> branch 'master' of https://github.com/lab712-kao/pre_TowerDefender.git
+
 	
 	private String modelPath;
 
