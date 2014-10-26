@@ -21,7 +21,8 @@ import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
 
 public class ObjectHandler  {
 
-	private Vector<Object> objects;
+//	private Vector<Object> objects;
+	private DoubleDeque<Object> objects;
 	private ObjectInfoReader OIR;
 	private IMetaioSDKAndroid sdk;
 	private MetaioSurfaceView view;
@@ -30,12 +31,12 @@ public class ObjectHandler  {
 		OIR = new ObjectInfoReader();
 		this.sdk = sdk;
 		this.view = view;
+		objects = new DoubleDeque<Object>();
 	}
 
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID, int x, int y) {
 		
-		OIR.getSoldierInfoByName(name);
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects, OIR.getSoldierInfoByName(name),x, y));
 		return false;

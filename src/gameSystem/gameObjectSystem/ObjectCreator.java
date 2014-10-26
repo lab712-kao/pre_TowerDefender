@@ -13,7 +13,7 @@ import com.metaio.sdk.jni.Vector3d;
 
 public class ObjectCreator implements Runnable {
 
-	private Vector<Object> objects;
+	private DoubleDeque<Object> objects;
 	private IMetaioSDKAndroid sdk;
 	private int x, y;
 	private ObjectInfo objectInfo;
@@ -23,7 +23,7 @@ public class ObjectCreator implements Runnable {
 	private String modelPath;
 
 	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
-			int coordinateSystemID, Vector<Object> objects,ObjectInfo objectInfo) {
+			int coordinateSystemID, DoubleDeque<Object> objects,ObjectInfo objectInfo) {
 		this.coordinateSystemID = coordinateSystemID;
 		this.modelPath = modelPath;
 		this.sdk = sdk;
@@ -34,7 +34,7 @@ public class ObjectCreator implements Runnable {
 	}
 
 	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
-			int coordinateSystemID, Vector<Object> objects,ObjectInfo objectInfo, int x, int y) {
+			int coordinateSystemID, DoubleDeque<Object> objects,ObjectInfo objectInfo, int x, int y) {
 		this.coordinateSystemID = coordinateSystemID;
 		this.modelPath = modelPath;
 		this.sdk = sdk;
@@ -55,7 +55,8 @@ public class ObjectCreator implements Runnable {
 		// new Thread(new Tank(sdk.createGeometry(modelPath), 1, new Vector3d(
 		// 35.0f), new Vector3d(0, 0, 0), 100, 100, 20)).start();
 		*/
-		objects.add(new Tank(sdk.createGeometry(modelPath), coordinateSystemID,
+		
+		objects.pushF(new Tank(sdk.createGeometry(modelPath), coordinateSystemID,
 				new Vector3d(3.5f), x, y, 3.5f, objectInfo.getSpeed(), objectInfo.getHp(), objectInfo.getAtk(), objectInfo.getRange()));
 		
 
