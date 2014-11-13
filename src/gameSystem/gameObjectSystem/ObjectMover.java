@@ -1,5 +1,6 @@
 package gameSystem.gameObjectSystem;
 
+import gameObject.tower.MovingObject;
 import gameObject.tower.Object;
 
 import java.util.ArrayList;
@@ -12,12 +13,29 @@ import com.metaio.sdk.jni.Vector3d;
 
 public class ObjectMover implements Runnable{
 
+	
+	private IDType TYPE;
+	private DoubleArrayList<MovingObject> objects = null;
+	
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		
 	}
 	
+	public IDType getTYPE() {
+		return TYPE;
+	}
+
+	public void setTYPE(IDType tYPE) {
+		TYPE = tYPE;
+	}
+
+	public void setObjects(DoubleArrayList<MovingObject> objects) {
+		this.objects = objects;
+	}
+
 	private ArrayList getCube(BoundingBox box){
 		
 		ArrayList<Vector3d> cubePoint = new ArrayList<Vector3d>();
@@ -66,6 +84,26 @@ public class ObjectMover implements Runnable{
 		
 		return false;
 	}
-	
+	private boolean move(MovingObject obj){
+		
+		int i=0;
+		float moveAngel = obj.getModelFaceAngle();
+		float moveSpeed = obj.getMoveSpeed();
+		Vector3d originePos = obj.getModelPosition();
+		obj.getModel().setTranslation( new Vector3d((moveSpeed*(float)Math.cos(moveAngel)), moveSpeed* (float)Math.sin(moveAngel), (float)0.0) );
+		if(TYPE == IDType.O){
+
+			if(collisionDetection(obj, objects.seek(0, IDType.E))||collisionDetection(obj, objects.seek(objects.getIndexOf(obj, IDType.O), IDType.O)))
+				obj.getModel().setTranslation(originePos);
+				return false;
+			
+		}else if(TYPE == IDType.E){	
+			
+			if(collisionDetection(obj, objects.seek(0, IDType.O))||collisionDetection(obj, objects.seek(objects.getIndexOf(obj, IDType.E), IDType.E)))
+				obj.getModel().setTranslation(originePos);
+				return false;
+		}
+		return true;
+	}
 
 }

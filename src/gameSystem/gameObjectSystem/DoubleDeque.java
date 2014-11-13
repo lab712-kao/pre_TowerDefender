@@ -1,6 +1,7 @@
 package gameSystem.gameObjectSystem;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Vector;
 
@@ -16,6 +17,8 @@ public class DoubleDeque<E> {
 	}
 	public void pushF(E object){
 		DequeF.addLast(object);
+		
+		
 	}
 
 	public E popF() {

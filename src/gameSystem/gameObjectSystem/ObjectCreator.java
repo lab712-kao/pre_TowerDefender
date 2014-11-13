@@ -1,5 +1,6 @@
 package gameSystem.gameObjectSystem;
 
+import gameObject.tower.MovingObject;
 import gameObject.tower.Object;
 import gameObject.tower.Tank;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfo;
@@ -13,7 +14,7 @@ import com.metaio.sdk.jni.Vector3d;
 
 public class ObjectCreator implements Runnable {
 
-	private DoubleDeque<Object> objects;
+	private DoubleArrayList<MovingObject> objects;
 	private IMetaioSDKAndroid sdk;
 	private int x, y;
 	private ObjectInfo objectInfo;
@@ -23,7 +24,7 @@ public class ObjectCreator implements Runnable {
 	private String modelPath;
 
 	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
-			int coordinateSystemID, DoubleDeque<Object> objects,ObjectInfo objectInfo) {
+			int coordinateSystemID, DoubleArrayList<MovingObject> objects,ObjectInfo objectInfo) {
 		this.coordinateSystemID = coordinateSystemID;
 		this.modelPath = modelPath;
 		this.sdk = sdk;
@@ -34,7 +35,7 @@ public class ObjectCreator implements Runnable {
 	}
 
 	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
-			int coordinateSystemID, DoubleDeque<Object> objects,ObjectInfo objectInfo, int x, int y) {
+			int coordinateSystemID, DoubleArrayList<MovingObject> objects,ObjectInfo objectInfo, int x, int y) {
 		this.coordinateSystemID = coordinateSystemID;
 		this.modelPath = modelPath;
 		this.sdk = sdk;
@@ -56,8 +57,8 @@ public class ObjectCreator implements Runnable {
 		// 35.0f), new Vector3d(0, 0, 0), 100, 100, 20)).start();
 		*/
 		
-		objects.pushF(new Tank(sdk.createGeometry(modelPath), coordinateSystemID,
-				new Vector3d(3.5f), x, y, 3.5f, objectInfo.getSpeed(), objectInfo.getHp(), objectInfo.getAtk(), objectInfo.getRange()));
+		objects.push(new Tank(sdk.createGeometry(modelPath), coordinateSystemID,
+				new Vector3d(3.5f), x, y, 3.5f, objectInfo.getSpeed(), objectInfo.getHp(), objectInfo.getAtk(), objectInfo.getRange()),IDType.O);
 		
 
 	}

@@ -15,6 +15,7 @@ import android.R.integer;
 import android.R.string;
 import android.graphics.drawable.Drawable.Callback;
 import android.os.Handler;
+import gameObject.tower.MovingObject;
 import gameObject.tower.Object;
 import gameObject.tower.Tank;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
@@ -22,7 +23,7 @@ import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
 public class ObjectHandler  {
 
 //	private Vector<Object> objects;
-	private DoubleDeque<Object> objects;
+	private DoubleArrayList<MovingObject> objects;
 	private ObjectInfoReader OIR;
 	private IMetaioSDKAndroid sdk;
 	private MetaioSurfaceView view;
@@ -31,7 +32,7 @@ public class ObjectHandler  {
 		OIR = new ObjectInfoReader();
 		this.sdk = sdk;
 		this.view = view;
-		objects = new DoubleDeque<Object>();
+		objects = new DoubleArrayList<MovingObject>();
 	}
 
 	public boolean creatObject(String name, String modelPath,
