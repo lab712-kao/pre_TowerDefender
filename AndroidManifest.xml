@@ -27,6 +27,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+         <activity
+            android:name="gameviews.MainMenuView">   	
+        </activity>
         <activity
             android:name="tw.edu.ttu.pre_towerdefender.GameScreenActivity"
             android:label="@string/title_activity_game_screen" 
