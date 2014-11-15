@@ -1,5 +1,6 @@
 package tw.edu.ttu.pre_towerdefender;
 
+import gameviews.view.MainMenuView;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -42,6 +43,12 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	public void gotoMainMenu() {
+		Intent it = new Intent();
+		it.setClass(this, MainMenuView.class);
+		startActivity(it);
 	}
 
 }
