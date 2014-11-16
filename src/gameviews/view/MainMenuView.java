@@ -35,6 +35,7 @@ public class MainMenuView extends Activity{
 		}
 		
 	}
+	
 
 	public void gotoGameActivity(View v) {
 		
