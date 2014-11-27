@@ -29,7 +29,8 @@ public class ObjectHandler  {
 	private MetaioSurfaceView view;
 	
 	public ObjectHandler(IMetaioSDKAndroid sdk, MetaioSurfaceView view) {
-		OIR = new ObjectInfoReader();
+//		OIR = new ObjectInfoReader();
+		OIR = null;
 		this.sdk = sdk;
 		this.view = view;
 		objects = new DoubleArrayList<MovingObject>();

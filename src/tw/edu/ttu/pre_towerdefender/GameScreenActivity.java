@@ -6,6 +6,8 @@ import gameObject.tower.tower;
 import java.io.IOException;
 import java.util.concurrent.Executor;
 import gameSystem.gameObjectSystem.ObjectHandler;
+import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
+
 import java.io.IOException;
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
@@ -33,8 +35,9 @@ public class GameScreenActivity extends ARViewActivity {
 	
 	Tank tanks;
 	private tower T;
-	private ObjectHandler OBHL;
+//	private ObjectHandler OBHL;
 	private MetaioSDKCallbackHandler mMetaioHandler;
+	private ObjectInfoReader OIR = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -89,31 +92,42 @@ public class GameScreenActivity extends ARViewActivity {
 		}
 		setRequestedOrientation(0);
 		
-		OBHL = new ObjectHandler(metaioSDK, mSurfaceView);
+		//OBHL = new ObjectHandler(metaioSDK, mSurfaceView);
 		
+//		try {
+//			String trackingConfigFile = AssetsManager.getAssetPath("TrackingData_MarkerlessFast.xml");
+//			boolean result = metaioSDK.setTrackingConfiguration(trackingConfigFile); 
+//			MetaioDebug.log("Tracking data loaded: " + result);
+//			
+//			Log.d("trackingData", "Tracking data loaded: " + result);
+//			
+//			String towerModel1 = AssetsManager.getAssetPath("saintriqT3DS.obj");
+//			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
+//			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+//			tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
+//		}
+//		catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		try {
-			String trackingConfigFile = AssetsManager.getAssetPath("TrackingData_MarkerlessFast.xml");
-			boolean result = metaioSDK.setTrackingConfiguration(trackingConfigFile); 
-			MetaioDebug.log("Tracking data loaded: " + result);
-			
-			Log.d("trackingData", "Tracking data loaded: " + result);
-			
-			String towerModel1 = AssetsManager.getAssetPath("saintriqT3DS.obj");
-			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
-			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-			tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
-		}
-		catch (Exception e) {
+			OIR = new ObjectInfoReader(this.getAssets().open("unitinfo.xml") );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.d("moveStart",e+ "<<<<<<<exception++++++++++++++++++++++++++++");			
+
 		}
+		Log.d("moveStart",OIR.getSoldierInfoByName("tank").getAtk()+"++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+//		OIR.getSoldierInfoByName("soldier")
+		
 	}
 
 	@Override
 	protected void onGeometryTouched(IGeometry geometry) {
 		// TODO Auto-generated method stub	
 		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
-		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-		OBHL.creatObject("qwe", tankModel,1, 0, 0);
+//		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+//		OBHL.creatObject("qwe", tankModel,1, 0, 0);
 		
 //		new Thread(tanks).start() ;
 //		this.mSurfaceView.queueEvent(new Runnable() {
@@ -125,7 +139,7 @@ public class GameScreenActivity extends ARViewActivity {
 //				new Thread(new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20)).start();
 //			}
 //		});
-
+		
 //		tanks.move();
 	}
 	
@@ -136,13 +150,13 @@ public class GameScreenActivity extends ARViewActivity {
 		public void onTrackingEvent(TrackingValuesVector trackingValues)
 		{
 			//Log.d("pre-dd", "Tracking Event");
-			for (int i=0; i<trackingValues.size(); i++)
-			{
-				final TrackingValues v = trackingValues.get(i);
-				//MetaioDebug.log("Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
-				//System.out.println("Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
-				Log.d("pre-dd", "Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
-			}
+//			for (int i=0; i<trackingValues.size(); i++)
+//			{
+//				final TrackingValues v = trackingValues.get(i);
+//				//MetaioDebug.log("Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
+//				//System.out.println("Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
+//				Log.d("pre-dd", "Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
+//			}
 		}
 
 	}
