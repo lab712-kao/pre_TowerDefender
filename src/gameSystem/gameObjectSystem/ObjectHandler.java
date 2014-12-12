@@ -15,6 +15,7 @@ import android.R.integer;
 import android.R.string;
 import android.graphics.drawable.Drawable.Callback;
 import android.os.Handler;
+import android.util.Log;
 import gameObject.tower.MovingObject;
 import gameObject.tower.Object;
 import gameObject.tower.Tank;
@@ -28,9 +29,9 @@ public class ObjectHandler  {
 	private IMetaioSDKAndroid sdk;
 	private MetaioSurfaceView view;
 	
-	public ObjectHandler(IMetaioSDKAndroid sdk, MetaioSurfaceView view) {
+	public ObjectHandler(IMetaioSDKAndroid sdk, MetaioSurfaceView view,ObjectInfoReader OIR) {
 //		OIR = new ObjectInfoReader();
-		OIR = null;
+		this.OIR = OIR;
 		this.sdk = sdk;
 		this.view = view;
 		objects = new DoubleArrayList<MovingObject>();
@@ -46,7 +47,23 @@ public class ObjectHandler  {
 	}
 
 	public boolean creatObject(String name, String modelPath,
+			int coordinateSystemID, int x, int y,IDType id) {
+		
+		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
+				objects, OIR.getSoldierInfoByName(name),x, y));
+		return false;
+
+	}
+	
+	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID) {
+		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
+				objects,OIR.getSoldierInfoByName(name)));
+		return false;
+
+	}
+	public boolean creatObject(String name, String modelPath,
+			int coordinateSystemID,IDType id) {
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects,OIR.getSoldierInfoByName(name)));
 		return false;

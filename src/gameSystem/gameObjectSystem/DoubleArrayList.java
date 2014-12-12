@@ -11,6 +11,8 @@ public class DoubleArrayList<E> {
 	
 	public DoubleArrayList() {
 		super();
+		own = new ArrayList<E>();
+		enemy = new ArrayList<E> ();
 	}
 	
 	public void push(E object, IDType T){

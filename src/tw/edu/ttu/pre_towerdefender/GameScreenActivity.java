@@ -35,7 +35,7 @@ public class GameScreenActivity extends ARViewActivity {
 	
 	Tank tanks;
 	private tower T;
-//	private ObjectHandler OBHL;
+	private ObjectHandler OBHL;
 	private MetaioSDKCallbackHandler mMetaioHandler;
 	private ObjectInfoReader OIR = null;
 	
@@ -94,29 +94,32 @@ public class GameScreenActivity extends ARViewActivity {
 		
 		//OBHL = new ObjectHandler(metaioSDK, mSurfaceView);
 		
-//		try {
-//			String trackingConfigFile = AssetsManager.getAssetPath("TrackingData_MarkerlessFast.xml");
-//			boolean result = metaioSDK.setTrackingConfiguration(trackingConfigFile); 
-//			MetaioDebug.log("Tracking data loaded: " + result);
-//			
-//			Log.d("trackingData", "Tracking data loaded: " + result);
-//			
-//			String towerModel1 = AssetsManager.getAssetPath("saintriqT3DS.obj");
-//			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
-//			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-//			tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
-//		}
-//		catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		try {
+			String trackingConfigFile = AssetsManager.getAssetPath("TrackingData_MarkerlessFast.xml");
+			boolean result = metaioSDK.setTrackingConfiguration(trackingConfigFile); 
+			MetaioDebug.log("Tracking data loaded: " + result);
+			
+			Log.d("trackingData", "Tracking data loaded: " + result);
+			
+			String towerModel1 = AssetsManager.getAssetPath("saintriqT3DS.obj");
+			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
+			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		try {
 			OIR = new ObjectInfoReader(this.getAssets().open("unitinfo.xml") );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			Log.d("moveStart",e+ "<<<<<<<exception++++++++++++++++++++++++++++");			
-
+			Log.d("moveStart",e+ "<<<<<<<exception++++++++++++++++++++++++++++");		
+			
 		}
+		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+		//Log.d("moveStart",tankModel + "<<<<<<<tankModel ++++++++++++++++++++++++++++");	
+		OBHL = new ObjectHandler(metaioSDK, mSurfaceView,OIR);
+		OBHL.creatObject("tank",  tankModel , 1);
 		Log.d("moveStart",OIR.getSoldierInfoByName("tank").getAtk()+"++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //		OIR.getSoldierInfoByName("soldier")
 		
