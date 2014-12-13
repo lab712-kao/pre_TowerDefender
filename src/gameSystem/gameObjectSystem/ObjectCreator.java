@@ -1,16 +1,15 @@
 package gameSystem.gameObjectSystem;
 
 import gameObject.tower.MovingObject;
-import gameObject.tower.Object;
+
 import gameObject.tower.Tank;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfo;
 
 
-import java.util.Vector;
-
 
 import android.util.Log;
 
+import com.metaio.sdk.jni.IGeometry;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.Vector3d;
 
@@ -84,8 +83,9 @@ public class ObjectCreator implements Runnable {
 		*/
 		Log.d("moveStart","inCreator+++++++++++++++++++++++=");
 		objects.push(new Tank(sdk.createGeometry(modelPath), coordinateSystemID,
-				new Vector3d(35f), x, y, 35f, objectInfo.getSpeed(), objectInfo.getHp(), objectInfo.getAtk(), objectInfo.getRange()),id);
-		
+				new Vector3d(35f), new Vector3d(0), objectInfo.getSpeed(),3.5f, objectInfo.getHp(), objectInfo.getAtk(), objectInfo.getRange()),id);
+//		Tank(IGeometry model,int coordinateSystemID, Vector3d size, Vector3d position, float moveSpeed,
+//		float moveAngle,float health ,float atk,float atkRang)
 //		new Tank(sdk.createGeometry(modelPath), coordinateSystemID,
 //				new Vector3d(3.5f), x, y, 3.5f, objectInfo.getSpeed(), objectInfo.getHp(), objectInfo.getAtk(), objectInfo.getRange());
 

@@ -81,7 +81,7 @@ public class Tank extends MovingObject implements Runnable{
 	}
 	
 	//--------------------------------construct end---------------------------------------------------//
-	public void attack(Object other){
+	public void attack(DefaultObject other){
 		if(other.getHealth()-atk<=0){
 			other.dead();
 			other.setHealth((float) 0.0);

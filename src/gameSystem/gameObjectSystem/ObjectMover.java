@@ -1,12 +1,14 @@
 package gameSystem.gameObjectSystem;
 
 import gameObject.tower.MovingObject;
-import gameObject.tower.Object;
+import gameObject.tower.DefaultObject;
 
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.Collection;
+
 
 import android.R.integer;
+import android.util.Log;
 
 import com.metaio.sdk.jni.BoundingBox;
 import com.metaio.sdk.jni.Vector3d;
@@ -16,11 +18,37 @@ public class ObjectMover implements Runnable{
 	
 	private IDType TYPE;
 	private DoubleArrayList<MovingObject> objects = null;
+	private Thread thread;
 	
 	
+	public ObjectMover(IDType tYPE, DoubleArrayList<MovingObject> objects) {
+		super();
+		TYPE = tYPE;
+		this.objects = objects;
+		thread = new Thread(this);
+		thread.start();
+	}
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+	
+		while(true){
+			int i=0;
+			try {
+				for(i=0; i<objects.size(TYPE);i++){
+					move(i);
+					Log.d("MOVER", "<<<<<<<moving++++++++++++++++++++++++++++");
+					thread.sleep(10);
+				}
+				thread.sleep(500);
+//			Log.d("MOVER", "<<<<<<<SLEEP>>>>>"+objects.size(TYPE)+"<<++++++++++++++++++++++++++++");		
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				Log.d("MOVER",e+ "<<<<<<<exception++++++++++++++++++++++++++++");		
+			}
+		}
 		
 	}
 	
@@ -56,8 +84,9 @@ public class ObjectMover implements Runnable{
 		
 		return cubePoint;
 	}
-	private Boolean collisionDetection(Object A,Object B){
+	private Boolean collisionDetection(DefaultObject A,DefaultObject B){
 		
+		if(A==null||B==null)return false;
 		BoundingBox AB= A.getModelBoundingBox();
 		BoundingBox BB= B.getModelBoundingBox();
 		ArrayList<Vector3d> cubeAsPoint = getCube(A.getModelBoundingBox());
@@ -65,6 +94,7 @@ public class ObjectMover implements Runnable{
 		boolean insideX = false;
 		boolean insideY = false;
 		boolean insideZ = false;
+		
 		for(Vector3d V :cubeAsPoint){
 			insideX = V.getX()<BB.getMax().getX()&&V.getX()>BB.getMin().getX();
 			insideY = V.getY()<BB.getMax().getY()&&V.getY()>BB.getMin().getY();
@@ -84,24 +114,33 @@ public class ObjectMover implements Runnable{
 		
 		return false;
 	}
-	private boolean move(MovingObject obj){
+	private boolean move(int index){
 		
 		int i=0;
-		float moveAngel = obj.getModelFaceAngle();
-		float moveSpeed = obj.getMoveSpeed();
-		Vector3d originePos = obj.getModelPosition();
-		obj.getModel().setTranslation( new Vector3d((moveSpeed*(float)Math.cos(moveAngel)), moveSpeed* (float)Math.sin(moveAngel), (float)0.0) );
+		float moveAngel = objects.seek(index, TYPE).getModelFaceAngle();
+		Log.d("MOVER", "<<<<<<<moveAngel :"+moveAngel +"+++++++++++");
+		float moveSpeed = objects.seek(index, TYPE).getMoveSpeed();
+		Log.d("MOVER", "<<<<<<<moveSpeed :"+moveSpeed +"+++++++++++");
+		Vector3d originePos = objects.seek(index, TYPE).getModelPosition();
+//		objects.seek(index, TYPE).getModel().setTranslation( new Vector3d((originePos .getX()+moveSpeed*(float)Math.cos(moveAngel)),originePos.getY()+ moveSpeed* (float)Math.sin(moveAngel), originePos.getZ()+(float)0.0) );
+		objects.seek(index, TYPE).move();
+		
+		Log.d("MOVER", "<<<<<<<"+objects.seek(index, TYPE).getModelPosition() .getX()+"+++++++++++++++++++++++++++++");
+		Log.d("MOVER", "<<<<<<<"+objects.seek(index, TYPE).getModelPosition() .getY()+"+++++++++++++++++++++++++++++");
 		if(TYPE == IDType.O){
-
-			if(collisionDetection(obj, objects.seek(0, IDType.E))||collisionDetection(obj, objects.seek(objects.getIndexOf(obj, IDType.O), IDType.O)))
-				obj.getModel().setTranslation(originePos);
+			
+			if(collisionDetection(objects.seek(index, IDType.O), objects.seek(0, IDType.E))||collisionDetection(objects.seek(index, IDType.O), objects.seek(index, IDType.O))){
+				objects.seek(index, IDType.O).getModel().setTranslation(originePos);
 				return false;
+			}
 			
 		}else if(TYPE == IDType.E){	
 			
-			if(collisionDetection(obj, objects.seek(0, IDType.O))||collisionDetection(obj, objects.seek(objects.getIndexOf(obj, IDType.E), IDType.E)))
-				obj.getModel().setTranslation(originePos);
+			if(collisionDetection(objects.seek(index, IDType.E), objects.seek(0, IDType.O))||collisionDetection(objects.seek(index, IDType.O), objects.seek(index, IDType.E))){
+				objects.seek(index, IDType.O).getModel().setTranslation(originePos);
 				return false;
+			}
+			
 		}
 		return true;
 	}

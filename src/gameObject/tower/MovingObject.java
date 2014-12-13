@@ -3,7 +3,7 @@ package gameObject.tower;
 import com.metaio.sdk.jni.IGeometry;
 import com.metaio.sdk.jni.Vector3d;
 
-public abstract class MovingObject extends Object {
+public abstract class MovingObject extends DefaultObject {
 	
 	protected float moveSpeed;
 	protected float moveAngle;

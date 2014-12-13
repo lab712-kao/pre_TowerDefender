@@ -9,14 +9,14 @@ import com.metaio.sdk.jni.MetaioSDK;
 import com.metaio.sdk.jni.Rotation;
 import com.metaio.sdk.jni.Vector3d;
 
-public abstract class Object {
+public abstract class DefaultObject {
 	protected IGeometry model = null;
 	protected float health;
 	protected float faceAngle;
 	protected Vector3d position;
 
 	//----------------------------------------- have face angle----------------------------------------------------------
-	public Object(IGeometry model,int coordinateSystemID ,Vector3d size,float x, float y, float health) {
+	public DefaultObject(IGeometry model,int coordinateSystemID ,Vector3d size,float x, float y, float health) {
 		// TODO Auto-generated constructor stub
 		this.model = model;
 		this.position = new Vector3d(x,y,0);
@@ -30,7 +30,7 @@ public abstract class Object {
 		
 	}
 	
-	public Object(IGeometry model,int coordinateSystemID ,Vector3d size,Vector3d position,float health) {
+	public DefaultObject(IGeometry model,int coordinateSystemID ,Vector3d size,Vector3d position,float health) {
 		// TODO Auto-generated constructor stub
 		this.model = model;
 		this.position = position;
@@ -44,7 +44,7 @@ public abstract class Object {
 		
 	}
 	//----------------------------------------- none face angle----------------------------------------------------------
-	public Object(IGeometry model ,int coordinateSystemID,Vector3d size,float x, float y, float health, float faceAngel) {
+	public DefaultObject(IGeometry model ,int coordinateSystemID,Vector3d size,float x, float y, float health, float faceAngel) {
 		this.model = model;
 		this.position = new Vector3d(x,y,0);
 		this.health = health;
@@ -56,7 +56,7 @@ public abstract class Object {
 		model.setRotation(new Rotation( faceAngle, 0.0f, 0.0f) );
 	}
 
-	public Object(IGeometry model ,int coordinateSystemID,Vector3d size,Vector3d position, float health, float faceAngel) {
+	public DefaultObject(IGeometry model ,int coordinateSystemID,Vector3d size,Vector3d position, float health, float faceAngel) {
 		this.model = model;
 		this.position = position;
 		this.health = health;

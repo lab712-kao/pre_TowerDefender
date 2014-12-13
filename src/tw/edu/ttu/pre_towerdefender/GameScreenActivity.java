@@ -1,36 +1,34 @@
 package tw.edu.ttu.pre_towerdefender;
-import gameObject.tower.IGObject;
-import gameObject.tower.IGSoldier;
+
 import gameObject.tower.Tank;
 import gameObject.tower.tower;
 import java.io.IOException;
-import java.util.concurrent.Executor;
+
 import gameSystem.gameObjectSystem.ObjectHandler;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
 
-import java.io.IOException;
+
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
-import com.metaio.sdk.jni.IMetaioSDKAndroid;
+
 import com.metaio.sdk.jni.IMetaioSDKCallback;
-import com.metaio.sdk.jni.Rotation;
-import com.metaio.sdk.jni.TrackingValues;
+
 import com.metaio.sdk.jni.TrackingValuesVector;
 import com.metaio.sdk.jni.Vector2di;
-import com.metaio.sdk.jni.Vector3d;
+
 import com.metaio.tools.SystemInfo;
 import com.metaio.tools.io.AssetsManager;
-import android.annotation.SuppressLint;
-import android.hardware.Camera;
+
+
 import android.hardware.Camera.CameraInfo;
-import android.hardware.Camera.Parameters;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 //ya
 
-public class GameScreenActivity extends ARViewActivity {
+public class GameScreenActivity extends ARViewActivity { 
 	private IGeometry tower_1, tower_2,tank;
 	
 	Tank tanks;
