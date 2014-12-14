@@ -29,17 +29,17 @@ public class ObjectHandler  {
 	private ObjectMover OBMO,OBME;
 	private IMetaioSDKAndroid sdk;
 	private MetaioSurfaceView view;
-	private Thread MVTO,MVTE;
+	private ObjectAttacker OBAO,OBAE;
 	
 	public ObjectHandler(IMetaioSDKAndroid sdk, MetaioSurfaceView view,ObjectInfoReader OIR) {
-//		OIR = new ObjectInfoReader();
 		this.OIR = OIR;
 		this.sdk = sdk;
 		this.view = view;
 		objects = new DoubleArrayList<MovingObject>();
 		OBMO = new ObjectMover(IDType.O,objects);
 		OBME = new ObjectMover(IDType.E,objects);
-		
+		OBAO = new ObjectAttacker(IDType.O, objects);
+		OBAE = new ObjectAttacker(IDType.E, objects);
 		
 		
 	}
