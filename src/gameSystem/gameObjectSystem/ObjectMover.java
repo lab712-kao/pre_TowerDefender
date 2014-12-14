@@ -116,32 +116,30 @@ public class ObjectMover implements Runnable{
 	}
 	private boolean move(int index){
 		
-		int i=0;
-		float moveAngel = objects.seek(index, TYPE).getModelFaceAngle();
-		Log.d("MOVER", "<<<<<<<moveAngel :"+moveAngel +"+++++++++++");
-		float moveSpeed = objects.seek(index, TYPE).getMoveSpeed();
-		Log.d("MOVER", "<<<<<<<moveSpeed :"+moveSpeed +"+++++++++++");
-		Vector3d originePos = objects.seek(index, TYPE).getModelPosition();
-//		objects.seek(index, TYPE).getModel().setTranslation( new Vector3d((originePos .getX()+moveSpeed*(float)Math.cos(moveAngel)),originePos.getY()+ moveSpeed* (float)Math.sin(moveAngel), originePos.getZ()+(float)0.0) );
+			
+		
 		objects.seek(index, TYPE).move();
 		
-		Log.d("MOVER", "<<<<<<<"+objects.seek(index, TYPE).getModelPosition() .getX()+"+++++++++++++++++++++++++++++");
-		Log.d("MOVER", "<<<<<<<"+objects.seek(index, TYPE).getModelPosition() .getY()+"+++++++++++++++++++++++++++++");
-		if(TYPE == IDType.O){
+	
+		if(collisionDetection(objects.seek(index,  TYPE), objects.seek(0,  TYPE==IDType.O?IDType.E:IDType.O))){
 			
-			if(collisionDetection(objects.seek(index, IDType.O), objects.seek(0, IDType.E))||collisionDetection(objects.seek(index, IDType.O), objects.seek(index, IDType.O))){
-				objects.seek(index, IDType.O).getModel().setTranslation(originePos);
-				return false;
+			objects.seek(index, IDType.O).back();
+			return false;
+			
+		}else{
+			for(int i=0; i<objects.size(TYPE);i++){
+				
+				if(collisionDetection(objects.seek(index, TYPE), objects.seek(index, TYPE))){
+					objects.seek(index, IDType.O).back();
+					return false;
+				}
+				
 			}
-			
-		}else if(TYPE == IDType.E){	
-			
-			if(collisionDetection(objects.seek(index, IDType.E), objects.seek(0, IDType.O))||collisionDetection(objects.seek(index, IDType.O), objects.seek(index, IDType.E))){
-				objects.seek(index, IDType.O).getModel().setTranslation(originePos);
-				return false;
-			}
-			
 		}
+			
+		
+			
+		
 		return true;
 	}
 
