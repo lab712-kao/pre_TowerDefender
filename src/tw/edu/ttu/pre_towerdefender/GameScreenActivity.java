@@ -4,9 +4,15 @@ import gameObject.tower.IGSoldier;
 import gameObject.tower.Tank;
 import gameObject.tower.tower;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executor;
 import gameSystem.gameObjectSystem.ObjectHandler;
+import gameviews.constants.Constant;
+
 import java.io.IOException;
+
+
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
@@ -17,32 +23,152 @@ import com.metaio.sdk.jni.TrackingValues;
 import com.metaio.sdk.jni.TrackingValuesVector;
 import com.metaio.sdk.jni.Vector2di;
 import com.metaio.sdk.jni.Vector3d;
+import com.metaio.tools.Layout;
 import com.metaio.tools.SystemInfo;
 import com.metaio.tools.io.AssetsManager;
+
+import android.R.bool;
+import android.R.layout;
 import android.annotation.SuppressLint;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
-//ya
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 
 public class GameScreenActivity extends ARViewActivity {
 	private IGeometry tower_1, tower_2,tank;
 	
 	Tank tanks;
 	private tower T;
-	private ObjectHandler OBHL;
+
+	public int bound = 100;
+	public int levelCost = 0;
+	public int cost = 0;
+	public int flag_bound = 1;
+	public ImageView num_hun, num_ten, num_one, 
+					 levelnum, levelnum_hun, levelnum_ten, levelnum_single,
+					 bound_hun;
+	public ImageButton levelUP;
+	
+	//private ObjectHandler OBHL;
 	private MetaioSDKCallbackHandler mMetaioHandler;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
+		mMetaioHandler = new MetaioSDKCallbackHandler();	
+		setAutoFocus();
 		
-		mMetaioHandler = new MetaioSDKCallbackHandler();		
+		
 	}
+	
+/* This parts for dynamic time present, 
+ * and use timer to control the blood of the armies*/
+	
+ 	private Timer timer = null;
+	Handler timerhandler = new Handler();
+
+	public void setAutoFocus(){
+
+		timer = new Timer(false);
+		
+		timer.schedule(new TimerTask(){
+			@Override
+			public void run(){
+				timerhandler.post(new Runnable(){
+					@Override
+					public void run() {
+						costAndBound();
+					}
+				});
+			}
+		}, 0, 100);//end of timer schedule
+	}
+	
+	public void timerStop(View v){
+		flag_bound ^= 1;		
+	}
+	public void costAndBound(){
+		
+		if(flag_bound == 1 && cost < bound)
+			cost += 1;
+		num_hun=(ImageView)findViewById(R.id.cost_hun);
+		num_ten=(ImageView)findViewById(R.id.cost_ten);
+		num_one=(ImageView)findViewById(R.id.cost_single);		
+		bound_hun=(ImageView)findViewById(R.id.bound_hun);
+		
+	 	
+	 	num_hun.setImageResource(Constant.images[cost/100%10]);	
+	 	num_ten.setImageResource(Constant.images[cost/10%10]);	
+	 	num_one.setImageResource(Constant.images[cost%10]);	
+	 	
+	 	bound_hun.setImageResource(Constant.images[bound/100%10]);		
+	}	
+	public void levelUpOnclick(View v){
+		if(cost - Constant.Levelup_cost[levelCost] >=0)
+			if(levelCost<7){
+			
+				levelnum=(ImageView)findViewById(R.id.levelnum);
+				levelnum_hun=(ImageView)findViewById(R.id.level_hun);
+				levelnum_single=(ImageView)findViewById(R.id.level_single);
+				levelnum_ten=(ImageView)findViewById(R.id.level_ten);
+				levelnum_single.setImageResource(R.drawable.num_zero);
+				bound+=100;
+				cost-=Constant.Levelup_cost[levelCost];
+				levelCost++;
+				showNum(Constant.levels,Constant.Levelup_cost[levelCost]/100%10, Constant.Levelup_cost[levelCost]/10%10, levelCost+1,
+						levelnum_hun, levelnum_ten, levelnum);
+			}
+			else{
+				levelnum_hun.setImageResource(0);
+				levelnum_ten.setImageResource(0);
+				levelnum_single.setImageResource(0);
+				levelUP=(ImageButton)findViewById(R.id.levelUP);
+				levelUP.setEnabled(false);	
+			}
+			
+	}
+	public void tankOnclick(View v){
+		if(cost - 100 >=0)
+		{
+			cost-=100;
+		}
+	}
+	public void domOnclick(View v){
+		if(cost - 50 >=0)
+		{
+			cost-=50;
+		}
+	}
+	
+	public void peanutsOnclick(View v){
+		if(cost - 150 >=0)
+		{
+			cost-=150;
+		}
+	}
+	public void showNum( int[] x , 
+						 int index_hun, int index_ten, int index_single, 
+						 ImageView v, ImageView v2, ImageView v3){		
+		v.setImageResource(x[index_hun]);
+		v2.setImageResource(x[index_ten]);
+		v3.setImageResource(x[index_single]);
+	}
+/* end of the part referent to the time and button*/
+	
+	
 	
 	@Override
 	protected void onDestroy() 
@@ -68,8 +194,8 @@ public class GameScreenActivity extends ARViewActivity {
 		
 	@Override
 	protected int getGUILayout() {
-		// TODO Auto-generated method stub
-		return 0;
+	
+		return R.layout.activity_game_screen;
 	}
 
 	@Override
@@ -79,6 +205,7 @@ public class GameScreenActivity extends ARViewActivity {
 		return mMetaioHandler;
 	}
 
+	
 	@Override
 	protected void loadContents() {
 		try {
@@ -89,7 +216,7 @@ public class GameScreenActivity extends ARViewActivity {
 		}
 		setRequestedOrientation(0);
 		
-		OBHL = new ObjectHandler(metaioSDK, mSurfaceView);
+		//OBHL = new ObjectHandler(metaioSDK, mSurfaceView);
 		
 		try {
 			String trackingConfigFile = AssetsManager.getAssetPath("TrackingData_MarkerlessFast.xml");
@@ -101,7 +228,7 @@ public class GameScreenActivity extends ARViewActivity {
 			String towerModel1 = AssetsManager.getAssetPath("saintriqT3DS.obj");
 			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
 			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-			tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
+			//tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -113,7 +240,7 @@ public class GameScreenActivity extends ARViewActivity {
 		// TODO Auto-generated method stub	
 		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
 		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-		OBHL.creatObject("qwe", tankModel,1, 0, 0);
+		//.creatObject("qwe", tankModel,1, 0, 0);
 		
 //		new Thread(tanks).start() ;
 //		this.mSurfaceView.queueEvent(new Runnable() {

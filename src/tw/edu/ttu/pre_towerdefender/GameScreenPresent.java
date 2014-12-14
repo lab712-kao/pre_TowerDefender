@@ -1,19 +1,31 @@
 package tw.edu.ttu.pre_towerdefender;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+
+
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.os.Handler;
+import android.os.Message;
+import android.widget.AbsoluteLayout;
+import android.widget.AbsoluteLayout.LayoutParams;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class GameScreenPresent extends Activity{
-	
-	public int bound = 200;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_game_screen);	
+		setContentView(R.layout.activity_game_screen);
+		
+		
 	}
+	
+	
+	
 	
 	
 	

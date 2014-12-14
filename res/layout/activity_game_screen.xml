@@ -1,12 +1,160 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/FrameLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/try3"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".GameScreenActivity" >
 
-</FrameLayout>
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:layout_x="2dp"
+        android:layout_y="130dp"
+        android:background="@null"
+        android:src="@drawable/button_domdom" 
+        android:onClick="domOnclick"/>
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="2dp"
+        android:layout_y="252dp"
+        android:background="@null"
+        android:src="@drawable/button_tank"
+        android:onClick="tankOnclick" />
+    
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="2dp"
+        android:layout_y="378dp"
+        android:background="@null"
+        android:src="@drawable/button_peanut" 
+        android:onClick="peanutsOnclick"/>
+
+    <ImageButton
+        android:id="@+id/levelUP"
+        android:layout_width="362dp"
+        android:layout_height="wrap_content"
+        android:layout_x="-35dp"
+        android:layout_y="-1dp"
+        android:background="@null"
+        android:onClick="levelUpOnclick"
+        android:src="@drawable/levelup" />
+
+    <ImageView
+        android:id="@+id/level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="105dp"
+        android:layout_y="5dp"
+        android:src="@drawable/leveltext" />
+
+    <ImageView
+        android:id="@+id/levelnum"
+        android:layout_width="18dp"
+        android:layout_height="37dp"
+        android:layout_x="169dp"
+        android:layout_y="-3dp"
+        android:src="@drawable/num_one" />
+
+    <ImageView
+        android:id="@+id/level_hun"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_x="200dp"
+        android:layout_y="3dp"
+        android:src="@drawable/num_zero" />
+
+    <ImageView
+        android:id="@+id/level_ten"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_x="220dp"
+        android:layout_y="3dp"
+        android:src="@drawable/num_five" />
+
+    <ImageView
+        android:id="@+id/level_single"
+        android:layout_width="20dp"
+        android:layout_height="26dp"
+        android:layout_x="240dp"
+        android:layout_y="3dp"
+        android:src="@drawable/num_zero" />
+
+    <ImageView
+        android:id="@+id/cost_hun"
+        android:layout_width="24dp"
+        android:layout_height="32dp"
+        android:layout_x="120dp"
+        android:layout_y="41dp"
+        android:src="@drawable/number_zero" />
+
+    <ImageView
+        android:id="@+id/cost_single"
+        android:layout_width="24dp"
+        android:layout_height="32dp"
+        android:layout_x="160dp"
+        android:layout_y="41dp"
+        android:src="@drawable/number_zero" />
+
+    <ImageView
+        android:id="@+id/cost_ten"
+        android:layout_width="24dp"
+        android:layout_height="32dp"
+        android:layout_x="140dp"
+        android:layout_y="41dp"
+        android:src="@drawable/number_zero" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="24dp"
+        android:layout_height="32dp"
+        android:layout_x="183dp"
+        android:layout_y="41dp"
+        android:src="@drawable/number_desh" />
+
+    <ImageView
+        android:id="@+id/bound_hun"
+        android:layout_width="24dp"
+        android:layout_height="32dp"
+        android:layout_x="203dp"
+        android:layout_y="41dp"
+        android:src="@drawable/number_zero" />
+
+    <ImageView
+        android:id="@+id/bound_ten"
+        android:layout_width="24dp"
+        android:layout_height="32dp"
+        android:layout_x="223dp"
+        android:layout_y="41dp"
+        android:src="@drawable/number_zero" />
+
+    <ImageView
+        android:id="@+id/bound_single"
+        android:layout_width="24dp"
+        android:layout_height="32dp"
+        android:layout_x="243dp"
+        android:layout_y="41dp"
+        android:src="@drawable/number_zero" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="900dp"
+        android:layout_y="-3dp"
+        android:src="@drawable/pause"
+        android:background="@null"
+        android:onClick="timerStop" />
+  
+</AbsoluteLayout>
