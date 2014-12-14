@@ -35,7 +35,10 @@ public class MainMenuView extends Activity{
 		}
 		
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 6d599d2851b62d93586158a59ac5fb78b0864450
 
 	public void gotoGameActivity(View v) {
 		
