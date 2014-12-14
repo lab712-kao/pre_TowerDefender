@@ -111,7 +111,8 @@ public class GameScreenActivity extends ARViewActivity {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			Log.d("moveStart",e+ "<<<<<<<exception++++++++++++++++++++++++++++");		
+			Log.d("moveStart", e
+					+ "<<<<<<<exception++++++++++++++++++++++++++++");
 			
 		}
 		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
