@@ -1,6 +1,7 @@
 package tw.edu.ttu.pre_towerdefender;
 
 import gameObject.tower.Tank;
+
 import gameObject.tower.tower;
 import java.io.IOException;
 
@@ -17,7 +18,6 @@ import java.io.IOException;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
 
 
-
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
@@ -26,6 +26,7 @@ import com.metaio.sdk.jni.IMetaioSDKCallback;
 
 import com.metaio.sdk.jni.TrackingValuesVector;
 import com.metaio.sdk.jni.Vector2di;
+
 
 import com.metaio.sdk.jni.Vector3d;
 import com.metaio.tools.Layout;
@@ -40,6 +41,7 @@ import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.media.MediaPlayer;
 
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -51,7 +53,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 
 public class GameScreenActivity extends ARViewActivity { 
 	private IGeometry tower_1, tower_2,tank;
@@ -261,8 +262,6 @@ public class GameScreenActivity extends ARViewActivity {
 			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
 			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
 
-			//tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
-
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -290,10 +289,11 @@ public class GameScreenActivity extends ARViewActivity {
 		// TODO Auto-generated method stub	
 		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
 
+
 		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
 		//.creatObject("qwe", tankModel,1, 0, 0);
 
-		
+
 //		new Thread(tanks).start() ;
 //		this.mSurfaceView.queueEvent(new Runnable() {
 //			
@@ -304,7 +304,7 @@ public class GameScreenActivity extends ARViewActivity {
 //				new Thread(new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20)).start();
 //			}
 //		});
-		
+
 //		tanks.move();
 	}
 	
