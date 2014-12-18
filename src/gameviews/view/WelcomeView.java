@@ -108,7 +108,7 @@ int currentAlpha=0;//目前的不透明值
 					}
 				}
 				
-				activity.gotoMainMenu();
+				//activity.gotoGameActivity();
 			}
 		}.start();
 		

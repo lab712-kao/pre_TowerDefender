@@ -151,10 +151,22 @@
         android:id="@+id/imageButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="900dp"
+        android:layout_x="890dp"
         android:layout_y="-3dp"
         android:src="@drawable/pause"
         android:background="@null"
         android:onClick="timerStop" />
+
+    <ImageButton
+        android:id="@+id/musicBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="890dp"
+        android:layout_y="78dp"
+        android:src="@drawable/button_sound_game"
+        android:background="@null"
+        android:onClick="MusicControl"  />
+
+   
   
 </AbsoluteLayout>

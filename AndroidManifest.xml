@@ -28,8 +28,9 @@
             </intent-filter>
         </activity>
          <activity
-            android:name="gameviews.MainMenuView">   	
+            android:name="tw.edu.ttu.gameviews.MainMenuView">   	
         </activity>
+       
         <activity
             android:name="tw.edu.ttu.pre_towerdefender.GameScreenActivity"
             android:label="@string/title_activity_game_screen" 

@@ -33,6 +33,7 @@ import android.annotation.SuppressLint;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -56,11 +57,12 @@ public class GameScreenActivity extends ARViewActivity {
 	public int levelCost = 0;
 	public int cost = 0;
 	public int flag_bound = 1;
+	public int playerChange = 0; 
 	public ImageView num_hun, num_ten, num_one, 
 					 levelnum, levelnum_hun, levelnum_ten, levelnum_single,
 					 bound_hun;
-	public ImageButton levelUP;
-	
+	public ImageButton levelUP, musicBtn;
+	private MediaPlayer Player;
 	//private ObjectHandler OBHL;
 	private MetaioSDKCallbackHandler mMetaioHandler;
 	
@@ -70,7 +72,9 @@ public class GameScreenActivity extends ARViewActivity {
 		super.onCreate(savedInstanceState);
 		mMetaioHandler = new MetaioSDKCallbackHandler();	
 		setAutoFocus();
-		
+		Player = new MediaPlayer();
+		Player = MediaPlayer.create(GameScreenActivity.this, R.raw.sample);
+		Player.start();
 		
 	}
 	
@@ -158,6 +162,27 @@ public class GameScreenActivity extends ARViewActivity {
 		{
 			cost-=150;
 		}
+	}
+	public void MusicControl(View v){
+		musicBtn = (ImageButton)findViewById(R.id.musicBtn);
+		if(playerChange == 0){
+			playerChange = 1;
+			musicBtn.setImageResource(R.drawable.button_soundoff_game);
+			Player.pause();
+		}
+		else{
+			playerChange = 0;
+			musicBtn.setImageResource(R.drawable.button_sound_game);
+			Player.start();
+			
+			
+		}
+			
+	}
+	public void MusicOff(View v){
+		
+			Player.pause();
+		
 	}
 	public void showNum( int[] x , 
 						 int index_hun, int index_ten, int index_single, 

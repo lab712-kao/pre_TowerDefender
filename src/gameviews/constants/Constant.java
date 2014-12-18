@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 package gameviews.constants;
 
@@ -9,45 +8,26 @@ public class Constant {
 	
 	
 	// for the screen settings
-=======
-package gameviews.constants;
-
-public class Constant {
+	public static int Screen_Width;//Ã¸âˆšÏ€Ä±â„¢âˆ«ÂºeÂ´â—Š
+	public static int Screen_Height;//Ã¸âˆšÏ€Ä±â„¢âˆ«âˆžâ„¢Â´â—Š
 	
->>>>>>> 6d599d2851b62d93586158a59ac5fb78b0864450
-	public static int Screen_Width;//¿Ã¹õªº¼e«×
-	public static int Screen_Height;//¿Ã¹õªº°ª«×
-	
-	public static float wRatio;//¾AÀ³¥þ¿Ã¹õªºÁY©ñ¤ñ¨Ò
+	public static float wRatio;//Ã¦AÂ¿â‰¥â€¢Ë›Ã¸âˆšÏ€Ä±â„¢âˆ«Â¡YÂ©Ã’Â§Ã’Â®â€œ
 	public static float hRatio;
 	
 	public static final float screenRatio800x480=1.667f;
 	public static final float screenRatio854x480=1.779f;
-<<<<<<< HEAD
 
-	public static final int screenWidthTest=800;//´ú¸Õ¾÷¿Ã¹õ¼e«×
-	public static final int screenHeightTest=480;//´ú¸Õ¾÷¿Ã¹õ°ª«×
+	public static final int screenWidthTest=800;//Â¥Ë™âˆâ€™Ã¦ËœÃ¸âˆšÏ€Ä±ÂºeÂ´â—Š
+	public static final int screenHeightTest=480;//Â¥Ë™âˆâ€™Ã¦ËœÃ¸âˆšÏ€Ä±âˆžâ„¢Â´â—Š
 
 	public static boolean isInitFlag = false;
 	public static void initConst(int screenWidth,int screenHeight)
 	{
 		
-=======
-	
-	//2D¬É­±¦Û¾AÀ³«Ì®Éªº±`¼Æ
-		public static final int screenWidthTest=800;//´ú¸Õ¾÷¿Ã¹õ¼e«×
-		public static final int screenHeightTest=480;//´ú¸Õ¾÷¿Ã¹õ°ª«×
-		
-	public static boolean isInitFlag = false;//¤èªk¬O§_³Q©I¥s¹Lªº¼Ð§Ó¦ì	
-	public static void initConst(int screenWidth,int screenHeight)
-	{
-		//­YªG¤èªk¤w¸g°õ¦æ¹L¡A«h¤£¦A°õ¦æ
->>>>>>> 6d599d2851b62d93586158a59ac5fb78b0864450
 		if(isInitFlag == true){
 			return;
 		}
 		
-<<<<<<< HEAD
 		Screen_Width=screenWidth;
 		Screen_Height=screenHeight;
 		wRatio=screenWidth/(float)screenWidthTest;
@@ -96,18 +76,5 @@ public class Constant {
 	public static int[] buttons_cost = new int[]{
 	  50,100,150,200
 	};
-=======
-		Screen_Width=screenWidth;//¿Ã¹õªº¤Ø¤o
-		Screen_Height=screenHeight;
-		//¾AÀ³¥þ¿Ã¹õªºÁY©ñ¤ñ¨Ò
-		wRatio=screenWidth/(float)screenWidthTest;
-		hRatio=screenHeight/(float)screenHeightTest;
-		
-		//¼Ð¥Ü¤èªk¤w³Q°õ¦æ¹L
-		isInitFlag = true;
-	}
-	
-	
->>>>>>> 6d599d2851b62d93586158a59ac5fb78b0864450
 
 }
