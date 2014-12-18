@@ -3,10 +3,11 @@ package gameObject.tower;
 import com.metaio.sdk.jni.IGeometry;
 import com.metaio.sdk.jni.Vector3d;
 
-public abstract class MovingObject extends Object {
+public abstract class MovingObject extends DefaultObject {
 	
 	protected float moveSpeed;
 	protected float moveAngle;
+	protected Vector3d lastTimePos = null;
 	
 	public MovingObject(IGeometry model, int coordinateSystemID, Vector3d size,float x, float y, float faceAngle,float moveSpeed,float moveAngle,float health) {
 		super(model, coordinateSystemID,size,x, y, health,faceAngle);
@@ -68,8 +69,14 @@ public abstract class MovingObject extends Object {
 		float speedX = (float)(moveSpeed*Math.sin(moveAngle)+position.getX());
 		float speedY = (float)(moveSpeed*Math.cos(moveAngle)+position.getY());
 		
+		lastTimePos =  new Vector3d(position.getX(), position.getY(), 0);
 		position = new Vector3d(speedX, speedY, 0);
 		model.setTranslation(position);
-
+	}
+	public void back(){
+		
+		if(lastTimePos != null){
+			model.setTranslation(lastTimePos);
+		}
 	}
 }

@@ -19,7 +19,15 @@ public class Tank extends MovingObject implements Runnable{
 	public void setAtk(float atk) {
 		this.atk = atk;
 	}
-//-----------------------------------have face angle----------------------------------------------------------------
+public float getAtkRange() {
+		return atkRange;
+	}
+
+	public void setAtkRange(float atkRange) {
+		this.atkRange = atkRange;
+	}
+
+	//-----------------------------------have face angle----------------------------------------------------------------
 	public Tank(IGeometry model,int coordinateSystemID, Vector3d size,float x, float y, float moveSpeed,
 			float moveAngle,float health ,float faceAngle, float atk, float atkRang) {
 		super(model, coordinateSystemID,size, x, y, moveSpeed, moveAngle, health);
@@ -81,7 +89,7 @@ public class Tank extends MovingObject implements Runnable{
 	}
 	
 	//--------------------------------construct end---------------------------------------------------//
-	public void attack(Object other){
+	public void attack(DefaultObject other){
 		if(other.getHealth()-atk<=0){
 			other.dead();
 			other.setHealth((float) 0.0);
