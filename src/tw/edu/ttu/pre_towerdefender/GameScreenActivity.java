@@ -70,9 +70,10 @@ public class GameScreenActivity extends ARViewActivity {
 					 bound_hun;
 	public ImageButton levelUP, musicBtn;
 	private MediaPlayer Player;
-	//private ObjectHandler OBHL;
+	private ObjectHandler OBHL;
 	private MetaioSDKCallbackHandler mMetaioHandler;
 	private ObjectInfoReader OIR = null;
+	private String tankModel = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -153,9 +154,10 @@ public class GameScreenActivity extends ARViewActivity {
 			
 	}
 	public void tankOnclick(View v){
-		if(cost - 100 >=0)
+		if(cost - 100 >=0 && tankModel!=null)
 		{
 			cost-=100;
+			OBHL.creatObject("tank",  tankModel , 1);
 		}
 	}
 	public void domOnclick(View v){
@@ -260,7 +262,8 @@ public class GameScreenActivity extends ARViewActivity {
 			
 			String towerModel1 = AssetsManager.getAssetPath("saintriqT3DS.obj");
 			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
-			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+			tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+			
 
 		}
 		catch (Exception e) {
@@ -279,7 +282,7 @@ public class GameScreenActivity extends ARViewActivity {
 		//Log.d("moveStart",tankModel + "<<<<<<<tankModel ++++++++++++++++++++++++++++");	
 		OBHL = new ObjectHandler(metaioSDK, mSurfaceView,OIR);
 		OBHL.creatObject("tank",  tankModel , 1);
-		Log.d("moveStart",OIR.getSoldierInfoByName("tank").getAtk()+"++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+//		Log.d("moveStart",OIR.getSoldierInfoByName("tank").getAtk()+"++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //		OIR.getSoldierInfoByName("soldier")
 		
 	}
@@ -288,24 +291,6 @@ public class GameScreenActivity extends ARViewActivity {
 	protected void onGeometryTouched(IGeometry geometry) {
 		// TODO Auto-generated method stub	
 		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
-
-
-		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-		//.creatObject("qwe", tankModel,1, 0, 0);
-
-
-//		new Thread(tanks).start() ;
-//		this.mSurfaceView.queueEvent(new Runnable() {
-//			
-//			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-//			@Override
-//			public void run() {
-//				// TODO Auto-generated method stub 
-//				new Thread(new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20)).start();
-//			}
-//		});
-
-//		tanks.move();
 	}
 	
 	final class MetaioSDKCallbackHandler extends IMetaioSDKCallback
