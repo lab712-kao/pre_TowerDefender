@@ -6,6 +6,7 @@ import gameObject.tower.DefaultObject;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import android.R.bool;
 import android.R.integer;
 import android.util.Log;
 
@@ -35,10 +36,11 @@ public class ObjectMover implements Runnable {
 			try {
 				for (i = 0; i < objects.size(TYPE); i++) {
 					move(i);
+					
 					Log.d("MOVER", "<<<<<<<moving++++++++++++++++++++++++++++");
 					thread.sleep(10);
 				}
-				thread.sleep(500);
+				thread.sleep(250);
 				// Log.d("MOVER",
 				// "<<<<<<<SLEEP>>>>>"+objects.size(TYPE)+"<<++++++++++++++++++++++++++++");
 			} catch (InterruptedException e) {
@@ -97,23 +99,23 @@ public class ObjectMover implements Runnable {
 		boolean insideZ = false;
 
 		for (Vector3d V : cubeAsPoint) {
-			insideX = V.getX() < BB.getMax().getX()
-					&& V.getX() > BB.getMin().getX();
-			insideY = V.getY() < BB.getMax().getY()
-					&& V.getY() > BB.getMin().getY();
-			insideZ = V.getZ() < BB.getMax().getZ()
-					&& V.getZ() > BB.getMin().getZ();
+			insideX = V.getX() <= BB.getMax().getX()
+					&& V.getX() >= BB.getMin().getX();
+			insideY = V.getY() <= BB.getMax().getY()
+					&& V.getY() >= BB.getMin().getY();
+			insideZ = V.getZ() <= BB.getMax().getZ()
+					&& V.getZ() >= BB.getMin().getZ();
 			if (insideX && insideY && insideZ) {
 				return true;
 			}
 		}
 		for (Vector3d V : cubeBsPoint) {
-			insideX = V.getX() < AB.getMax().getX()
-					&& V.getX() > AB.getMin().getX();
-			insideY = V.getY() < AB.getMax().getY()
-					&& V.getY() > AB.getMin().getY();
-			insideZ = V.getZ() < AB.getMax().getZ()
-					&& V.getZ() > AB.getMin().getZ();
+			insideX = V.getX() <= AB.getMax().getX()
+					&& V.getX() >= AB.getMin().getX();
+			insideY = V.getY() <= AB.getMax().getY()
+					&& V.getY() >= AB.getMin().getY();
+			insideZ = V.getZ() <= AB.getMax().getZ()
+					&& V.getZ() >= AB.getMin().getZ();
 			if (insideX && insideY && insideZ) {
 				return true;
 			}
@@ -125,27 +127,29 @@ public class ObjectMover implements Runnable {
 	private boolean move(int index) {
 
 		objects.seek(index, TYPE).move();
-
+		boolean succ=true;
 		// 兩邊對頭碰撞檢查
 		if (collisionDetection(objects.seek(index, TYPE),
 				objects.seek(0, TYPE == IDType.O ? IDType.E : IDType.O))) {
-
+			Log.d("moveStart", "collision!!!!!!!!!!!!!!!!!!!!!!!!!");
 			objects.seek(index, TYPE).back();
-			return false;
+			//return false;
+			succ = false;
 
 		} else {// 內部碰撞檢查
 			for (int i = 0; i < objects.size(TYPE); i++) {
 
-				if (collisionDetection(objects.seek(index, TYPE),
-						objects.seek(index, TYPE))) {
+				if (collisionDetection(objects.seek(index, TYPE), objects.seek(i, TYPE)) && i!=index) {
 					objects.seek(index, TYPE).back();
-					return false;
+					Log.d("moveStart", "collision!!!!!!!!!!!!!!!!!!!!!!!!!");
+					//return false;
+					succ = false;
 				}
 
 			}
 		}
 
-		return true;
+		return succ;
 	}
 
 }

@@ -252,6 +252,7 @@ public class GameScreenActivity extends ARViewActivity {
 		setRequestedOrientation(0);
 		
 		//OBHL = new ObjectHandler(metaioSDK, mSurfaceView);
+
 		
 		try {
 			String trackingConfigFile = AssetsManager.getAssetPath("TrackingData_MarkerlessFast.xml");
@@ -262,8 +263,7 @@ public class GameScreenActivity extends ARViewActivity {
 			
 			String towerModel1 = AssetsManager.getAssetPath("saintriqT3DS.obj");
 			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
-			tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-			
+			tankModel = AssetsManager.getAssetPath("tankNorm.obj");				
 
 		}
 		catch (Exception e) {

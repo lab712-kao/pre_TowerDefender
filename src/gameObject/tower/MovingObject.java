@@ -77,6 +77,8 @@ public abstract class MovingObject extends DefaultObject {
 		
 		if(lastTimePos != null){
 			model.setTranslation(lastTimePos);
+		}else{
+			
 		}
 	}
 }
