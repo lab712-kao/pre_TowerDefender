@@ -282,7 +282,7 @@ public class GameScreenActivity extends ARViewActivity {
 		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
 		//Log.d("moveStart",tankModel + "<<<<<<<tankModel ++++++++++++++++++++++++++++");	
 		OBHL = new ObjectHandler(metaioSDK, mSurfaceView,OIR);
-		OBHL.creatObject("tank",  tankModel , 1);
+//		OBHL.creatObject("tank",  tankModel , 1);
 //		Log.d("moveStart",OIR.getSoldierInfoByName("tank").getAtk()+"++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //		OIR.getSoldierInfoByName("soldier")
 		
