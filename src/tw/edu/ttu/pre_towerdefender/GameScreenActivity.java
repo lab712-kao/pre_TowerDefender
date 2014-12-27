@@ -70,7 +70,7 @@ public class GameScreenActivity extends ARViewActivity {
 					 bound_hun;
 	public ImageButton levelUP, musicBtn;
 	private MediaPlayer Player;
-	private ObjectHandler OBHL;
+	private ObjectHandler OBHL = null;
 	private MetaioSDKCallbackHandler mMetaioHandler;
 	private ObjectInfoReader OIR = null;
 	private String tankModel = null;
@@ -154,7 +154,7 @@ public class GameScreenActivity extends ARViewActivity {
 			
 	}
 	public void tankOnclick(View v){
-		if(cost - 100 >=0 && tankModel!=null)
+		if(cost - 100 >=0 && tankModel!=null&&OBHL!=null)
 		{
 			cost-=100;
 			OBHL.creatObject("tank",  tankModel , 1);
@@ -271,6 +271,9 @@ public class GameScreenActivity extends ARViewActivity {
 		}
 		try {
 			OIR = new ObjectInfoReader(this.getAssets().open("unitinfo.xml") );
+			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");	
+			OBHL = new ObjectHandler(metaioSDK, mSurfaceView, OIR);
+			OBHL.creatObject("tank",  tankModel , 1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -278,10 +281,7 @@ public class GameScreenActivity extends ARViewActivity {
 					+ "<<<<<<<exception++++++++++++++++++++++++++++");
 			
 		}
-		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-		//Log.d("moveStart",tankModel + "<<<<<<<tankModel ++++++++++++++++++++++++++++");	
-		OBHL = new ObjectHandler(metaioSDK, mSurfaceView,OIR);
-		OBHL.creatObject("tank",  tankModel , 1);
+		
 //		Log.d("moveStart",OIR.getSoldierInfoByName("tank").getAtk()+"++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //		OIR.getSoldierInfoByName("soldier")
 		
