@@ -24,6 +24,7 @@ import com.metaio.sdk.jni.IGeometry;
 
 import com.metaio.sdk.jni.IMetaioSDKCallback;
 
+import com.metaio.sdk.jni.TrackingValues;
 import com.metaio.sdk.jni.TrackingValuesVector;
 import com.metaio.sdk.jni.Vector2di;
 
@@ -300,13 +301,13 @@ public class GameScreenActivity extends ARViewActivity {
 		public void onTrackingEvent(TrackingValuesVector trackingValues)
 		{
 			//Log.d("pre-dd", "Tracking Event");
-//			for (int i=0; i<trackingValues.size(); i++)
-//			{
-//				final TrackingValues v = trackingValues.get(i);
+			for (int i=0; i<trackingValues.size(); i++)
+			{
+			final TrackingValues v = trackingValues.get(i);
 //				//MetaioDebug.log("Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
 //				//System.out.println("Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
-//				Log.d("pre-dd", "Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
-//			}
+				Log.d("pre-dd", "Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
+			}
 		}
 
 	}
