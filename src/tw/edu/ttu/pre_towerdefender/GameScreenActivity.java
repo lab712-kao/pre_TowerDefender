@@ -2,7 +2,7 @@ package tw.edu.ttu.pre_towerdefender;
 
 import gameObject.tower.IGObject;
 import gameObject.tower.IGSoldier;
-import gameObject.tower.Tank;
+import gameObject.tower.Soldier;
 import gameObject.tower.tower;
 import gameObject.tower.tower;
 import java.io.IOException;
@@ -64,7 +64,7 @@ import android.view.SurfaceHolder;
 public class GameScreenActivity extends ARViewActivity { 
 	private IGeometry tower_1, tower_2,tank;
 	
-	Tank tanks;
+	Soldier tanks;
 	private tower T;
 
 	public int bound = 100;
@@ -84,10 +84,10 @@ public class GameScreenActivity extends ARViewActivity {
 	private Vector3d enTran = new Vector3d();
 	private IGeometry enTower;
 	private IGeometry ttt;
-	private IGeometry aChess, bChess;
+	private IGeometry margin1, margin2;
 	private SurfaceHolder myHolder;
-	int[] trackingState = {0, 0, 0, 0};
-	private MyView drawView;
+	int[] trackingState = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};//10
+	private Button setEnTowerBtn, OKBtn;
 
 	
 	@Override
@@ -99,7 +99,6 @@ public class GameScreenActivity extends ARViewActivity {
 		Player = new MediaPlayer();
 		Player = MediaPlayer.create(GameScreenActivity.this, R.raw.sample);
 		Player.start();
-
 	}
 	
 /* This parts for dynamic time present, 
@@ -122,7 +121,7 @@ public class GameScreenActivity extends ARViewActivity {
 					}
 				});
 			}
-		}, 0, 100);//end of timer schedule
+		}, 0, 300);//end of timer schedule
 	}
 	
 	public void timerStop(View v){
@@ -130,8 +129,10 @@ public class GameScreenActivity extends ARViewActivity {
 	}
 	public void costAndBound(){
 		
-		if(flag_bound == 1 && cost < bound)
-			cost += 1;
+		if(flag_bound == 1 && cost < bound) {
+			cost += bound/75;
+			if(cost > bound) cost = cost - cost%bound;
+		}
 		num_hun=(ImageView)findViewById(R.id.cost_hun);
 		num_ten=(ImageView)findViewById(R.id.cost_ten);
 		num_one=(ImageView)findViewById(R.id.cost_single);		
@@ -254,6 +255,77 @@ public class GameScreenActivity extends ARViewActivity {
 		return mMetaioHandler;
 	}
 
+	private void setListener(){
+		
+		setEnTowerBtn = (Button)findViewById(R.id.setEnTowerBtn);
+		OKBtn = (Button)findViewById(R.id.OKBtn);
+		
+		setEnTowerBtn.setOnClickListener(new OnClickListener(){
+
+			private int randInt(int min, int max) {
+				Random rand = new Random();
+				
+				int randomNum = rand.nextInt((max - min) + 1) + min;
+
+			    return randomNum;
+			}
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Vector3d co1 = new Vector3d();
+				Vector3d co2 = new Vector3d();
+				if(trackingState[0] == 1 && trackingState[2] == 1 && trackingState[3] == 1) {
+					boolean success;
+					TrackingValues theRelation1 = new TrackingValues();
+					TrackingValues theRelation2 = new TrackingValues();
+					
+					success = metaioSDK.getCosRelation(1, 3, theRelation1);
+					if(success) {
+						co1 = theRelation1.getTranslation();
+					}
+					
+					success = metaioSDK.getCosRelation(1, 4, theRelation2);
+					if(success) {
+						co2 = theRelation2.getTranslation();
+					}
+					
+					//Log.d("pre-dd", "co1.x = " + co1.getX() + " co1.y = " + co1.getY());
+					//Log.d("pre-dd", "co2.x = " + co2.getX() + " co2.y = " + co2.getY());
+
+					//Log.d("pre-dd", "xx = " + (ran.nextInt(x) + tmpx) + "yy = " + (ran.nextInt(y) + tmpy));
+					
+					int maxX = 0, maxY = 0, minX = 0, minY = 0;
+					
+					if(co1.getX() > co2.getX()) {
+						maxX = (int)co1.getX();
+						minX = (int)co2.getX();
+					}
+					else {
+						maxX = (int)co2.getX();
+						minX = (int)co1.getX();
+					}
+					
+					if(co1.getY() > co2.getY()) {
+						maxY = (int)co1.getY();
+						minY = (int)co2.getY();
+					}
+					else {
+						maxY = (int)co2.getY();
+						minY = (int)co1.getY();
+					}
+					
+					enTran.setX(randInt(minX, maxX));
+					enTran.setY(randInt(minY, maxY));
+					enTran.setZ(0);
+					
+					Log.d("pre-dd", "x = " + enTran.getX() + " y = " + enTran.getY() + " z = " + enTran.getZ());
+					
+					enTower.setTranslation(enTran);
+					enTower.setVisible(true);
+					
+				}
+			}});
+	}
 	
 	@Override
 	protected void loadContents() {
@@ -282,32 +354,32 @@ public class GameScreenActivity extends ARViewActivity {
 			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
 			tankModel = AssetsManager.getAssetPath("tankNorm.obj");
 			String chessModel = AssetsManager.getAssetPath("chess.obj");
+			String marginPic = AssetsManager.getAssetPath("side.png");
 			//tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
 			
-			ttt = metaioSDK.createGeometry(tankModel);
+			ttt = metaioSDK.createGeometry(towerModel1);
 			ttt.setCoordinateSystemID(1);
-			ttt.setScale(35.0f);
+			ttt.setScale(10.0f);
 			ttt.setTranslation(new Vector3d(0, 0, 0));
 			ttt.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 			
 			enTower = metaioSDK.createGeometry(towerModel1);
 			enTower.setCoordinateSystemID(1);
-			enTower.setScale(20.5f);
+			enTower.setScale(10.0f);
 			enTower.setTranslation(new Vector3d(10, 10, 0));
 			enTower.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 			enTower.setVisible(false);
 			
-			aChess = metaioSDK.createGeometry(chessModel);
-			aChess.setCoordinateSystemID(3);
-			aChess.setScale(10.0f);
-			aChess.setTranslation(new Vector3d(0, 0, 0));
-			aChess.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
+
+			margin1 = metaioSDK.createGeometryFromImage(marginPic);
+			margin1.setCoordinateSystemID(3);
+			margin1.setScale(5.0f);
+			margin1.setTranslation(new Vector3d(0, 0, 0));
 			
-			bChess = metaioSDK.createGeometry(chessModel);
-			bChess.setCoordinateSystemID(4);
-			bChess.setScale(10.0f);
-			bChess.setTranslation(new Vector3d(0, 0, 0));
-			bChess.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
+			margin2 = metaioSDK.createGeometryFromImage(marginPic);
+			margin2.setCoordinateSystemID(4);
+			margin2.setScale(5.0f);
+			margin2.setTranslation(new Vector3d(0, 0, 0));
 			
 			//T = 
 		}
@@ -320,7 +392,7 @@ public class GameScreenActivity extends ARViewActivity {
 			OIR = new ObjectInfoReader(this.getAssets().open("unitinfo.xml") );
 			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");	
 			OBHL = new ObjectHandler(metaioSDK, mSurfaceView, OIR);
-			OBHL.creatObject("tank",  tankModel , 1);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -331,7 +403,7 @@ public class GameScreenActivity extends ARViewActivity {
 		
 //		Log.d("moveStart",OIR.getSoldierInfoByName("tank").getAtk()+"++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //		OIR.getSoldierInfoByName("soldier")
-		
+		setListener();
 	}
 
 	@Override
@@ -460,10 +532,7 @@ public class GameScreenActivity extends ARViewActivity {
 		@Override
 		public void onTrackingEvent(TrackingValuesVector trackingValues)
 		{
-			Vector3d co1 = new Vector3d();
-			Vector3d co2 = new Vector3d();
-			
-			new Thread(new testThread()).start();
+			//new Thread(new testThread()).start();
 			
 			//Log.d("pre-dd", "Tracking Event");
 
@@ -492,49 +561,6 @@ public class GameScreenActivity extends ARViewActivity {
 			
 			if(trackingState[2] == 1 && trackingState[3] == 1) {
 				Log.d("pre-dd", "map prepare");
-			}
-			
-			if(trackingState[0] == 1 && trackingState[2] == 1 && trackingState[3] == 1) {
-				boolean success;
-				Random ran = new Random();
-				TrackingValues theRelation1 = new TrackingValues();
-				TrackingValues theRelation2 = new TrackingValues();
-				int x, y;
-				
-				success = metaioSDK.getCosRelation(1, 3, theRelation1);
-				if(success) {
-					co1 = theRelation1.getTranslation();
-				}
-				
-				success = metaioSDK.getCosRelation(1, 4, theRelation2);
-				if(success) {
-					co2 = theRelation2.getTranslation();
-				}
-				
-				Log.d("pre-dd", "co1.x = " + co1.getX() + " co1.y = " + co1.getY());
-				Log.d("pre-dd", "co2.x = " + co2.getX() + " co2.y = " + co2.getY());
-				
-				x = (int) (co1.getX() - co2.getX());
-				if(x < 0) x *= -1;
-				
-				y = (int) (co1.getY() - co2.getY());
-				if(y < 0) y *= -1;
-				
-				int tmpx, tmpy;
-				
-				tmpx = (int) (co1.getX() < 0 ? co1.getX() : co2.getX());
-				tmpy = (int) (co1.getY() < 0 ? co1.getY() : co2.getY());
-				Log.d("pre-dd", "xx = " + (ran.nextInt(x) + tmpx) + "yy = " + (ran.nextInt(y) + tmpy));
-				
-				enTran.setX(ran.nextInt(x) + tmpx);
-				enTran.setY(ran.nextInt(y) + tmpy);
-				enTran.setZ(0);
-				
-				Log.d("pre-dd", "x = " + enTran.getX() + " y = " + enTran.getY() + " z = " + enTran.getZ());
-				
-				enTower.setTranslation(enTran);
-				enTower.setVisible(true);
-				
 			}
 			
 		}

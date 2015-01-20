@@ -31,11 +31,11 @@ public class ObjectInfoReader {
 	        parseXML(parser);
 
 		} catch (XmlPullParserException e) {
-        	Log.d("moveStart",e+ "<<<<<<<exception++++++++++++++++++++++++++++");			
+        	//Log.d("moveStart",e+ "<<<<<<<exception++++++++++++++++++++++++++++");			
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			Log.d("moveStart",e+ "<<<<<<<exception++++++++++++++++++++++++++++");			
+			//Log.d("moveStart",e+ "<<<<<<<exception++++++++++++++++++++++++++++");			
 			e.printStackTrace();
 		}
 	}
@@ -102,7 +102,7 @@ public class ObjectInfoReader {
                     name = parser.getName();
                     
                     /****************debug massege********************/
-                    Log.d("xmlParser", name);
+                    //Log.d("xmlParser", name);
                     /*************************************************/
                     
                     if (name.equalsIgnoreCase("soldier") && currentObjectInfo != null) {
@@ -114,9 +114,9 @@ public class ObjectInfoReader {
                     break;
                     
             }
-            Log.d("parseXML", "1" + (eventType == XmlPullParser.END_DOCUMENT));
+            //Log.d("parseXML", "1" + (eventType == XmlPullParser.END_DOCUMENT));
             eventType = parser.next();
-            Log.d("parseXML", "2" + (eventType == XmlPullParser.END_DOCUMENT));
+            //Log.d("parseXML", "2" + (eventType == XmlPullParser.END_DOCUMENT));
         }
 	}
 	
@@ -128,9 +128,9 @@ public class ObjectInfoReader {
 			if(matchObjectInfo.getName().equals(name)) {
 				return matchObjectInfo;
 			}
-			Log.d("objInfo", matchObjectInfo.getName() + " " +  matchObjectInfo.getAtk() + " " + matchObjectInfo.getHp() + " " + matchObjectInfo.getPath());
+			//Log.d("objInfo", matchObjectInfo.getName() + " " +  matchObjectInfo.getAtk() + " " + matchObjectInfo.getHp() + " " + matchObjectInfo.getPath());
 		}
-		Log.e("inf", "info not found");
+		//Log.e("inf", "info not found");
 		return null;
 	}
 	

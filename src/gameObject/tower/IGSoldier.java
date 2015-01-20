@@ -24,6 +24,4 @@ public class IGSoldier extends IGMoveObject{
 		this.atkRange = atkRange;
 	}
 
-	
-	
 }

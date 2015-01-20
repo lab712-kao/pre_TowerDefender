@@ -18,7 +18,7 @@ import android.os.Handler;
 import android.util.Log;
 import gameObject.tower.MovingObject;
 import gameObject.tower.DefaultObject;
-import gameObject.tower.Tank;
+import gameObject.tower.Soldier;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
 
 public class ObjectHandler  {
@@ -39,9 +39,7 @@ public class ObjectHandler  {
 		OBMO = new ObjectMover(IDType.O,objects);
 		OBME = new ObjectMover(IDType.E,objects);
 		OBAO = new ObjectAttacker(IDType.O, objects);
-		OBAE = new ObjectAttacker(IDType.E, objects);
-		
-		
+		OBAE = new ObjectAttacker(IDType.E, objects);	
 	}
 
 	public boolean creatObject(String name, String modelPath,
