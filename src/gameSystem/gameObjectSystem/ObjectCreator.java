@@ -1,19 +1,18 @@
 package gameSystem.gameObjectSystem;
 
 import gameObject.tower.MovingObject;
-
 import gameObject.tower.Tank;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfo;
-
 import android.util.Log;
-
 import com.metaio.sdk.jni.IGeometry;
+import java.util.Vector;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.Vector3d;
-
 public class ObjectCreator implements Runnable {
 
+
 	private DoubleArrayList<MovingObject> objects;
+
 	private IMetaioSDKAndroid sdk;
 	private int x, y;
 	private ObjectInfo objectInfo;

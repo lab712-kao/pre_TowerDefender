@@ -23,13 +23,11 @@ public class ObjectInfoReader {
 			pullParserFactory = XmlPullParserFactory.newInstance();
 			XmlPullParser parser = pullParserFactory.newPullParser();
 			String file = "res/xml/unitinfo.xml";
-			
 //			InputStream in_s = this.getClass().getClassLoader().getResourceAsStream(file);
 			in_s = ins;
+
 		    parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
 	        parser.setInput(in_s, null);
-	        
-
 	        parseXML(parser);
 
 		} catch (XmlPullParserException e) {
@@ -64,6 +62,7 @@ public class ObjectInfoReader {
                 	//Log.d("moveStart",  eventType +"<<<<<<<eventType++++++++++++++++++++++++++++");
                 	//Log.d("moveStart",  XmlPullParser.START_TAG+"<<START_TAG++++++++++++++++++++++++++++");
                     name = parser.getName();//get the name of tag
+                    
                     //Log.d("moveStart", name+"<<<name++++++++++++++++++++++++++++");
                     if(name.equals("soldier")) {//start of <soldier>
                     	currentObjectInfo = new ObjectInfo(TYPE.Soldier);
@@ -84,7 +83,7 @@ public class ObjectInfoReader {
                     			currentObjectInfo.setSpeed(Integer.parseInt(parser.nextText()));
                     		}else if(name.equals("modlePath")) {
                     			currentObjectInfo.setPath(parser.nextText());
-                    		}                                                 
+                    		}                                
                     	}
                     	else if(currentObjectInfo.getType() == TYPE.Tower){
                     		if(name.equals("towerName")) {
@@ -101,25 +100,37 @@ public class ObjectInfoReader {
 //                	Log.d("moveStart",  eventType +"<<<<<<<eventType++++++++++++++++++++++++++++");
 //                	Log.d("moveStart",  XmlPullParser.END_TAG+"<<END_TAG++++++++++++++++++++++++++++");
                     name = parser.getName();
+                    
+                    /****************debug massege********************/
+                    Log.d("xmlParser", name);
+                    /*************************************************/
+                    
                     if (name.equalsIgnoreCase("soldier") && currentObjectInfo != null) {
                     	SoldierInfo.add(currentObjectInfo);
                     }else if(name.equalsIgnoreCase("tower") && currentObjectInfo != null) {
                     	TowerInfo.add(currentObjectInfo);
                     }
+                    //currentObjectInfo = null;
                     break;
                     
             }
+            Log.d("parseXML", "1" + (eventType == XmlPullParser.END_DOCUMENT));
             eventType = parser.next();
+            Log.d("parseXML", "2" + (eventType == XmlPullParser.END_DOCUMENT));
         }
 	}
 	
 	public ObjectInfo getSoldierInfoByName(String name) {
 		
+		Log.d("objInfo", "in get Info" + SoldierInfo.size());
+		
 		for(ObjectInfo matchObjectInfo : SoldierInfo) {
 			if(matchObjectInfo.getName().equals(name)) {
 				return matchObjectInfo;
 			}
+			Log.d("objInfo", matchObjectInfo.getName() + " " +  matchObjectInfo.getAtk() + " " + matchObjectInfo.getHp() + " " + matchObjectInfo.getPath());
 		}
+		Log.e("inf", "info not found");
 		return null;
 	}
 	
