@@ -269,6 +269,8 @@ public class GameScreenActivity extends ARViewActivity {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
 		try {
 			OIR = new ObjectInfoReader(this.getAssets().open("unitinfo.xml") );
 			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");	
