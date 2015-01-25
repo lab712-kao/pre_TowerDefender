@@ -1,8 +1,8 @@
 <AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/FrameLayout1"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@drawable/try3"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -167,6 +167,20 @@
         android:background="@null"
         android:onClick="MusicControl"  />
 
-   
+    <Button
+        android:id="@+id/setEnTowerBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="438dp"
+        android:layout_y="28dp"
+        android:text="setEnTower" />
+
+    <Button
+        android:id="@+id/OKBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="436dp"
+        android:layout_y="86dp"
+        android:text="OK" />
   
 </AbsoluteLayout>
