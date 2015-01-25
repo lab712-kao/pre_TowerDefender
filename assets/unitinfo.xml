@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unitInfo>
+    <soldier>
+        <soldierName>tank</soldierName>
+        <soldierHealth>100</soldierHealth>
+        <soldierAttack>50</soldierAttack>
+        <soldierAtkRange>50</soldierAtkRange>
+        <soldierSpeed>40</soldierSpeed>
+        <modlePath>"i don't know"</modlePath>
+    </soldier>
+    <soldier>
+        <soldierName>moai</soldierName>
+        <soldierHealth>100</soldierHealth>
+        <soldierAttack>50</soldierAttack>
+        <soldierAtkRange>50</soldierAtkRange>
+        <soldierSpeed>40</soldierSpeed>
+        <modlePath>"i don't know"</modlePath>
+    </soldier>
+    <tower>
+        <towerName>QQTower</towerName>
+        <towerHealth>10</towerHealth>
+        <modlePath>"i don't know"</modlePath>
+    </tower>
+</unitInfo>

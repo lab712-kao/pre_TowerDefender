@@ -8,17 +8,20 @@ public class Constant {
 	
 	
 	// for the screen settings
+
 	public static int Screen_Width;//繪���晦��威榷織��	
 	public static int Screen_Height;//繪���晦��徉��Ⅹ氯�
 	
 	public static float wRatio;//疆A聶�乒��繪���晦��威︳穢�禮�簧��	
+
 	public static float hRatio;
 	
 	public static final float screenRatio800x480=1.667f;
 	public static final float screenRatio854x480=1.779f;
 
-	public static final int screenWidthTest=800;//瞼����疆�繪���授榷織��	
-	public static final int screenHeightTest=480;//瞼����疆�繪���晦��Ⅹ氯�
+	public static final int screenWidthTest=800;
+	public static final int screenHeightTest=480;
+
 
 	public static boolean isInitFlag = false;
 	public static void initConst(int screenWidth,int screenHeight)
