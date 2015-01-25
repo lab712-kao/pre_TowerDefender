@@ -18,15 +18,28 @@ public class ObjectMover implements Runnable {
 	private IDType TYPE;
 	private DoubleArrayList<MovingObject> objects = null;
 	private Thread thread;
-
+	
+	private PathPlaner pathPlaner;
+	private ArrayList<Vector3d> path;
+	
 	public ObjectMover(IDType tYPE, DoubleArrayList<MovingObject> objects) {
 		super();
 		TYPE = tYPE;
 		this.objects = objects;
+		pathPlaner = new PathPlaner(new Vector3d(0), new Vector3d((float)100.0, (float)100.0, (float)0.0));
+		path = pathPlaner.getPath();
 		thread = new Thread(this);
 		thread.start();
 	}
-
+	public ObjectMover(IDType tYPE, DoubleArrayList<MovingObject> objects,Vector3d begin,Vector3d goal) {
+		super();
+		TYPE = tYPE;
+		this.objects = objects;
+		pathPlaner = new PathPlaner(begin, goal);
+		thread = new Thread(this);
+		thread.start();
+	}
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

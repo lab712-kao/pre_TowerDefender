@@ -55,10 +55,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GameScreenActivity extends ARViewActivity { 
-	private IGeometry tower_1, tower_2,tank;
 	
 	Tank tanks;
-	private tower T;
 
 	public int bound = 100;
 	public int levelCost = 0;
