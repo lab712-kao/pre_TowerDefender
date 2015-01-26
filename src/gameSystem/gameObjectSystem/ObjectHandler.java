@@ -1,24 +1,9 @@
 package gameSystem.gameObjectSystem;
 
-import java.util.Vector;
-
-import junit.framework.Test;
-
-import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioSurfaceView;
-import com.metaio.sdk.jni.IGeometry;
-import com.metaio.sdk.jni.IMetaioSDK;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
-import com.metaio.sdk.jni.Vector3d;
 
-import android.R.integer;
-import android.R.string;
-import android.graphics.drawable.Drawable.Callback;
-import android.os.Handler;
-import android.util.Log;
 import gameObject.tower.MovingObject;
-import gameObject.tower.DefaultObject;
-import gameObject.tower.Soldier;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
 
 public class ObjectHandler  {

@@ -73,6 +73,11 @@ public abstract class MovingObject extends DefaultObject {
 		position = new Vector3d(speedX, speedY, 0);
 		model.setTranslation(position);
 	}
+	public void moveToXY(float x,float y){
+		lastTimePos =  new Vector3d(position.getX(), position.getY(), 0);
+		position = new Vector3d(x, y, 0);
+		model.setTranslation(position);
+	}
 	public void back(){
 		
 		if(lastTimePos != null){

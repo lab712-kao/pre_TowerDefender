@@ -1,52 +1,43 @@
 package tw.edu.ttu.pre_towerdefender;
 
-import gameObject.tower.IGObject;
-import gameObject.tower.IGSoldier;
+
 import gameObject.tower.Soldier;
-import gameObject.tower.tower;
-import gameObject.tower.tower;
+
 import java.io.IOException;
 import java.util.Random;
-import java.util.concurrent.Executor;
+
 import gameSystem.gameObjectSystem.ObjectHandler;
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executor;
-import gameSystem.gameObjectSystem.ObjectHandler;
 import gameviews.constants.Constant;
-import java.io.IOException;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
-import com.metaio.sdk.jni.IMetaioSDK;
-import com.metaio.sdk.jni.IMetaioSDKAndroid;
+
 import com.metaio.sdk.jni.IMetaioSDKCallback;
 import com.metaio.sdk.jni.Rotation;
 import com.metaio.sdk.jni.TrackingValues;
 import com.metaio.sdk.jni.TrackingValuesVector;
-import com.metaio.sdk.jni.Vector2d;
+
 import com.metaio.sdk.jni.Vector2di;
 import com.metaio.sdk.jni.Vector3d;
-import com.metaio.tools.Layout;
+
+
 import com.metaio.tools.SystemInfo;
 import com.metaio.tools.io.AssetsManager;
-import android.R.bool;
-import android.R.layout;
-import android.annotation.SuppressLint;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
-import android.hardware.Camera.Parameters;
+
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -54,18 +45,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import android.view.SurfaceView;
-import android.view.SurfaceHolder.Callback;
-//ya
+
 import android.view.SurfaceHolder;
 
 public class GameScreenActivity extends ARViewActivity { 
-	private IGeometry tower_1, tower_2,tank;
-	
-	Soldier tanks;
-	private tower T;
+
+	private Soldier tanks;
 
 	public int bound = 100;
 	public int levelCost = 0;
@@ -239,7 +226,9 @@ public class GameScreenActivity extends ARViewActivity {
 	protected void startCamera() {
 		// Select the back facing camera by default
 		final int cameraIndex = SystemInfo.getCameraIndex(CameraInfo.CAMERA_FACING_BACK);
-		this.mCameraResolution = metaioSDK.startCamera(cameraIndex, 1280, 760);
+		this.metaioSDK.startCamera(cameraIndex, 1280, 760);
+
+		
 	}
 		
 	@Override
@@ -289,10 +278,6 @@ public class GameScreenActivity extends ARViewActivity {
 						co2 = theRelation2.getTranslation();
 					}
 					
-					//Log.d("pre-dd", "co1.x = " + co1.getX() + " co1.y = " + co1.getY());
-					//Log.d("pre-dd", "co2.x = " + co2.getX() + " co2.y = " + co2.getY());
-
-					//Log.d("pre-dd", "xx = " + (ran.nextInt(x) + tmpx) + "yy = " + (ran.nextInt(y) + tmpy));
 					
 					int maxX = 0, maxY = 0, minX = 0, minY = 0;
 					
@@ -422,53 +407,11 @@ public class GameScreenActivity extends ARViewActivity {
 		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
 		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
 		OBHL.creatObject("tank", tankModel,1, 0, 0);
-		
-//		new Thread(tanks).start() ;
-//		this.mSurfaceView.queueEvent(new Runnable() {
-//			
-//			String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-//			@Override
-//			public void run() {
-//				// TODO Auto-generated method stub 
-//				new Thread(new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20)).start();
-//			}
-//		});
-
-//		tanks.move();
 	}
 	
 	@Override
 	public void onDrawFrame() {
 		super.onDrawFrame();
-		
-		/*
-		Vector2d a, b;
-		Paint paint = new Paint();
-		Canvas canvas = new Canvas();
-		try {
-			canvas = myHolder.lockCanvas();
-			a = metaioSDK.getScreenCoordinatesFrom3DPosition(3, new Vector3d(0, 0, 0));
-			b = metaioSDK.getScreenCoordinatesFrom3DPosition(4, new Vector3d(0, 0, 0));
-			
-			paint.setColor(0x00ff00ff);
-			paint.setAntiAlias(true);
-			paint.setStyle(Paint.Style.STROKE);
-	        
-	//		Log.i("screen point", "a = " + a.getX() + ", " + a.getY());
-	//		Log.i("screen point", "b = " + b.getX() + ", " + b.getY());
-			
-			canvas.drawLine(a.getX(), a.getY(), a.getX(), b.getY(), paint);
-			canvas.drawLine(a.getX(), a.getY(), b.getX(), a.getY(), paint);
-			canvas.drawLine(b.getX(), b.getY(), a.getX(), b.getY(), paint);
-			canvas.drawLine(b.getX(), b.getY(), b.getX(), a.getY(), paint);
-			
-			//this.mSurfaceView.draw(canvas);
-			myHolder.unlockCanvasAndPost(canvas);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		*/
 	}
 	
 	@Override
@@ -476,64 +419,6 @@ public class GameScreenActivity extends ARViewActivity {
 		super.onSurfaceCreated();
 		myHolder = this.mSurfaceView.getHolder();
 		Log.d("surface create", "createeeeeeeeeeeeeeeeee");
-		/*;
-		myHolder.addCallback(this.mSurfaceView);
-		
-		myHolder = this.mSurfaceView.getHolder()
-		Log.d("onSC", "onSCCCC");
-		
-		Thread testThread = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				int i = 0;
-				while(i < 5000) {
-					try {
-						Canvas cc = myHolder.lockCanvas();
-						Paint paint = new Paint();
-					
-						paint.setColor(0x00ff00ff);
-						paint.setAntiAlias(true);
-						paint.setStyle(Paint.Style.STROKE);
-					
-						if(cc == null) Log.d("canvas", "canvas null");
-						else {
-							cc.drawCircle(300, 300, 50, paint);
-							myHolder.unlockCanvasAndPost(cc);
-						}
-						
-						try {
-							Thread.sleep(50);
-						}
-						catch(Exception e) {
-							e.printStackTrace();
-						}
-					}
-					catch(Exception e) {
-						e.printStackTrace();
-					}
-					
-					i++;
-				}
-			}
-			
-		});
-		
-		testThread.start();
-		
-		Canvas cc = myHolder.lockCanvas();
-		Paint paint = new Paint();
-		
-		paint.setColor(0x00ff00ff);
-		paint.setAntiAlias(true);
-		paint.setStyle(Paint.Style.STROKE);
-		
-		if(cc == null) Log.d("canvas", "canvas null");
-		else {
-			cc.drawCircle(300, 300, 50, paint);
-			myHolder.unlockCanvasAndPost(cc);
-		}*/
 	}
 	
 	final class MetaioSDKCallbackHandler extends IMetaioSDKCallback
@@ -542,23 +427,9 @@ public class GameScreenActivity extends ARViewActivity {
 		@Override
 		public void onTrackingEvent(TrackingValuesVector trackingValues)
 		{
-			//new Thread(new testThread()).start();
-			
-			//Log.d("pre-dd", "Tracking Event");
-
-//			for (int i=0; i<trackingValues.size(); i++)
-//			{
-//				final TrackingValues v = trackingValues.get(i);
-//				//MetaioDebug.log("Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
-//				//System.out.println("Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
-//				Log.d("pre-dd", "Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
-//			}
-
 			for (int i=0; i<trackingValues.size(); i++)
 			{
 				final TrackingValues v = trackingValues.get(i);
-				//MetaioDebug.log("Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
-				//System.out.println("Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
 				Log.d("pre-dd", "Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
 				if(v.getState() == com.metaio.sdk.jni.ETRACKING_STATE.ETS_FOUND) {
 					Log.d("pre-dd", "found found");
@@ -640,5 +511,5 @@ public class GameScreenActivity extends ARViewActivity {
         }  
           
     }  
-	//button event(call handler new igometry <- this )
+	
 }
