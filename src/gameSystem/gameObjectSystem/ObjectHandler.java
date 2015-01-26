@@ -82,4 +82,7 @@ public class ObjectHandler  {
 
 	}
 
+	public void setEnermyTowerPosition(Vector3d enTower) {
+		OBMO.setEnTowerPos(enTower);
+	}
 }

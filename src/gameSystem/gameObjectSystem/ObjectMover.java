@@ -18,6 +18,7 @@ public class ObjectMover implements Runnable {
 	private IDType TYPE;
 	private DoubleArrayList<MovingObject> objects = null;
 	private Thread thread;
+	private Vector3d enTowerPosition = new Vector3d(0, -1, 0);
 
 	public ObjectMover(IDType tYPE, DoubleArrayList<MovingObject> objects) {
 		super();
@@ -38,9 +39,9 @@ public class ObjectMover implements Runnable {
 					move(i);
 					
 					//Log.d("MOVER", "<<<<<<<moving++++++++++++++++++++++++++++");
-					thread.sleep(10);
+					Thread.sleep(10);
 				}
-				thread.sleep(250);
+				Thread.sleep(250);
 				// Log.d("MOVER",
 				// "<<<<<<<SLEEP>>>>>"+objects.size(TYPE)+"<<++++++++++++++++++++++++++++");
 			} catch (InterruptedException e) {
@@ -63,6 +64,10 @@ public class ObjectMover implements Runnable {
 
 	public void setObjects(DoubleArrayList<MovingObject> objects) {
 		this.objects = objects;
+	}
+	
+	public void setEnTowerPos(Vector3d enPos) {
+		enTowerPosition = enPos;
 	}
 
 	private ArrayList getCube(BoundingBox box) {
@@ -124,8 +129,18 @@ public class ObjectMover implements Runnable {
 		return false;
 	}
 
+	private float culAngle(Vector3d a, Vector3d b) {
+	
+		//Math.atan2(b.getY() - a.getY(), b.getX() - a.getX());
+		return (float)Math.atan2(b.getY() - a.getY(), b.getX() - a.getX());
+	}
+	
 	private boolean move(int index) {
-
+		
+		Vector3d pos = objects.seek(index, TYPE).getModelPosition();
+		Log.d("mover-p", "x = " + pos.getX() + ", y = " + pos.getY());
+		Log.d("mover", "x = " + enTowerPosition.getX() + ", y = " + enTowerPosition.getY());
+		objects.seek(index, TYPE).setModelFaceAngle(culAngle(pos, enTowerPosition));
 		objects.seek(index, TYPE).move();
 		boolean succ=true;
 		// �拚�撠蝣唳�瑼Ｘ
