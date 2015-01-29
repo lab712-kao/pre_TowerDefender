@@ -10,7 +10,7 @@ import com.metaio.sdk.jni.Vector3d;
 public class PathPlaner implements Comparator<Vector3d>{
 	private ArrayList<Vector3d> path;
 	private ArrayList<Vector3d> passPos;
-	private final float avaLength = (float) 4.0;
+	private final float avaLength = (float) 5.0;
 	private Vector3d goal,begin;
 	
 	public PathPlaner( Vector3d begin,Vector3d goal){
@@ -30,17 +30,29 @@ public class PathPlaner implements Comparator<Vector3d>{
 		calPath();
 	}
 	public void  removePassPos(Vector3d pos) {
-		if(path.size()>2)
-			path.remove(findNearlyPos(pos));
-		else 
-			return;
+		passPos.remove(findNearlyPos(pos));
+		calPath();
 	}
 	public Vector3d getNextPos(Vector3d nowPos){
-		return findNearlyPos(nowPos);
+		Vector3d nextPos = goal;
+		
+		float walked = calDistance(begin, nowPos), len = calDistance(begin, goal);
+		for(Vector3d tmp:passPos){
+			if(getProjectionOnBasicPath(tmp, len)>walked)
+				return tmp;
+		}
+		
+		return nextPos;
+	}
+	private float getProjectionOnBasicPath(Vector3d pos,float len){
+		double px = pos.getX()-begin.getX(), gx = goal.getX()-begin.getX();
+		double py = pos.getY()-begin.getY(), gy = goal.getY()-begin.getY();
+		
+		return len * (float) Math.cos(Math.atan2(gy, gx)-Math.atan2(py, px));
 	}
 	private Vector3d findNearlyPos(Vector3d pos){
 		Vector3d nearPos = goal;
-		for(Vector3d tmp:path){
+		for(Vector3d tmp:passPos){
 			if(calDistance(nearPos, pos)>calDistance(tmp, pos))
 				nearPos = tmp;
 		}
