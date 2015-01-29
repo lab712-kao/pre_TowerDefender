@@ -38,10 +38,13 @@ public class PathPlaner implements Comparator<Vector3d>{
 		System.out.println(arr.length);
 		if(arr.length!=0)
 			for (Vector3d tmp : arr ) {
-				fillPos(tmp);
+				//fillPos(tmp);
+				path.add(tmp);
 			}
-		fillPos(goal);
+//		fillPos(goal);
+		path.add(goal);
 	}
+	@Deprecated
 	private void fillPos(Vector3d end){
 		
 		
