@@ -25,11 +25,27 @@ public class PathPlaner implements Comparator<Vector3d>{
 		return path;
 	}
 	
-	public void addPassPos(Vector3d Pos){
-		passPos.add(Pos);
+	public void addPassPos(Vector3d pos){
+		passPos.add(pos);
 		calPath();
 	}
-	
+	public void  removePassPos(Vector3d pos) {
+		if(path.size()>2)
+			path.remove(findNearlyPos(pos));
+		else 
+			return;
+	}
+	public Vector3d getNextPos(Vector3d nowPos){
+		return findNearlyPos(nowPos);
+	}
+	private Vector3d findNearlyPos(Vector3d pos){
+		Vector3d nearPos = goal;
+		for(Vector3d tmp:path){
+			if(calDistance(nearPos, pos)>calDistance(tmp, pos))
+				nearPos = tmp;
+		}
+		return nearPos;
+	}
 	private void calPath(){
 		path.clear();
 		path.add(begin);

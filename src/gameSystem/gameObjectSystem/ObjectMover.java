@@ -71,7 +71,12 @@ public class ObjectMover implements Runnable {
 	public void setObjects(DoubleArrayList<MovingObject> objects) {
 		this.objects = objects;
 	}
-
+	public void addPosition(Vector3d pos){
+		pathPlaner.addPassPos(pos);
+	}
+	public void reovePosition(Vector3d pos){
+		pathPlaner.removePassPos(pos);
+	}
 	private ArrayList getCube(BoundingBox box) {
 
 		ArrayList<Vector3d> cubePoint = new ArrayList<Vector3d>();
@@ -135,7 +140,7 @@ public class ObjectMover implements Runnable {
 
 		objects.seek(index, TYPE).move();
 		boolean succ=true;
-		// �拚�撠蝣唳�瑼Ｘ
+		
 		if (collisionDetection(objects.seek(index, TYPE),
 				objects.seek(0, TYPE == IDType.O ? IDType.E : IDType.O))) {
 			//Log.d("moveStart", "collision!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -143,7 +148,7 @@ public class ObjectMover implements Runnable {
 			//return false;
 			succ = false;
 
-		} else {// �折蝣唳�瑼Ｘ
+		} else {
 			for (int i = 0; i < objects.size(TYPE); i++) {
 
 				if (collisionDetection(objects.seek(index, TYPE), objects.seek(i, TYPE)) && i!=index) {
