@@ -66,11 +66,16 @@ public abstract class MovingObject extends DefaultObject {
 	}
 	
 	public void move() {
-		float speedX = (float)(moveSpeed*Math.sin(moveAngle)+position.getX());
-		float speedY = (float)(moveSpeed*Math.cos(moveAngle)+position.getY());
+		float speedX = (float)(moveSpeed*Math.sin(faceAngle)+position.getX());
+		float speedY = (float)(moveSpeed*Math.cos(faceAngle)+position.getY());
 		
 		lastTimePos =  new Vector3d(position.getX(), position.getY(), 0);
 		position = new Vector3d(speedX, speedY, 0);
+		model.setTranslation(position);
+	}
+	public void moveToXY(float x,float y){
+		lastTimePos =  new Vector3d(position.getX(), position.getY(), 0);
+		position = new Vector3d(x, y, 0);
 		model.setTranslation(position);
 	}
 	public void back(){

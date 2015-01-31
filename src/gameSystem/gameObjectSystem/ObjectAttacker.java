@@ -10,7 +10,7 @@ import android.R.integer;
 import android.util.Log;
 import gameObject.tower.DefaultObject;
 import gameObject.tower.MovingObject;
-import gameObject.tower.Tank;
+import gameObject.tower.Soldier;
 
 public class ObjectAttacker implements Runnable {
 
@@ -76,7 +76,7 @@ public class ObjectAttacker implements Runnable {
 	}
 	private boolean checkAttackRange(MovingObject attacker, DefaultObject victims) {
 		
-		float attackRange = ((Tank)attacker).getAtkRange();
+		float attackRange = ((Soldier)attacker).getAtkRange();
 		ArrayList<Vector3d> cubePoint = getCube(victims.getModelBoundingBox());
 		
 		Vector3d attackerPos = attacker.getModelPosition();
@@ -94,11 +94,11 @@ public class ObjectAttacker implements Runnable {
 	private void attack(int index) {
 		IDType otherIdType = type == IDType.O ? IDType.E : IDType.O;
 
-		if (objects.seek(index, type).getClass() == Tank.class) {
+		if (objects.seek(index, type).getClass() == Soldier.class) {
 			for (int i = 0; i < objects.size(otherIdType); i++) {
 				if (checkAttackRange(objects.seek(index, type),
 						objects.seek(i, otherIdType))) {
-					((Tank) objects.seek(index, type)).attack(objects.seek(i,
+					((Soldier) objects.seek(index, type)).attack(objects.seek(i,
 							otherIdType));
 				}
 			}

@@ -4,12 +4,6 @@ import gameObject.tower.MovingObject;
 import gameObject.tower.DefaultObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
-
-import android.R.bool;
-import android.R.integer;
-import android.util.Log;
-
 import com.metaio.sdk.jni.BoundingBox;
 import com.metaio.sdk.jni.Vector3d;
 
@@ -18,15 +12,28 @@ public class ObjectMover implements Runnable {
 	private IDType TYPE;
 	private DoubleArrayList<MovingObject> objects = null;
 	private Thread thread;
-
+	
+	private PathPlaner pathPlaner;
+	private ArrayList<Vector3d> path;
+	
 	public ObjectMover(IDType tYPE, DoubleArrayList<MovingObject> objects) {
 		super();
 		TYPE = tYPE;
 		this.objects = objects;
+		pathPlaner = new PathPlaner(new Vector3d(0), new Vector3d((float)100.0, (float)100.0, (float)0.0));
+		path = pathPlaner.getPath();
 		thread = new Thread(this);
 		thread.start();
 	}
-
+	public ObjectMover(IDType tYPE, DoubleArrayList<MovingObject> objects,Vector3d begin,Vector3d goal) {
+		super();
+		TYPE = tYPE;
+		this.objects = objects;
+		pathPlaner = new PathPlaner(begin, goal);
+		thread = new Thread(this);
+		thread.start();
+	}
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -37,7 +44,7 @@ public class ObjectMover implements Runnable {
 				for (i = 0; i < objects.size(TYPE); i++) {
 					move(i);
 					
-					Log.d("MOVER", "<<<<<<<moving++++++++++++++++++++++++++++");
+					//Log.d("MOVER", "<<<<<<<moving++++++++++++++++++++++++++++");
 					thread.sleep(10);
 				}
 				thread.sleep(250);
@@ -46,8 +53,8 @@ public class ObjectMover implements Runnable {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				Log.d("MOVER", e
-						+ "<<<<<<<exception++++++++++++++++++++++++++++");
+				//Log.d("MOVER", e
+				//		+ "<<<<<<<exception++++++++++++++++++++++++++++");
 			}
 		}
 
@@ -128,20 +135,20 @@ public class ObjectMover implements Runnable {
 
 		objects.seek(index, TYPE).move();
 		boolean succ=true;
-		// 兩邊對頭碰撞檢查
+		// �拚�撠蝣唳�瑼Ｘ
 		if (collisionDetection(objects.seek(index, TYPE),
 				objects.seek(0, TYPE == IDType.O ? IDType.E : IDType.O))) {
-			Log.d("moveStart", "collision!!!!!!!!!!!!!!!!!!!!!!!!!");
+			//Log.d("moveStart", "collision!!!!!!!!!!!!!!!!!!!!!!!!!");
 			objects.seek(index, TYPE).back();
 			//return false;
 			succ = false;
 
-		} else {// 內部碰撞檢查
+		} else {// �折蝣唳�瑼Ｘ
 			for (int i = 0; i < objects.size(TYPE); i++) {
 
 				if (collisionDetection(objects.seek(index, TYPE), objects.seek(i, TYPE)) && i!=index) {
 					objects.seek(index, TYPE).back();
-					Log.d("moveStart", "collision!!!!!!!!!!!!!!!!!!!!!!!!!");
+					//Log.d("moveStart", "collision!!!!!!!!!!!!!!!!!!!!!!!!!");
 					//return false;
 					succ = false;
 				}

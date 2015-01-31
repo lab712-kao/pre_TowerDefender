@@ -158,7 +158,20 @@
 
 				</Parameters>
 			</SensorCOS>
-
+			<SensorCOS>
+				<SensorCosID>Patch3</SensorCosID>
+				<Parameters>
+					<ReferenceImage>m1.png</ReferenceImage>
+					<SimilarityThreshold>0.8</SimilarityThreshold>
+				</Parameters>
+			</SensorCOS>
+			<SensorCOS>
+				<SensorCosID>Patch4</SensorCosID>
+				<Parameters>
+					<ReferenceImage>m2.png</ReferenceImage>
+					<SimilarityThreshold>0.8</SimilarityThreshold>
+				</Parameters>
+			</SensorCOS>
 			<!--	The commented lines below show how another COS can be 
 					added to the configuration. -->
 			<!--
@@ -449,6 +462,96 @@
 			</SensorSource>
 		</COS>
 
+		<COS>
+			<Name>MarkerlessCOS3</Name>
+			<Fuser Type="BestQualityFuser">
+				<Parameters>
+					<KeepPoseForNumberOfFrames>2</KeepPoseForNumberOfFrames>
+					<GravityAssistance></GravityAssistance>
+					<AlphaTranslation>0.8</AlphaTranslation>
+					<GammaTranslation>0.8</GammaTranslation>
+					<AlphaRotation>0.5</AlphaRotation>
+					<GammaRotation>0.5</GammaRotation>
+					<ContinueLostTrackingWithOrientationSensor>false</ContinueLostTrackingWithOrientationSensor>
+				</Parameters>
+			</Fuser>
+
+			<SensorSource>
+				<SensorID>FeatureTracking1</SensorID>
+				<SensorCosID>Patch3</SensorCosID>
+				<HandEyeCalibration>
+					<TranslationOffset>
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+					</TranslationOffset>
+					<RotationOffset>
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+						<W>1</W>
+					</RotationOffset>
+				</HandEyeCalibration>
+				<COSOffset>
+					<TranslationOffset>
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+					</TranslationOffset>
+					<RotationOffset>
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+						<W>1</W>
+					</RotationOffset>
+				</COSOffset>
+			</SensorSource>
+		</COS>
+		<COS>
+			<Name>MarkerlessCOS4</Name>
+			<Fuser Type="BestQualityFuser">
+				<Parameters>
+					<KeepPoseForNumberOfFrames>2</KeepPoseForNumberOfFrames>
+					<GravityAssistance></GravityAssistance>
+					<AlphaTranslation>0.8</AlphaTranslation>
+					<GammaTranslation>0.8</GammaTranslation>
+					<AlphaRotation>0.5</AlphaRotation>
+					<GammaRotation>0.5</GammaRotation>
+					<ContinueLostTrackingWithOrientationSensor>false</ContinueLostTrackingWithOrientationSensor>
+				</Parameters>
+			</Fuser>
+
+			<SensorSource>
+				<SensorID>FeatureTracking1</SensorID>
+				<SensorCosID>Patch4</SensorCosID>
+				<HandEyeCalibration>
+					<TranslationOffset>
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+					</TranslationOffset>
+					<RotationOffset>
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+						<W>1</W>
+					</RotationOffset>
+				</HandEyeCalibration>
+				<COSOffset>
+					<TranslationOffset>
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+					</TranslationOffset>
+					<RotationOffset>
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+						<W>1</W>
+					</RotationOffset>
+				</COSOffset>
+			</SensorSource>
+		</COS>
 		<!--	The commented lines below show how another COS can be added to 
 				the configuration. This can be used together with the 
 				commented-out SensorCOS part in the Sensor definition above to 

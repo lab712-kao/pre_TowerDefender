@@ -58,7 +58,9 @@ public class PositionUpdater {
 	public void addGeometry(IGeometry model, String name) {
 		Models m = new Models(model, name);
 		m.setPosition(new Vector3d(0, 0, 0));
-		modelPos.add(m);
+		synchronized(modelPos) {
+			modelPos.add(m);
+		}	
 	}
 	
 	public void startPosUpdate() {

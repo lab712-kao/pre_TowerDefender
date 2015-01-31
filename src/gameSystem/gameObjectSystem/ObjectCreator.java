@@ -1,19 +1,20 @@
 package gameSystem.gameObjectSystem;
 
 import gameObject.tower.MovingObject;
-
-import gameObject.tower.Tank;
+import gameObject.tower.Soldier;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfo;
-
 import android.util.Log;
-
 import com.metaio.sdk.jni.IGeometry;
+import java.util.Vector;
+
+import com.metaio.sdk.jni.BoundingBox;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.Vector3d;
-
 public class ObjectCreator implements Runnable {
 
+
 	private DoubleArrayList<MovingObject> objects;
+
 	private IMetaioSDKAndroid sdk;
 	private int x, y;
 	private ObjectInfo objectInfo;
@@ -85,10 +86,13 @@ public class ObjectCreator implements Runnable {
 		 */
 		Log.d("moveStart", "inCreator+++++++++++++++++++++++=");
 		objects.push(
-				new Tank(sdk.createGeometry(modelPath), coordinateSystemID,
-						new Vector3d(35f), new Vector3d(0), objectInfo
-								.getSpeed(), 3.5f, objectInfo.getHp(),
-						objectInfo.getAtk(), objectInfo.getRange()), id);
+				new Soldier(sdk.createGeometry(modelPath), coordinateSystemID,
+						new Vector3d(10.0f), new Vector3d(0), objectInfo.getSpeed(),
+						0.0f, objectInfo.getHp(), objectInfo.getAtk(),
+						objectInfo.getRange()), id);
+		BoundingBox bb = objects.seek(0, IDType.O).getModelBoundingBox();
+		Log.d("creator", "maxX: "+bb.getMax().getX() + " , maxY: "+bb.getMax().getY());
+		Log.d("creator", "minX: "+bb.getMin().getX() + " , minY: "+bb.getMin().getY());
 		// Tank(IGeometry model,int coordinateSystemID, Vector3d size, Vector3d
 		// position, float moveSpeed,
 		// float moveAngle,float health ,float atk,float atkRang)
