@@ -309,8 +309,8 @@ public class GameScreenActivity extends ARViewActivity {
 						minY = (int)co1.getY();
 					}
 					
-					enTran.setX(randInt(minX, maxX));
-					enTran.setY(randInt(minY, maxY));
+					enTran.setX(randInt(minX, maxX)*-1);
+					enTran.setY(randInt(minY, maxY)*-1);
 					enTran.setZ(0);
 					
 					Log.d("pre-dd", "x = " + enTran.getX() + " y = " + enTran.getY() + " z = " + enTran.getZ());
@@ -320,6 +320,15 @@ public class GameScreenActivity extends ARViewActivity {
 					
 				}
 			}});
+		OKBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				OBHL.setEnermyTowerPosition(enTran);
+			}
+			
+		});
 	}
 	
 	@Override
@@ -349,7 +358,8 @@ public class GameScreenActivity extends ARViewActivity {
 			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
 			tankModel = AssetsManager.getAssetPath("tankNorm.obj");
 			String chessModel = AssetsManager.getAssetPath("chess.obj");
-			String marginPic = AssetsManager.getAssetPath("side.png");
+			String marginPic1 = AssetsManager.getAssetPath("side.png");
+			String marginPic2 = AssetsManager.getAssetPath("side2.png");
 			//tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
 			
 			ttt = metaioSDK.createGeometry(towerModel1);
@@ -366,12 +376,12 @@ public class GameScreenActivity extends ARViewActivity {
 			enTower.setVisible(false);
 			
 
-			margin1 = metaioSDK.createGeometryFromImage(marginPic);
+			margin1 = metaioSDK.createGeometryFromImage(marginPic1);
 			margin1.setCoordinateSystemID(3);
 			margin1.setScale(5.0f);
 			margin1.setTranslation(new Vector3d(0, 0, 0));
 			
-			margin2 = metaioSDK.createGeometryFromImage(marginPic);
+			margin2 = metaioSDK.createGeometryFromImage(marginPic2);
 			margin2.setCoordinateSystemID(4);
 			margin2.setScale(5.0f);
 			margin2.setTranslation(new Vector3d(0, 0, 0));

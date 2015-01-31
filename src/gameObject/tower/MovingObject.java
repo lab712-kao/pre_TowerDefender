@@ -23,13 +23,13 @@ public abstract class MovingObject extends DefaultObject {
 	}
 	public MovingObject(IGeometry model,int coordinateSystemID, Vector3d size, float x, float y,float health, float faceAngle) {
 		super(model, coordinateSystemID,size,x, y, health,faceAngle);
-		this.moveSpeed = 10;
+		this.moveSpeed = 3;
 		this.moveAngle =  (float)(Math.PI/2);
 		// TODO Auto-generated constructor stub
 	}
 	public MovingObject(IGeometry model, int coordinateSystemID,  Vector3d size, float x, float y,float health) {
 		super(model, coordinateSystemID,size,x, y, health);
-		this.moveSpeed = 10;
+		this.moveSpeed = 3;
 		this.moveAngle =  (float)(Math.PI/2);
 		// TODO Auto-generated constructor stub
 	}
@@ -47,13 +47,13 @@ public abstract class MovingObject extends DefaultObject {
 	}
 	public MovingObject(IGeometry model,int coordinateSystemID, Vector3d size, Vector3d position,float health, float faceAngle) {
 		super(model, coordinateSystemID,size,position, health,faceAngle);
-		this.moveSpeed = 10;
+		this.moveSpeed = 3;
 		this.moveAngle =  (float)(Math.PI/2);
 		// TODO Auto-generated constructor stub
 	}
 	public MovingObject(IGeometry model, int coordinateSystemID,  Vector3d size, Vector3d position, float health) {
 		super(model, coordinateSystemID,size,position, health);
-		this.moveSpeed = 10;
+		this.moveSpeed = 3;
 		this.moveAngle =  (float)(Math.PI/2);
 		// TODO Auto-generated constructor stub
 	}
@@ -66,8 +66,8 @@ public abstract class MovingObject extends DefaultObject {
 	}
 	
 	public void move() {
-		float speedX = (float)(moveSpeed*Math.sin(faceAngle)+position.getX());
-		float speedY = (float)(moveSpeed*Math.cos(faceAngle)+position.getY());
+		float speedX = (float)(moveSpeed*Math.cos(faceAngle)+position.getX());
+		float speedY = (float)(moveSpeed*Math.sin(faceAngle)+position.getY());
 		
 		lastTimePos =  new Vector3d(position.getX(), position.getY(), 0);
 		position = new Vector3d(speedX, speedY, 0);

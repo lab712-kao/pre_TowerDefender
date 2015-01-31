@@ -2,6 +2,7 @@ package gameSystem.gameObjectSystem;
 
 import com.metaio.sdk.MetaioSurfaceView;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
+import com.metaio.sdk.jni.Vector3d;
 
 import gameObject.tower.MovingObject;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
@@ -60,4 +61,7 @@ public class ObjectHandler  {
 
 	}
 
+	public void setEnermyTowerPosition(Vector3d enTower) {
+		OBMO.setEnTowerPos(enTower);
+	}
 }
