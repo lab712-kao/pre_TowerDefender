@@ -81,6 +81,7 @@ public class GameScreenActivity extends ARViewActivity {
 	public void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_game_screen);
 		mMetaioHandler = new MetaioSDKCallbackHandler();	
 		setAutoFocus();
 		Player = new MediaPlayer();
