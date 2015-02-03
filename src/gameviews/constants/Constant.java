@@ -11,10 +11,19 @@ public class Constant {
 	
 	
 	// for the screen settings
+<<<<<<< HEAD
 	public static int Screen_Width;
 	public static int Screen_Height;
 	
 	public static float wRatio;
+=======
+
+	public static int Screen_Width;//繪���晦��威榷織��	
+	public static int Screen_Height;//繪���晦��徉��Ⅹ氯�
+	
+	public static float wRatio;//疆A聶�乒��繪���晦��威︳穢�禮�簧��	
+
+>>>>>>> 6bab006582ac2840658e87cac703c982d3d55414
 	public static float hRatio;
 	public static float Hdp;
 	public static float Wdp;
@@ -22,6 +31,7 @@ public class Constant {
 	public static final float screenRatio800x480=1.667f;
 	public static final float screenRatio854x480=1.779f;
 
+<<<<<<< HEAD
 	public static final int screenWidthStander=800;
 	public static final int screenHeightStander=480;
 	
@@ -29,6 +39,12 @@ public class Constant {
 	public static final int standerWidth = 1024;
 	public static final int standerHeight = 552;
 	
+=======
+	public static final int screenWidthTest=800;
+	public static final int screenHeightTest=480;
+
+
+>>>>>>> 6bab006582ac2840658e87cac703c982d3d55414
 	public static boolean isInitFlag = false;
 	
 	public static void initConst(int screenWidth,int screenHeight )

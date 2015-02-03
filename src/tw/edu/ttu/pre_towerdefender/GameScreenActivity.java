@@ -20,7 +20,11 @@ import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
 
 import com.metaio.sdk.jni.IMetaioSDKCallback;
+<<<<<<< HEAD
+
+=======
 import com.metaio.sdk.jni.Rotation;
+>>>>>>> b5b33da87c01b2c397155fa3001680b62bcdfe24
 import com.metaio.sdk.jni.TrackingValues;
 import com.metaio.sdk.jni.TrackingValuesVector;
 
@@ -57,7 +61,7 @@ import android.view.SurfaceHolder;
 
 public class GameScreenActivity extends ARViewActivity { 
 
-	private Soldier tanks;
+	//private Soldier tanks;
 
 	public int bound = 100;
 	public int levelCost = 0;
@@ -157,6 +161,12 @@ public class GameScreenActivity extends ARViewActivity {
 	
 	public void timerStop(View v){
 		flag_bound ^= 1;		
+	}
+	boolean mPreview = true;
+	
+	public void trytrysee(View v){
+		metaioSDK.startInstantTracking("INSTANT_2D_GRAVITY_SLAM_EXTRAPOLATED", "", mPreview);
+		mPreview = !mPreview;
 	}
 	public void costAndBound(){
 		
@@ -430,10 +440,18 @@ public class GameScreenActivity extends ARViewActivity {
 					+ "<<<<<<<exception++++++++++++++++++++++++++++");
 			
 		}
+
+
+		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+		//Log.d("moveStart",tankModel + "<<<<<<<tankModel ++++++++++++++++++++++++++++");	
+		OBHL = new ObjectHandler(metaioSDK, mSurfaceView,OIR);
+//		OBHL.creatObject("tank",  tankModel , 1);
+
 		
 //		Log.d("moveStart",OIR.getSoldierInfoByName("tank").getAtk()+"++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //		OIR.getSoldierInfoByName("soldier")
 		setListener();
+
 	}
 
 	@Override
@@ -462,6 +480,7 @@ public class GameScreenActivity extends ARViewActivity {
 		@Override
 		public void onTrackingEvent(TrackingValuesVector trackingValues)
 		{
+
 			for (int i=0; i<trackingValues.size(); i++)
 			{
 				final TrackingValues v = trackingValues.get(i);
@@ -479,6 +498,7 @@ public class GameScreenActivity extends ARViewActivity {
 				Log.d("pre-dd", "map prepare");
 			}
 			
+
 		}
 
 	}

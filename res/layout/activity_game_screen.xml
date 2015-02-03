@@ -167,6 +167,25 @@
         android:onClick="MusicControl"  />
 
     <Button
+
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="308dp"
+        android:layout_y="41dp"
+        android:onClick="trytrysee"
+        android:text="Create" />
+
+    <Button
+        android:id="@+id/button2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="392dp"
+        android:layout_y="41dp"
+        android:text="Larger"
+        android:onClick="tryLarger" />
+
         android:id="@+id/setEnTowerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -181,5 +200,6 @@
         android:layout_x="436dp"
         android:layout_y="86dp"
         android:text="OK" />
+
   
 </AbsoluteLayout>
