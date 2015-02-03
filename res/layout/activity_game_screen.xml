@@ -100,8 +100,8 @@
 
     <ImageView
         android:id="@+id/cost_single"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="32dp"
         android:layout_x="160dp"
         android:layout_y="41dp"
         android:src="@drawable/number_zero" />
@@ -124,24 +124,24 @@
 
     <ImageView
         android:id="@+id/bound_hun"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="32dp"
         android:layout_x="203dp"
         android:layout_y="41dp"
         android:src="@drawable/number_zero" />
 
     <ImageView
         android:id="@+id/bound_ten"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="32dp"
         android:layout_x="223dp"
         android:layout_y="41dp"
         android:src="@drawable/number_zero" />
 
     <ImageView
         android:id="@+id/bound_single"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="32dp"
         android:layout_x="243dp"
         android:layout_y="41dp"
         android:src="@drawable/number_zero" />
@@ -181,13 +181,5 @@
         android:layout_x="436dp"
         android:layout_y="86dp"
         android:text="OK" />
-
-    <ImageView
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="242dp"
-        android:layout_y="212dp"
-        android:src="@drawable/number_four" />
   
 </AbsoluteLayout>

@@ -127,7 +127,7 @@ public class GameScreenActivity extends ARViewActivity {
 			
 		}
 		LayoutParams params = levelUP.getLayoutParams();
-		params.width = (int)( 362* Constant.wRatio);
+		params.width = (int)( 320* Constant.wRatio);
         params.height =(int)(  150* Constant.hRatio);
 		
 		

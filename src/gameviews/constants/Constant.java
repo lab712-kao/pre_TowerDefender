@@ -96,11 +96,15 @@ public class Constant {
 	public static int[][] imageSize = new int[][]{
 		{ 24, 32 },  //cost_hun
 		{ 24, 32 },  //cost_ten
-		{ 24, 32 }, //cost_one
-		{ 24, 32 }, //bound_hun
-		{ 24, 32 }, //
-		{ 24, 32 },
-		{ 24, 32 },
+		{ 24, 32 },  //cost_one
+		{ 24, 32 },  //desh
+		{ 24, 32 },  //bound_hun
+		{ 24, 32 },  //bound_ten
+		{ 24, 32 },  //bound_one
+		{ 24, 32 },  //level
+		{ 24, 32 },	 //level_num
+		{ 24, 32 },	 //level_hun
+		{ 24, 32 },  //level_ten
 		{ 24, 32 }	
 	};
 
