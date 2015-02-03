@@ -1,6 +1,9 @@
 
 package gameviews.constants;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
 import tw.edu.ttu.pre_towerdefender.R;
 
 public class Constant {
@@ -8,33 +11,43 @@ public class Constant {
 	
 	
 	// for the screen settings
-	public static int Screen_Width;//繪��晦�威榷織��	
-	public static int Screen_Height;//繪��晦�徉��Ⅹ氯�
+	public static int Screen_Width;
+	public static int Screen_Height;
 	
-	public static float wRatio;//疆A聶�乒��繪��晦�威︳穢�禮�簧��	
+	public static float wRatio;
 	public static float hRatio;
+	public static float Hdp;
+	public static float Wdp;
 	
 	public static final float screenRatio800x480=1.667f;
 	public static final float screenRatio854x480=1.779f;
 
-	public static final int screenWidthTest=800;//瞼���疆�繪��授榷織��
-	public static final int screenHeightTest=480;//瞼���疆�繪��晦��Ⅹ氯�
-
+	public static final int screenWidthStander=800;
+	public static final int screenHeightStander=480;
+	
+	
+	public static final int standerWidth = 1024;
+	public static final int standerHeight = 552;
+	
 	public static boolean isInitFlag = false;
-	public static void initConst(int screenWidth,int screenHeight)
+	
+	public static void initConst(int screenWidth,int screenHeight )
 	{
 		
 		if(isInitFlag == true){
 			return;
 		}
 		
-		Screen_Width=screenWidth;
-		Screen_Height=screenHeight;
-		wRatio=screenWidth/(float)screenWidthTest;
-		hRatio=screenHeight/(float)screenHeightTest;
-	
+		Screen_Width = screenWidth;
+		Screen_Height = screenHeight;
+		
+		wRatio = screenWidth/(float)standerWidth;
+		hRatio = screenHeight/(float)standerHeight;
+		
 		isInitFlag = true;
 	}
+	
+
 /*-------------------------------------------------------
  This part is for the timer setting in the game.
  The flag for control timer, which in the whole game.
@@ -75,6 +88,20 @@ public class Constant {
 	};
 	public static int[] buttons_cost = new int[]{
 	  50,100,150,200
+	};
+	
+/*---------------------------------------------------
+ 	store the images and buttons' size
+  ------------------------------------------------*/
+	public static int[][] imageSize = new int[][]{
+		{ 24, 32 },  //cost_hun
+		{ 24, 32 },  //cost_ten
+		{ 24, 32 }, //cost_one
+		{ 24, 32 }, //bound_hun
+		{ 24, 32 }, //
+		{ 24, 32 },
+		{ 24, 32 },
+		{ 24, 32 }	
 	};
 
 }
