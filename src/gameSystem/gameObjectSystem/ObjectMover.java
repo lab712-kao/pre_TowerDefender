@@ -15,13 +15,16 @@ public class ObjectMover implements Runnable {
 	
 	private PathPlaner pathPlaner;
 	private ArrayList<Vector3d> path;
+	private Vector3d begin = new Vector3d(0, 0, 0);
+	private Vector3d goal = new Vector3d((float)100.0, (float)100.0, (float)0.0);
 	
-	public ObjectMover(IDType tYPE, DoubleArrayList<MovingObject> objects) {
+	public ObjectMover(IDType type, DoubleArrayList<MovingObject> objects) {
 		super();
-		TYPE = tYPE;
+		TYPE = type;
 		this.objects = objects;
-		pathPlaner = new PathPlaner(new Vector3d(0), new Vector3d((float)100.0, (float)100.0, (float)0.0));
+		pathPlaner = new PathPlaner(begin, goal);
 		path = pathPlaner.getPath();
+		
 		thread = new Thread(this);
 		thread.start();
 	}
@@ -29,7 +32,9 @@ public class ObjectMover implements Runnable {
 		super();
 		TYPE = tYPE;
 		this.objects = objects;
-		pathPlaner = new PathPlaner(begin, goal);
+		this.begin = begin;
+		this.goal = goal;
+		pathPlaner = new PathPlaner(this.begin, this.goal);
 		thread = new Thread(this);
 		thread.start();
 	}
@@ -123,7 +128,7 @@ public class ObjectMover implements Runnable {
 		}
 		for (Vector3d V : cubeBsPoint) {
 			insideX = V.getX() <= AB.getMax().getX()
-					&& V.getX() >= AB.getMin().getX();
+		 			&& V.getX() >= AB.getMin().getX();
 			insideY = V.getY() <= AB.getMax().getY()
 					&& V.getY() >= AB.getMin().getY();
 			insideZ = V.getZ() <= AB.getMax().getZ()
@@ -136,23 +141,59 @@ public class ObjectMover implements Runnable {
 		return false;
 	}
 
+	private Boolean isOver(MovingObject moveObject){
+				
+		Vector3d v = moveObject.getModelPosition().subtract(begin);
+		
+		Vector3d nextPos = moveObject.getNextPos();
+		
+		Vector3d nextPosv = nextPos.subtract(begin);
+		
+		Vector3d nowPos = moveObject.getModelPosition();
+		if(nextPos == null){
+//			pathPlaner.getNextPos(moveObject.getModelPosition(), TYPE);
+			return true;
+		}
+		v = v.cross(nextPosv);
+						
+		if(v.getZ()>=0){//right
+			if(nowPos.getX()>=nextPos.getX()&&nowPos.getY()>=nextPos.getY())
+				return true;
+			return false;
+		}
+		else{//left
+			if(nowPos.getX()>=nextPos.getX()&&nowPos.getY()<=nextPos.getY())
+				return true;
+			return false;
+		}
+		
+//		return true;
+	}
 	private boolean move(int index) {
 
-		objects.seek(index, TYPE).move();
+		MovingObject movingObject = objects.seek(index, TYPE);
+		movingObject.move();
+		
+		if(isOver(movingObject)){
+			movingObject.setNextPos(pathPlaner.getNextPos(movingObject.getModelPosition(), TYPE));
+			movingObject.setModelFaceAngle((float) Math.atan2(movingObject.getModelPosition().getY()-movingObject.getNextPos().getY()
+					, movingObject.getModelPosition().getX()-movingObject.getNextPos().getX()));
+		}
+		
 		boolean succ=true;
 		
-		if (collisionDetection(objects.seek(index, TYPE),
+		if (collisionDetection(movingObject,
 				objects.seek(0, TYPE == IDType.O ? IDType.E : IDType.O))) {
 			//Log.d("moveStart", "collision!!!!!!!!!!!!!!!!!!!!!!!!!");
-			objects.seek(index, TYPE).back();
+			movingObject.back();
 			//return false;
 			succ = false;
 
 		} else {
 			for (int i = 0; i < objects.size(TYPE); i++) {
 
-				if (collisionDetection(objects.seek(index, TYPE), objects.seek(i, TYPE)) && i!=index) {
-					objects.seek(index, TYPE).back();
+				if (collisionDetection(movingObject, objects.seek(i, TYPE)) && i!=index) {
+					movingObject.back();
 					//Log.d("moveStart", "collision!!!!!!!!!!!!!!!!!!!!!!!!!");
 					//return false;
 					succ = false;

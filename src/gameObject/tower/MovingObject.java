@@ -8,6 +8,7 @@ public abstract class MovingObject extends DefaultObject {
 	protected float moveSpeed;
 	protected float moveAngle;
 	protected Vector3d lastTimePos = null;
+	protected Vector3d nextPos = null;
 	
 	public MovingObject(IGeometry model, int coordinateSystemID, Vector3d size,float x, float y, float faceAngle,float moveSpeed,float moveAngle,float health) {
 		super(model, coordinateSystemID,size,x, y, health,faceAngle);
@@ -57,7 +58,12 @@ public abstract class MovingObject extends DefaultObject {
 		this.moveAngle =  (float)(Math.PI/2);
 		// TODO Auto-generated constructor stub
 	}
-	
+	public Vector3d getNextPos(){
+		return nextPos;
+	}
+	public void setNextPos(Vector3d nextPos){
+		this.nextPos = nextPos;
+	}
 	public float getMoveSpeed() {
 		return moveSpeed;
 	}
@@ -73,11 +79,13 @@ public abstract class MovingObject extends DefaultObject {
 		position = new Vector3d(speedX, speedY, 0);
 		model.setTranslation(position);
 	}
+	@Deprecated
 	public void moveToXY(float x,float y){
 		lastTimePos =  new Vector3d(position.getX(), position.getY(), 0);
 		position = new Vector3d(x, y, 0);
 		model.setTranslation(position);
 	}
+	
 	public void back(){
 		
 		if(lastTimePos != null){

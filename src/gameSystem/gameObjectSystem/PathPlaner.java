@@ -1,5 +1,6 @@
 package gameSystem.gameObjectSystem;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -33,18 +34,19 @@ public class PathPlaner implements Comparator<Vector3d>{
 		passPos.remove(findNearlyPos(pos));
 		calPath();
 	}
-	public Vector3d getNextPos(Vector3d nowPos){
+	public Vector3d getNextPos(Vector3d nowPos,IDType type){
 		Vector3d nextPos = goal;
 		
-		float walked = calDistance(begin, nowPos), len = calDistance(begin, goal);
+		float walked = calDistance(type==IDType.O ?begin:goal, nowPos), len = calDistance(begin, goal);
 		for(Vector3d tmp:passPos){
-			if(getProjectionOnBasicPath(tmp, len)>walked)
+			if(getProjectionLenOnBasicPath(tmp, len)>walked)
 				return tmp;
 		}
 		
 		return nextPos;
 	}
-	private float getProjectionOnBasicPath(Vector3d pos,float len){
+	
+	private float getProjectionLenOnBasicPath(Vector3d pos,float len){
 		double px = pos.getX()-begin.getX(), gx = goal.getX()-begin.getX();
 		double py = pos.getY()-begin.getY(), gy = goal.getY()-begin.getY();
 		
@@ -111,8 +113,20 @@ public class PathPlaner implements Comparator<Vector3d>{
 	@Override
 	public int compare(Vector3d lhs, Vector3d rhs) {
 		// TODO Auto-generated method stub
-		if(calDistance(begin, lhs) == calDistance(begin, rhs))
-			return 0;
+		if(calDistance(begin, lhs) == calDistance(begin, rhs)){
+			if(lhs.getX()>rhs.getX())
+				return 1;
+			else if(lhs.getX()<rhs.getX())
+				return -1;
+			else{
+				if(lhs.getY()>rhs.getY())
+					return 1;
+				else if(lhs.getY()<rhs.getY())
+					return -1;
+				else 
+					return 0;
+			}
+		}
 		else if(calDistance(begin, lhs) > calDistance(begin, rhs))
 				return 1;
 		else
