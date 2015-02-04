@@ -10,52 +10,49 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".GameScreenActivity" >
 
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/dom"
+        android:layout_width="129dp"
+        android:layout_height="140dp"
         android:layout_marginLeft="22dp"
         android:layout_x="2dp"
-        android:layout_y="130dp"
-        android:background="@null"
-        android:src="@drawable/button_domdom" 
-        android:onClick="domOnclick"/>
+        android:layout_y="125dp"
+        android:onClick="domOnclick"
+        android:src="@drawable/button_domdom" />
 
-    <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/tank"
+        android:layout_width="115dp"
+        android:layout_height="125dp"
         android:layout_x="2dp"
-        android:layout_y="252dp"
-        android:background="@null"
+        android:layout_y="247dp"
         android:src="@drawable/button_tank"
         android:onClick="tankOnclick" />
     
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/nut"
+        android:layout_width="115dp"
+        android:layout_height="125dp"
         android:layout_x="2dp"
-        android:layout_y="378dp"
-        android:background="@null"
+        android:layout_y="373dp"
         android:src="@drawable/button_peanut" 
         android:onClick="peanutsOnclick"/>
 
     <ImageView
         android:id="@+id/levelUP"
-        android:layout_width="362dp"
-        android:layout_height="wrap_content"
-        android:layout_x="-35dp"
+        android:layout_width="240dp"
+        android:layout_height="110dp"
+        android:layout_x="5dp"
         android:layout_y="-1dp"
         android:onClick="levelUpOnclick"
         android:src="@drawable/levelup" />
 
     <ImageView
         android:id="@+id/level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
         android:layout_x="105dp"
-        android:layout_y="5dp"
+        android:layout_y="-7dp"
         android:src="@drawable/leveltext" />
 
     <ImageView
@@ -63,7 +60,7 @@
        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_x="169dp"
-        android:layout_y="-3dp"
+        android:layout_y="5dp"
         android:src="@drawable/num_one" />
 
     <ImageView
@@ -115,7 +112,7 @@
         android:src="@drawable/number_zero" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/desh"
         android:layout_width="24dp"
         android:layout_height="32dp"
         android:layout_x="183dp"
@@ -165,27 +162,7 @@
         android:src="@drawable/button_sound_game"
         android:background="@null"
         android:onClick="MusicControl"  />
-
-    <Button
-
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="308dp"
-        android:layout_y="41dp"
-        android:onClick="trytrysee"
-        android:text="Create" />
-
-    <Button
-        android:id="@+id/button2"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="392dp"
-        android:layout_y="41dp"
-        android:text="Larger"
-        android:onClick="tryLarger" />
-
+	<Button
         android:id="@+id/setEnTowerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
