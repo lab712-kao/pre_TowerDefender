@@ -72,6 +72,7 @@ public class PathPlaner implements Comparator<Vector3d>{
 		}
 		
 	}
+	
 	private float calDistance(Vector3d a, Vector3d b){
 		float sum = (float) (Math.pow(a.getX()-b.getX(), 2))+ (float) (Math.pow(a.getY()-b.getY(), 2))+ (float) (Math.pow(a.getZ()-b.getZ(), 2));
 		return (float) Math.sqrt(sum);
