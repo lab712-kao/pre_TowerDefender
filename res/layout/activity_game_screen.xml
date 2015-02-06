@@ -41,13 +41,12 @@
         android:src="@drawable/button_peanut" 
         android:onClick="peanutsOnclick"/>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/levelUP"
         android:layout_width="362dp"
         android:layout_height="wrap_content"
         android:layout_x="-35dp"
         android:layout_y="-1dp"
-        android:background="@null"
         android:onClick="levelUpOnclick"
         android:src="@drawable/levelup" />
 
@@ -61,8 +60,8 @@
 
     <ImageView
         android:id="@+id/levelnum"
-        android:layout_width="18dp"
-        android:layout_height="37dp"
+       android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_x="169dp"
         android:layout_y="-3dp"
         android:src="@drawable/num_one" />
@@ -101,8 +100,8 @@
 
     <ImageView
         android:id="@+id/cost_single"
-        android:layout_width="24dp"
-        android:layout_height="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_x="160dp"
         android:layout_y="41dp"
         android:src="@drawable/number_zero" />
@@ -125,24 +124,24 @@
 
     <ImageView
         android:id="@+id/bound_hun"
-        android:layout_width="24dp"
-        android:layout_height="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_x="203dp"
         android:layout_y="41dp"
         android:src="@drawable/number_zero" />
 
     <ImageView
         android:id="@+id/bound_ten"
-        android:layout_width="24dp"
-        android:layout_height="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_x="223dp"
         android:layout_y="41dp"
         android:src="@drawable/number_zero" />
 
     <ImageView
         android:id="@+id/bound_single"
-        android:layout_width="24dp"
-        android:layout_height="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_x="243dp"
         android:layout_y="41dp"
         android:src="@drawable/number_zero" />
@@ -182,5 +181,13 @@
         android:layout_x="436dp"
         android:layout_y="86dp"
         android:text="OK" />
+
+    <ImageView
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="242dp"
+        android:layout_y="212dp"
+        android:src="@drawable/number_four" />
   
 </AbsoluteLayout>

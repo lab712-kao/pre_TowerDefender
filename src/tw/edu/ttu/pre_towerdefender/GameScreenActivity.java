@@ -7,8 +7,12 @@ import java.io.IOException;
 import java.util.Random;
 
 import gameSystem.gameObjectSystem.ObjectHandler;
+
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import tw.edu.ttu.pre_towerdefender.R.drawable;
 import gameviews.constants.Constant;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
 import com.metaio.sdk.ARViewActivity;
@@ -42,6 +46,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -61,8 +66,8 @@ public class GameScreenActivity extends ARViewActivity {
 	public int playerChange = 0; 
 	public ImageView num_hun, num_ten, num_one, 
 					 levelnum, levelnum_hun, levelnum_ten, levelnum_single,
-					 bound_hun;
-	public ImageButton levelUP, musicBtn;
+					 bound_hun,levelUP;
+	public ImageButton musicBtn;
 	private MediaPlayer Player;
 	private ObjectHandler OBHL = null;
 	private MetaioSDKCallbackHandler mMetaioHandler;
@@ -75,20 +80,58 @@ public class GameScreenActivity extends ARViewActivity {
 	private SurfaceHolder myHolder;
 	int[] trackingState = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};//10
 	private Button setEnTowerBtn, OKBtn;
-
+	GameInterface GI = null;
+	public ArrayList<ImageView> imageArray = new ArrayList<ImageView>();
+	
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game_screen);
-		mMetaioHandler = new MetaioSDKCallbackHandler();	
+		mMetaioHandler = new MetaioSDKCallbackHandler();
+		
+		GI = new GameInterface(imageArray);
 		setAutoFocus();
 		Player = new MediaPlayer();
 		Player = MediaPlayer.create(GameScreenActivity.this, R.raw.sample);
 		Player.start();
 	}
-	
+	public void initial(){
+		levelUP = (ImageView)findViewById(R.id.levelUP);
+		num_hun=(ImageView)findViewById(R.id.cost_hun);
+		num_ten=(ImageView)findViewById(R.id.cost_ten);
+		num_one=(ImageView)findViewById(R.id.cost_single);		
+		bound_hun=(ImageView)findViewById(R.id.bound_hun);
+		levelnum=(ImageView)findViewById(R.id.levelnum);
+		levelnum_hun=(ImageView)findViewById(R.id.level_hun);
+		levelnum_single=(ImageView)findViewById(R.id.level_single);
+		levelnum_ten=(ImageView)findViewById(R.id.level_ten);
+		levelUP=(ImageView)findViewById(R.id.levelUP);
+		
+		imageArray.add(num_hun);
+		imageArray.add(num_ten);
+		imageArray.add(num_one);
+		imageArray.add(bound_hun);
+		imageArray.add(levelnum);
+		imageArray.add(levelnum_hun);
+		imageArray.add(levelnum_single);
+		imageArray.add(levelnum_ten);
+		for (int i = 0; i < 7; i++) {
+			LayoutParams params = imageArray.get(i).getLayoutParams();
+			params.width = (int)(Constant.imageSize[i][0] * Constant.wRatio);
+	        params.height =(int)( Constant.imageSize[i][1] * Constant.hRatio);
+	        imageArray.get(i).setLayoutParams(params);
+			//imageArray.get(7).setImageResource(drawable.number_eight);
+			
+		}
+		LayoutParams params = levelUP.getLayoutParams();
+		params.width = (int)( 362* Constant.wRatio);
+        params.height =(int)(  150* Constant.hRatio);
+		
+		
+	}
 /* This parts for dynamic time present, 
  * and use timer to control the blood of the armies*/
 	
@@ -97,8 +140,7 @@ public class GameScreenActivity extends ARViewActivity {
 
 	public void setAutoFocus(){
 
-		timer = new Timer(false);
-		
+		timer = new Timer(false);	
 		timer.schedule(new TimerTask(){
 			@Override
 			public void run(){
@@ -106,10 +148,11 @@ public class GameScreenActivity extends ARViewActivity {
 					@Override
 					public void run() {
 						costAndBound();
+						
 					}
 				});
 			}
-		}, 0, 300);//end of timer schedule
+		}, 0, 100);//end of timer schedule
 	}
 	
 	public void timerStop(View v){
@@ -118,30 +161,22 @@ public class GameScreenActivity extends ARViewActivity {
 	public void costAndBound(){
 		
 		if(flag_bound == 1 && cost < bound) {
-			cost += bound/75;
+			cost += 1;
 			if(cost > bound) cost = cost - cost%bound;
 		}
-		num_hun=(ImageView)findViewById(R.id.cost_hun);
-		num_ten=(ImageView)findViewById(R.id.cost_ten);
-		num_one=(ImageView)findViewById(R.id.cost_single);		
-		bound_hun=(ImageView)findViewById(R.id.bound_hun);
 		
-	 	
+		initial();
+		
 	 	num_hun.setImageResource(Constant.images[cost/100%10]);	
 	 	num_ten.setImageResource(Constant.images[cost/10%10]);	
 	 	num_one.setImageResource(Constant.images[cost%10]);	
-	 	
+	 	levelnum_single.setImageResource(R.drawable.num_zero);
 	 	bound_hun.setImageResource(Constant.images[bound/100%10]);		
 	}	
 	public void levelUpOnclick(View v){
 		if(cost - Constant.Levelup_cost[levelCost] >=0)
 			if(levelCost<7){
 			
-				levelnum=(ImageView)findViewById(R.id.levelnum);
-				levelnum_hun=(ImageView)findViewById(R.id.level_hun);
-				levelnum_single=(ImageView)findViewById(R.id.level_single);
-				levelnum_ten=(ImageView)findViewById(R.id.level_ten);
-				levelnum_single.setImageResource(R.drawable.num_zero);
 				bound+=100;
 				cost-=Constant.Levelup_cost[levelCost];
 				levelCost++;
@@ -152,7 +187,6 @@ public class GameScreenActivity extends ARViewActivity {
 				levelnum_hun.setImageResource(0);
 				levelnum_ten.setImageResource(0);
 				levelnum_single.setImageResource(0);
-				levelUP=(ImageButton)findViewById(R.id.levelUP);
 				levelUP.setEnabled(false);	
 			}
 			
