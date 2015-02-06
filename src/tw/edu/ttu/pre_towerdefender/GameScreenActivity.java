@@ -69,10 +69,11 @@ public class GameScreenActivity extends ARViewActivity {
 	
 	public ImageView num_hun, num_ten, num_one, level_text,
 					 levelnum, levelnum_hun, levelnum_ten, levelnum_single,
-					 bound_ten, bound_one,
-					 bound_hun, levelUP, desh, domdom, tank, peanut;
+					 bound_ten, bound_one, bound_hun, 
+					 levelUP, desh, domdom, tank, peanut,
+					 musicBtn, pause;
 	
-	public ImageButton musicBtn;
+	
 	private MediaPlayer Player;
 	private ObjectHandler OBHL = null;
 	private MetaioSDKCallbackHandler mMetaioHandler;
@@ -161,8 +162,11 @@ public class GameScreenActivity extends ARViewActivity {
 		levelUP=(ImageView)findViewById(R.id.levelUP);
 		domdom = (ImageView)findViewById(R.id.dom);
 		tank = (ImageView)findViewById(R.id.tank);
-		peanut =(ImageView)findViewById(R.id.nut);
+		peanut = (ImageView)findViewById(R.id.nut);
 		
+		musicBtn = (ImageView)findViewById(R.id.musicBtn);
+		pause  = (ImageView)findViewById(R.id.pause);
+				
 		imageArray.add(num_hun);
 		imageArray.add(num_ten);
 		imageArray.add(num_one);
@@ -179,13 +183,14 @@ public class GameScreenActivity extends ARViewActivity {
 		imageArray.add(domdom);
 		imageArray.add(tank);
 		imageArray.add(peanut);
+		imageArray.add(musicBtn);
+		imageArray.add(pause);
 		
-		for (int i = 0; i < 16; i++) {
+		for (int i = 0; i < 18; i++) {
 			LayoutParams params = imageArray.get(i).getLayoutParams();
 			params.width = (int)(Constant.imageSize[i][0] * Constant.wRatio);
 	        params.height =(int)( Constant.imageSize[i][1] * Constant.hRatio);
 	        imageArray.get(i).setLayoutParams(params);
-	       
 	        imageArray.get(i).setX((float)Constant.imageSize[i][2]*Constant.wRatio);
 	        imageArray.get(i).setY((float) (Constant.imageSize[i][3]*Constant.hRatio));
 	        
@@ -244,8 +249,9 @@ public class GameScreenActivity extends ARViewActivity {
 		}
 	}
 	public void MusicControl(View v){
-		musicBtn = (ImageButton)findViewById(R.id.musicBtn);
+		musicBtn = (ImageView)findViewById(R.id.musicBtn);
 		if(playerChange == 0){
+			
 			playerChange = 1;
 			musicBtn.setImageResource(R.drawable.button_soundoff_game);
 			Player.pause();

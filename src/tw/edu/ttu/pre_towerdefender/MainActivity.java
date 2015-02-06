@@ -1,5 +1,7 @@
 package tw.edu.ttu.pre_towerdefender;
 
+import java.util.ArrayList;
+
 import gameviews.constants.Constant;
 import gameviews.view.MainMenuView;
 import android.R.integer;
@@ -11,47 +13,52 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewDebug.IntToString;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
-	ImageButton startBtn,playerBtn;
-	TextView height,width;
+	ImageView startBtn,playerBtn;
+	
 	
 	private MediaPlayer Player;
 	public int playerChange = 0;
+	public ArrayList<ImageView> imageArray = new ArrayList<ImageView>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
 		screenInit();
-		startBtn = (ImageButton)findViewById(R.id.startBtn2);
-		playerBtn = (ImageButton)findViewById(R.id.sound);
-		height = ( TextView )findViewById(R.id.screenHight);
-		width = ( TextView )findViewById(R.id.screenWidth);
 		
-		height.setText(String.valueOf(Constant.Screen_Height));
-		width.setText(String.valueOf(Constant.Screen_Width));
+		startBtn = (ImageView)findViewById(R.id.startBtn2);
+		playerBtn = (ImageView)findViewById(R.id.sound);
+		
+		/*	imageArray.add(startBtn);
+		imageArray.add(playerBtn);
+		
+		for (int i = 17; i < 19; i++) {
+			//LayoutParams params = imageArray.get(i).getLayoutParams();
+			//params.width = (int)(Constant.imageSize[i][0] * Constant.wRatio);
+	        //params.height =(int)( Constant.imageSize[i][1] * Constant.hRatio);
+	        //imageArray.get(i).setLayoutParams(params);
+	       // imageArray.get(i).setX((float)Constant.imageSize[i][2]*Constant.wRatio);
+	        //imageArray.get(i).setY((float) (Constant.imageSize[i][3]*Constant.hRatio));
+	        
+		}	*/	
 		
 		Player = new MediaPlayer();
 		Player = MediaPlayer.create(MainActivity.this, R.raw.sample);
 		Player.start();
+	}
+	public void startGame( View v ){
+		startBtn.setImageResource(R.drawable.buttun_start_click);
+		gotoGameActivity(v);
 		
-		if(startBtn == null) {
-			System.out.println("where is the button?");
-		}
-		else {
-			startBtn.setOnClickListener(new Button.OnClickListener(){
-				@Override
-				public void onClick(View v) {
-					startBtn.setImageResource(R.drawable.buttun_start_click);
-					gotoGameActivity(v);
-				}         
-	        });
-		}
 	}
 	public void screenInit(){
 		

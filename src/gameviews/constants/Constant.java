@@ -114,9 +114,10 @@ public class Constant {
 		{ 115, 140, 31, 122 },	 //domdom_button
 		{ 115, 140, 31, 244 },  //tank_button
 		{ 115, 138, 31, 368 },  //peanut_button
-		{ 24, 32,0,0 },	 //sound_control
-		{ 24, 32,0,0 },  //time_pause_button
-		{ 24, 32,0,0 }   //start_game_button
+		{ 120, 120, 890, 85 },	 //sound_control
+		{ 120, 120, 890 ,17 },  //time_pause_button
+		{ 200, 100, 0, 0 },   //start_game_button
+		{ 60, 60, 0, 0 }   //music_control_StartPage
 	};
 
 }

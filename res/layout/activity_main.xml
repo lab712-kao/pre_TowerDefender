@@ -9,45 +9,25 @@
     tools:context=".MainActivity" 
     android:background="@drawable/main_menu">
 
-    <ImageButton
-        android:id="@+id/startBtn2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="58dp"
-        android:background="@null"
-        android:src="@drawable/buttun_start" />
-
-    <ImageButton
+    <ImageView
         android:id="@+id/sound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignLeft="@+id/screenHight"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="20dp"
         android:background="@null"
         android:onClick="MusicOff"
         android:src="@drawable/button_sound" />
 
-    <TextView
-        android:id="@+id/screenWidth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/sound"
+    <ImageView
+        android:id="@+id/startBtn2"
+        android:layout_width="200dp"
+        android:layout_height="120dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="64dp"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/screenHight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView1"
-        android:layout_alignTop="@+id/textView1"
-        android:layout_marginTop="30dp"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:background="@null"
+        android:src="@drawable/buttun_start"
+        android:onClick="startGame" />
 
 </RelativeLayout>
