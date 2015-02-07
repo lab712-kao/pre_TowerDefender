@@ -6,9 +6,10 @@ import com.metaio.sdk.jni.Vector3d;
 public abstract class MovingObject extends DefaultObject {
 	
 	protected float moveSpeed;
-	protected float moveAngle;
+	protected float moveAngle;static 
 	protected Vector3d lastTimePos = null;
 	protected Vector3d nextPos = null;
+	protected Boolean isStop = false;
 	
 	public MovingObject(IGeometry model, int coordinateSystemID, Vector3d size,float x, float y, float faceAngle,float moveSpeed,float moveAngle,float health) {
 		super(model, coordinateSystemID,size,x, y, health,faceAngle);
@@ -70,10 +71,23 @@ public abstract class MovingObject extends DefaultObject {
 	public void setMoveSpeed(float moveSpeed) {
 		this.moveSpeed = moveSpeed;
 	}
-	
+	public Boolean getMoveStatus(){
+		return isStop;	
+	}
+	public void stopMove(){
+		isStop = true;
+	}
+	public void startMove(){
+		isStop = false;
+	}
 	public void move() {
+		
+		if(isStop)
+			return;
+		
 		float speedX = (float)(moveSpeed*Math.sin(faceAngle)+position.getX());
 		float speedY = (float)(moveSpeed*Math.cos(faceAngle)+position.getY());
+
 		
 		lastTimePos =  new Vector3d(position.getX(), position.getY(), 0);
 		position = new Vector3d(speedX, speedY, 0);
