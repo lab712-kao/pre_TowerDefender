@@ -31,41 +31,34 @@ public class ObjectHandler  {
 
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID, int x, int y) {
-		if(name == null || modelPath == null  )
-			return false;
 		
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects, OIR.getSoldierInfoByName(name),x, y));
-		return true;
+		return false;
 
 	}
 
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID, int x, int y,IDType id) {
-		if(name == null || modelPath == null  )
-			return false;
+		
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects, OIR.getSoldierInfoByName(name),x, y));
-		return true;
+		return false;
 
 	}
 	
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID) {
-		if(name == null || modelPath == null  )
-			return false;
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects,OIR.getSoldierInfoByName(name)));
-		return true;
+		return false;
 
 	}
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID,IDType id) {
-		if(name == null || modelPath == null  )
-			return false;
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects,OIR.getSoldierInfoByName(name)));
-		return true;
+		return false;
 
 	}
 
