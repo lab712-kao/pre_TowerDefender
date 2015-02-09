@@ -23,6 +23,7 @@ public class ObjectHandler  {
 		this.view = view;
 		objects = new DoubleArrayList<MovingObject>();
 		OBMO = new ObjectMover(IDType.O,objects);
+		OBMO.addPosition(new Vector3d(20, 75, 0));
 		OBME = new ObjectMover(IDType.E,objects);
 		OBAO = new ObjectAttacker(IDType.O, objects);
 		OBAE = new ObjectAttacker(IDType.E, objects);	

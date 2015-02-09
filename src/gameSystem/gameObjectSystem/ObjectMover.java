@@ -22,6 +22,8 @@ public class ObjectMover implements Runnable {
 	private Vector3d begin = new Vector3d(0, 0, 0);
 	private Vector3d goal = new Vector3d((float)100.0, (float)100.0, (float)0.0);
 	
+	private final Boolean _STOP = true;
+	
 	public ObjectMover(IDType type, DoubleArrayList<MovingObject> objects) {
 		super();
 		TYPE = type;
@@ -162,14 +164,14 @@ public class ObjectMover implements Runnable {
 		Vector3d v = moveObject.getModelPosition().subtract(begin);
 		
 		Vector3d nextPos = moveObject.getNextPos();
-		
-		Vector3d nextPosv = nextPos.subtract(begin);
-		
-		Vector3d nowPos = moveObject.getModelPosition();
 		if(nextPos == null){
 //			pathPlaner.getNextPos(moveObject.getModelPosition(), TYPE);
 			return true;
 		}
+		Vector3d nextPosv = nextPos.subtract(begin);
+		
+		Vector3d nowPos = moveObject.getModelPosition();
+
 		v = v.cross(nextPosv);
 						
 		if(v.getZ()>=0){//right
@@ -178,7 +180,8 @@ public class ObjectMover implements Runnable {
 			return false;
 		}
 		else{//left
-			if(nowPos.getX()>=nextPos.getX()&&nowPos.getY()<=nextPos.getY())
+			Log.d("moveStart", "nextPos"+nextPos);
+			if(nowPos.getX()<=nextPos.getX()&&nowPos.getY()>=nextPos.getY())
 				return true;
 			return false;
 		}
@@ -197,14 +200,26 @@ public class ObjectMover implements Runnable {
 
 
 		MovingObject movingObject = objects.seek(index, TYPE);
+		
+		if(movingObject.getMoveStatus().equals(_STOP))
+			return true;
 		movingObject.move();
 		
 		if(isOver(movingObject)){
-			movingObject.setNextPos(pathPlaner.getNextPos(movingObject.getModelPosition(), TYPE));
-			movingObject.setModelFaceAngle((float) Math.atan2(movingObject.getModelPosition().getY()-movingObject.getNextPos().getY()
-					, movingObject.getModelPosition().getX()-movingObject.getNextPos().getX()));
+			if(movingObject.getNextPos()==null||!(movingObject.getNextPos().getX()>goal.getX()&&movingObject.getNextPos().getY()>goal.getY())){
+				
+				movingObject.setNextPos(pathPlaner.getNextPos(movingObject.getModelPosition(), TYPE));
+				
+				movingObject.setModelFaceAngle((float) Math.atan2(movingObject.getModelPosition().getY()-movingObject.getNextPos().getY()
+						, movingObject.getModelPosition().getX()-movingObject.getNextPos().getX()));
+			}else{
+				//do nothing
+				Log.d("moveStart", "stopMove");
+				movingObject.stopMove();
+			}
 		}
-		
+
+		Log.d("moveStart", "pos"+movingObject.getModelPosition());
 
 		boolean succ=true;
 		
