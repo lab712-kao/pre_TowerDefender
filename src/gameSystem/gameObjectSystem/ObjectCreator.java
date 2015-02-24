@@ -17,11 +17,16 @@ public class ObjectCreator implements Runnable {
 
 	private IMetaioSDKAndroid sdk;
 	private int x, y;
+	private Vector3d pos = new Vector3d(0f);
 	private ObjectInfo objectInfo;
 	private int coordinateSystemID;
 	private IDType id = IDType.O;
 
 	private String modelPath;
+	
+	private final Vector3d SIZE = new Vector3d(1.0f);
+	
+	private final float DEFAULTANGLE = 0.0f;
 
 	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
 			int coordinateSystemID, DoubleArrayList<MovingObject> objects,
@@ -30,8 +35,6 @@ public class ObjectCreator implements Runnable {
 		this.modelPath = modelPath;
 		this.sdk = sdk;
 		this.objects = objects;
-		this.x = 0;
-		this.y = 0;
 		this.objectInfo = objectInfo;
 	}
 
@@ -42,9 +45,9 @@ public class ObjectCreator implements Runnable {
 		this.modelPath = modelPath;
 		this.sdk = sdk;
 		this.objects = objects;
-		this.x = x;
-		this.y = y;
 		this.objectInfo = objectInfo;
+		
+		this.pos = new Vector3d(x,y,0f);
 	}
 
 	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
@@ -54,8 +57,6 @@ public class ObjectCreator implements Runnable {
 		this.modelPath = modelPath;
 		this.sdk = sdk;
 		this.objects = objects;
-		this.x = 0;
-		this.y = 0;
 		this.objectInfo = objectInfo;
 		this.id = id;
 	}
@@ -67,10 +68,10 @@ public class ObjectCreator implements Runnable {
 		this.modelPath = modelPath;
 		this.sdk = sdk;
 		this.objects = objects;
-		this.x = x;
-		this.y = y;
 		this.objectInfo = objectInfo;
 		this.id = id;
+		
+		this.pos = new Vector3d(x,y,0f);
 	}
 
 	@Override
@@ -87,12 +88,12 @@ public class ObjectCreator implements Runnable {
 		Log.d("moveStart", "inCreator+++++++++++++++++++++++=");
 		objects.push(
 				new Soldier(sdk.createGeometry(modelPath), coordinateSystemID,
-						new Vector3d(10.0f), new Vector3d(0), objectInfo.getSpeed(),
-						0.0f, objectInfo.getHp(), objectInfo.getAtk(),
+						SIZE, pos, objectInfo.getSpeed(),
+						DEFAULTANGLE, objectInfo.getHp(), objectInfo.getAtk(),
 						objectInfo.getRange()), id);
-		BoundingBox bb = objects.seek(0, IDType.O).getModelBoundingBox();
-		Log.d("creator", "maxX: "+bb.getMax().getX() + " , maxY: "+bb.getMax().getY());
-		Log.d("creator", "minX: "+bb.getMin().getX() + " , minY: "+bb.getMin().getY());
+//		BoundingBox bb = objects.seek(0, IDType.O).getModelBoundingBox();
+//		Log.d("creator", "maxX: "+bb.getMax().getX() + " , maxY: "+bb.getMax().getY());
+//		Log.d("creator", "minX: "+bb.getMin().getX() + " , minY: "+bb.getMin().getY());
 		// Tank(IGeometry model,int coordinateSystemID, Vector3d size, Vector3d
 		// position, float moveSpeed,
 		// float moveAngle,float health ,float atk,float atkRang)
