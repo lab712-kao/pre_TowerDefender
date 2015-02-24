@@ -1,5 +1,8 @@
 package gameObject.tower;
 
+import java.util.ArrayList;
+
+import com.metaio.sdk.jni.BoundingBox;
 import com.metaio.sdk.jni.IGeometry;
 import com.metaio.sdk.jni.Vector3d;
 
@@ -106,5 +109,31 @@ public abstract class MovingObject extends DefaultObject {
 		}else{
 			
 		}
+	}
+	public Boolean checkCollision(DefaultObject aObject){
+		if (aObject == null){
+			return false;
+		}else{
+			Vector3d max = this.getModel().getBoundingBox().getMax().multiply(size.getX());
+			Vector3d min = this.getModel().getBoundingBox().getMin().multiply(size.getX());
+			ArrayList<Vector3d> cubeAsPoint = aObject.getModelBundingPointArrayList();
+			boolean insideX = false;
+			boolean insideY = false;
+			boolean insideZ = false;
+
+			for (Vector3d V : cubeAsPoint) {
+				insideX = V.getX() <= max.getX()
+						&& V.getX() >= min.getX();
+				insideY = V.getY() <= max.getY()
+						&& V.getY() >= min.getY();
+				insideZ = V.getZ() <= max.getZ()
+						&& V.getZ() >= min.getZ();
+				if (insideX && insideY && insideZ) {
+					return true;
+				}
+			}
+			
+		}
+		return false;
 	}
 }

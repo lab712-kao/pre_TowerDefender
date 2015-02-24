@@ -144,13 +144,13 @@ public abstract class DefaultObject {
 			return model.getBoundingBox();
 		}
 	}
-	public ArrayList getModelBundingPointArrayList(){
+	public ArrayList<Vector3d> getModelBundingPointArrayList(){
 		
 		if (model == null) {
 			Log.e("Object-getB-Box", "model is null");
 			return null;
 		}
-		ArrayList<Vector3d> BundingBoxPoint = new ArrayList<Vector3d>();
+		ArrayList<Vector3d> bundingBoxPoint = new ArrayList<Vector3d>();
 		Vector3d min = model.getBoundingBox().getMin();
 		Vector3d max = model.getBoundingBox().getMax();
 		float x = 0, y = 0, z = 0;

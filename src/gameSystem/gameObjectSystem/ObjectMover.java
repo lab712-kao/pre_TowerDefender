@@ -92,6 +92,7 @@ public class ObjectMover implements Runnable {
 	public void reovePosition(Vector3d pos){
 		pathPlaner.removePassPos(pos);
 	}
+	@Deprecated
 	private ArrayList getCube(BoundingBox box) {
 
 		ArrayList<Vector3d> cubePoint = new ArrayList<Vector3d>();
@@ -112,7 +113,7 @@ public class ObjectMover implements Runnable {
 
 		return cubePoint;
 	}
-
+	@Deprecated
 	private Boolean collisionDetection(DefaultObject A, DefaultObject B) {
 
 		if (A == null || B == null)
