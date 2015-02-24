@@ -1,5 +1,7 @@
 package gameObject.tower;
 
+import java.util.ArrayList;
+
 import android.R.integer;
 import android.util.Log;
 
@@ -14,6 +16,7 @@ public abstract class DefaultObject {
 	protected float health;
 	protected float faceAngle;
 	protected Vector3d position;
+	protected Vector3d size;
 
 	// ----------------------------------------- have face
 	// angle----------------------------------------------------------
@@ -23,6 +26,7 @@ public abstract class DefaultObject {
 		this.model = model;
 		this.position = new Vector3d(x, y, 0);
 		this.health = health;
+		this.size = size;
 		faceAngle = (float) (Math.PI / 2);
 
 		model.setCoordinateSystemID(coordinateSystemID);
@@ -38,6 +42,7 @@ public abstract class DefaultObject {
 		this.model = model;
 		this.position = position;
 		this.health = health;
+		this.size = size;
 		faceAngle = (float) (Math.PI / 2);
 
 		model.setCoordinateSystemID(coordinateSystemID);
@@ -54,6 +59,7 @@ public abstract class DefaultObject {
 		this.model = model;
 		this.position = new Vector3d(x, y, 0);
 		this.health = health;
+		this.size = size;
 		this.faceAngle = faceAngle;
 
 		model.setCoordinateSystemID(coordinateSystemID);
@@ -67,14 +73,16 @@ public abstract class DefaultObject {
 		this.model = model;
 		this.position = position;
 		this.health = health;
+		this.size = size;
 		this.faceAngle = faceAngle;
-
+		
 		model.setCoordinateSystemID(coordinateSystemID);
 		model.setScale(size);
 		model.setTranslation(position);
 		model.setRotation(new Rotation(faceAngle, 0.0f, 0.0f));
 	}
 
+	
 	public float getHealth() {
 		return health;
 	}
@@ -127,7 +135,7 @@ public abstract class DefaultObject {
 		}
 		return;
 	}
-
+	@Deprecated
 	public BoundingBox getModelBoundingBox() {
 		if (model == null) {
 			Log.e("Object-getB-Box", "model is null");
@@ -136,7 +144,29 @@ public abstract class DefaultObject {
 			return model.getBoundingBox();
 		}
 	}
-
+	public ArrayList getModelBundingPointArrayList(){
+		
+		if (model == null) {
+			Log.e("Object-getB-Box", "model is null");
+			return null;
+		}
+		ArrayList<Vector3d> BundingBoxPoint = new ArrayList<Vector3d>();
+		Vector3d min = model.getBoundingBox().getMin();
+		Vector3d max = model.getBoundingBox().getMax();
+		float x = 0, y = 0, z = 0;
+		
+		for (int i = 0; i < 2; i++) {
+			x = i == 0 ? min.getX() : max.getX();
+			for (int k = 0; k < 2; k++) {
+				y = k == 0 ? min.getY() : max.getY();
+				for (int t = 0; t < 2; t++) {
+					z = t == 0 ? min.getZ() : max.getZ();
+					BundingBoxPoint.add(new Vector3d(x, y, z).multiply(size.getX()));
+				}
+			}
+		}
+		return BundingBoxPoint;
+	}
 	public void dead() {
 		if (model != null) {
 			model.delete();
