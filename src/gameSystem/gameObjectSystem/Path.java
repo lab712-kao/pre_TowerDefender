@@ -1,21 +1,16 @@
 package gameSystem.gameObjectSystem;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.LinkedList;
 
-import android.R.integer;
-import android.provider.Telephony.Mms.Addr;
-import android.text.GetChars;
+
 
 import com.metaio.sdk.jni.Vector3d;
-import com.unity3d.player.a.l;
 
 public class Path {
 	
-	private class PathPoint implements Comparator<PathPoint>{
+	public class PathPoint implements Comparator<PathPoint>{
 		private Vector3d position,begin,end;
 		private PathPoint nextPoint = null;
 		private float angle;

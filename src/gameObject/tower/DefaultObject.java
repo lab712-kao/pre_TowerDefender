@@ -94,6 +94,32 @@ public abstract class DefaultObject {
 	public IGeometry getModel() {
 		return model;
 	}
+	public Boolean checkCollision(DefaultObject aObject){
+		if (aObject == null){
+			return false;
+		}else{
+			Vector3d max = this.getModel().getBoundingBox().getMax().multiply(size.getX());
+			Vector3d min = this.getModel().getBoundingBox().getMin().multiply(size.getX());
+			ArrayList<Vector3d> cubeAsPoint = aObject.getModelBundingPointArrayList();
+			boolean insideX = false;
+			boolean insideY = false;
+			boolean insideZ = false;
+
+			for (Vector3d V : cubeAsPoint) {
+				insideX = V.getX() <= max.getX()
+						&& V.getX() >= min.getX();
+				insideY = V.getY() <= max.getY()
+						&& V.getY() >= min.getY();
+				insideZ = V.getZ() <= max.getZ()
+						&& V.getZ() >= min.getZ();
+				if (insideX && insideY && insideZ) {
+					return true;
+				}
+			}
+			
+		}
+		return false;
+	}
 
 	public void setModel(IGeometry model) {
 		this.model = model;
@@ -161,11 +187,11 @@ public abstract class DefaultObject {
 				y = k == 0 ? min.getY() : max.getY();
 				for (int t = 0; t < 2; t++) {
 					z = t == 0 ? min.getZ() : max.getZ();
-					BundingBoxPoint.add(new Vector3d(x, y, z).multiply(size.getX()));
+					bundingBoxPoint.add(new Vector3d(x, y, z).multiply(size.getX()));
 				}
 			}
 		}
-		return BundingBoxPoint;
+		return bundingBoxPoint;
 	}
 	public void dead() {
 		if (model != null) {
