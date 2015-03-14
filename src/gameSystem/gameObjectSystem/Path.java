@@ -125,6 +125,8 @@ public class Path {
 			way.add(point[i]);
 		}
 		point[point.length-1].setAngle(calAngle(end));
+		point[point.length-1].setNextPoint(new PathPoint(end, calAngle(end)));
+		
 	}
 	public PathPoint getNextPathPoint(PathPoint nowPoint){
 		
