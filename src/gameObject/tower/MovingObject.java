@@ -5,6 +5,8 @@ import gameSystem.gameObjectSystem.Path.PathPoint;
 
 import java.util.ArrayList;
 
+import android.R.integer;
+
 import com.metaio.sdk.jni.BoundingBox;
 import com.metaio.sdk.jni.IGeometry;
 import com.metaio.sdk.jni.Vector3d;
@@ -17,6 +19,7 @@ public abstract class MovingObject extends DefaultObject {
 	protected Vector3d nextPos = null;
 	protected Boolean isStop = false;
 	protected PathPoint point = null;
+	public static final int NO_PATH_SET = 1, AT_END = 2, SUCC_MOVE = 3, STOPING = 4;
 	
 	public MovingObject(IGeometry model, int coordinateSystemID, Vector3d size,float x, float y, float faceAngle,float moveSpeed,float moveAngle,float health) {
 		super(model, coordinateSystemID,size,x, y, health,faceAngle);
@@ -93,12 +96,15 @@ public abstract class MovingObject extends DefaultObject {
 	}
 	
 	//this function do smooth moving between point and point 
-	public boolean moveByPathPoint(){
+	public int moveByPathPoint(){
+		
+		if(isStop)
+			return STOPING;
 		
 		double t = moveSpeed*Math.cos(faceAngle)*0.01;
 		
 		if(point == null){
-			return false;//need to setPathPoint
+			return NO_PATH_SET;//need to setPathPoint
 		}
 		else if(point.isIgnore() == true || 
 				(Math.abs(point.getPosition().getX()-position.getX())<3 
@@ -117,11 +123,11 @@ public abstract class MovingObject extends DefaultObject {
 			position = p;
 			this.setModelFaceAngle((float) Math.atan2(p.getY(), p.getX()));
 			model.setTranslation(p);
-			return true;
+			return SUCC_MOVE;
 		}
 				
 		//if return that mean should get nextPoint
-		return false;
+		return AT_END;
 	}
 	@Deprecated
 	public void move() {
