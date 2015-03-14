@@ -107,11 +107,12 @@ public abstract class MovingObject extends DefaultObject {
 				
 			}
 		}
-		if(point.getNextPoint().getPosition()!=null){
+		if(point.getNextPoint()!=null){
 			lastTimePos = position;
 			Vector3d p = Hermite.evalHermite(t, position, point.getPosition(), 
 				position.subtract(point.getPosition()), point.getNextPoint().getPosition().subtract(point.getPosition()));//
 			position = p;
+			this.setModelFaceAngle((float) Math.atan2(p.getY(), p.getX()));
 			model.setTranslation(p);
 			return true;
 		}
