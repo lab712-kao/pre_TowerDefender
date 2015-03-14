@@ -100,7 +100,9 @@ public abstract class MovingObject extends DefaultObject {
 		if(point == null){
 			return false;//need to setPathPoint
 		}
-		else if(point.isIgnore() == true || point.getPosition().equals(position)){
+		else if(point.isIgnore() == true || 
+				(Math.abs(point.getPosition().getX()-position.getX())<3 
+						&& Math.abs(point.getPosition().getY()-position.getY())<3) ){
 			while(point.isIgnore() == true){
 				lastTimePos = point.getPosition();
 				point = point.getNextPoint();
@@ -109,6 +111,7 @@ public abstract class MovingObject extends DefaultObject {
 		}
 		if(point.getNextPoint()!=null){
 			lastTimePos = position;
+			
 			Vector3d p = Hermite.evalHermite(t, position, point.getPosition(), 
 				position.subtract(point.getPosition()), point.getNextPoint().getPosition().subtract(point.getPosition()));//
 			position = p;
