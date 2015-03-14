@@ -95,7 +95,7 @@ public abstract class MovingObject extends DefaultObject {
 	//this function do smooth moving between point and point 
 	public boolean moveByPathPoint(){
 		
-		double t = moveSpeed*Math.cos(faceAngle)+position.getX();
+		double t = moveSpeed*Math.cos(faceAngle)*0.01;
 		
 		if(point == null){
 			return false;//need to setPathPoint
