@@ -38,8 +38,9 @@ public class PathPlaner implements Comparator<Vector3d>{
 		Vector3d nextPos = goal;
 		
 		float walked = calDistance(type==IDType.O ?begin:goal, nowPos), len = calDistance(begin, goal);
+		walked = getProjectionLenOnBasicPath(nowPos.subtract(type==IDType.O ?begin:goal), len);
 		for(Vector3d tmp:passPos){
-			if(getProjectionLenOnBasicPath(tmp, len)>walked)
+			if(getProjectionLenOnBasicPath(tmp.subtract(type==IDType.O ?begin:goal), len)>walked&&compare(tmp, nowPos)==1)
 				return tmp;
 		}
 		

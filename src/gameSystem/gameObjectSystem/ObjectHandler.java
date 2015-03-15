@@ -23,6 +23,7 @@ public class ObjectHandler  {
 		this.view = view;
 		objects = new DoubleArrayList<MovingObject>();
 		OBMO = new ObjectMover(IDType.O,objects);
+		OBMO.addPosition(new Vector3d(20, 75, 0));
 		OBME = new ObjectMover(IDType.E,objects);
 		OBAO = new ObjectAttacker(IDType.O, objects);
 		OBAE = new ObjectAttacker(IDType.E, objects);	
@@ -30,41 +31,34 @@ public class ObjectHandler  {
 
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID, int x, int y) {
-		if(name == null || modelPath == null  )
-			return false;
 		
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects, OIR.getSoldierInfoByName(name),x, y));
-		return true;
+		return false;
 
 	}
 
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID, int x, int y,IDType id) {
-		if(name == null || modelPath == null  )
-			return false;
+		
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects, OIR.getSoldierInfoByName(name),x, y));
-		return true;
+		return false;
 
 	}
 	
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID) {
-		if(name == null || modelPath == null  )
-			return false;
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects,OIR.getSoldierInfoByName(name)));
-		return true;
+		return false;
 
 	}
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID,IDType id) {
-		if(name == null || modelPath == null  )
-			return false;
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects,OIR.getSoldierInfoByName(name)));
-		return true;
+		return false;
 
 	}
 

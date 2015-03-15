@@ -11,16 +11,19 @@ public class Constant {
 	
 	
 	// for the screen settings
+
 	public static int Screen_Width;
 	public static int Screen_Height;
 	
 	public static float wRatio;
+
 	public static float hRatio;
 	public static float Hdp;
 	public static float Wdp;
 	
 	public static final float screenRatio800x480=1.667f;
 	public static final float screenRatio854x480=1.779f;
+
 
 	public static final int screenWidthStander=800;
 	public static final int screenHeightStander=480;
@@ -29,6 +32,7 @@ public class Constant {
 	public static final int standerWidth = 1024;
 	public static final int standerHeight = 552;
 	
+
 	public static boolean isInitFlag = false;
 	
 	public static void initConst(int screenWidth,int screenHeight )
@@ -94,14 +98,26 @@ public class Constant {
  	store the images and buttons' size
   ------------------------------------------------*/
 	public static int[][] imageSize = new int[][]{
-		{ 24, 32 },  //cost_hun
-		{ 24, 32 },  //cost_ten
-		{ 24, 32 }, //cost_one
-		{ 24, 32 }, //bound_hun
-		{ 24, 32 }, //
-		{ 24, 32 },
-		{ 24, 32 },
-		{ 24, 32 }	
+		{ 24, 32, 143, 62 },  //cost_hun
+		{ 24, 32, 163, 62 },  //cost_ten
+		{ 24, 32, 183, 62 },  //cost_one
+		{ 24, 32, 206, 62 },  //desh
+		{ 24, 32, 226, 62 },  //bound_hun
+		{ 24, 32, 246, 62 },  //bound_ten
+		{ 24, 32, 266, 62 },  //bound_one
+		{ 75, 60, 132, 8 },  //level
+		{ 21, 24, 204, 26 },  //level_num
+		{ 21, 28, 228, 24 },	 //level_hun
+		{ 21, 28, 268, 24 },  //level_ten
+		{ 21, 28, 248, 24 },	 //level_one
+		{ 280, 120, 32, 17 },	 //Level_UP_button
+		{ 115, 140, 31, 122 },	 //domdom_button
+		{ 115, 140, 31, 244 },  //tank_button
+		{ 115, 138, 31, 368 },  //peanut_button
+		{ 120, 120, 890, 85 },	 //sound_control
+		{ 120, 120, 890 ,17 },  //time_pause_button
+		{ 200, 100, 0, 0 },   //start_game_button
+		{ 60, 60, 0, 0 }   //music_control_StartPage
 	};
 
 }

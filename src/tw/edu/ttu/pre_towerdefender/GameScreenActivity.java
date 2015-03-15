@@ -20,7 +20,9 @@ import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
 
 import com.metaio.sdk.jni.IMetaioSDKCallback;
+
 import com.metaio.sdk.jni.Rotation;
+
 import com.metaio.sdk.jni.TrackingValues;
 import com.metaio.sdk.jni.TrackingValuesVector;
 
@@ -57,17 +59,21 @@ import android.view.SurfaceHolder;
 
 public class GameScreenActivity extends ARViewActivity { 
 
-	private Soldier tanks;
+	//private Soldier tanks;
 
 	public int bound = 100;
 	public int levelCost = 0;
 	public int cost = 0;
 	public int flag_bound = 1;
 	public int playerChange = 0; 
-	public ImageView num_hun, num_ten, num_one, 
+	
+	public ImageView num_hun, num_ten, num_one, level_text,
 					 levelnum, levelnum_hun, levelnum_ten, levelnum_single,
-					 bound_hun,levelUP;
-	public ImageButton musicBtn;
+					 bound_ten, bound_one, bound_hun, 
+					 levelUP, desh, domdom, tank, peanut,
+					 musicBtn, pause;
+	
+	
 	private MediaPlayer Player;
 	private ObjectHandler OBHL = null;
 	private MetaioSDKCallbackHandler mMetaioHandler;
@@ -98,40 +104,7 @@ public class GameScreenActivity extends ARViewActivity {
 		Player = MediaPlayer.create(GameScreenActivity.this, R.raw.sample);
 		Player.start();
 	}
-	public void initial(){
-		levelUP = (ImageView)findViewById(R.id.levelUP);
-		num_hun=(ImageView)findViewById(R.id.cost_hun);
-		num_ten=(ImageView)findViewById(R.id.cost_ten);
-		num_one=(ImageView)findViewById(R.id.cost_single);		
-		bound_hun=(ImageView)findViewById(R.id.bound_hun);
-		levelnum=(ImageView)findViewById(R.id.levelnum);
-		levelnum_hun=(ImageView)findViewById(R.id.level_hun);
-		levelnum_single=(ImageView)findViewById(R.id.level_single);
-		levelnum_ten=(ImageView)findViewById(R.id.level_ten);
-		levelUP=(ImageView)findViewById(R.id.levelUP);
-		
-		imageArray.add(num_hun);
-		imageArray.add(num_ten);
-		imageArray.add(num_one);
-		imageArray.add(bound_hun);
-		imageArray.add(levelnum);
-		imageArray.add(levelnum_hun);
-		imageArray.add(levelnum_single);
-		imageArray.add(levelnum_ten);
-		for (int i = 0; i < 7; i++) {
-			LayoutParams params = imageArray.get(i).getLayoutParams();
-			params.width = (int)(Constant.imageSize[i][0] * Constant.wRatio);
-	        params.height =(int)( Constant.imageSize[i][1] * Constant.hRatio);
-	        imageArray.get(i).setLayoutParams(params);
-			//imageArray.get(7).setImageResource(drawable.number_eight);
-			
-		}
-		LayoutParams params = levelUP.getLayoutParams();
-		params.width = (int)( 362* Constant.wRatio);
-        params.height =(int)(  150* Constant.hRatio);
-		
-		
-	}
+	
 /* This parts for dynamic time present, 
  * and use timer to control the blood of the armies*/
 	
@@ -147,6 +120,7 @@ public class GameScreenActivity extends ARViewActivity {
 				timerhandler.post(new Runnable(){
 					@Override
 					public void run() {
+						initial();
 						costAndBound();
 						
 					}
@@ -158,15 +132,78 @@ public class GameScreenActivity extends ARViewActivity {
 	public void timerStop(View v){
 		flag_bound ^= 1;		
 	}
+	boolean mPreview = true;
+	
+	public void trytrysee(View v){
+		metaioSDK.startInstantTracking("INSTANT_2D_GRAVITY_SLAM_EXTRAPOLATED", "", mPreview);
+		mPreview = !mPreview;
+	}
+	
+	public void initial(){
+		
+		num_hun = (ImageView)findViewById(R.id.cost_hun);
+		num_ten = (ImageView)findViewById(R.id.cost_ten);
+		num_one = (ImageView)findViewById(R.id.cost_single);
+		
+		desh =  (ImageView)findViewById(R.id.desh);
+		
+		bound_hun = (ImageView)findViewById(R.id.bound_hun);
+		bound_ten = (ImageView)findViewById(R.id.bound_ten);
+		bound_one = (ImageView)findViewById(R.id.bound_single);
+		
+		level_text =  (ImageView)findViewById(R.id.level);
+		
+		levelnum = (ImageView)findViewById(R.id.levelnum);
+		
+		levelnum_hun=(ImageView)findViewById(R.id.level_hun);
+		levelnum_ten=(ImageView)findViewById(R.id.level_ten);
+		levelnum_single=(ImageView)findViewById(R.id.level_single);
+		
+		levelUP=(ImageView)findViewById(R.id.levelUP);
+		domdom = (ImageView)findViewById(R.id.dom);
+		tank = (ImageView)findViewById(R.id.tank);
+		peanut = (ImageView)findViewById(R.id.nut);
+		
+		musicBtn = (ImageView)findViewById(R.id.musicBtn);
+		pause  = (ImageView)findViewById(R.id.pause);
+				
+		imageArray.add(num_hun);
+		imageArray.add(num_ten);
+		imageArray.add(num_one);
+		imageArray.add(desh);
+		imageArray.add(bound_hun);
+		imageArray.add(bound_ten);
+		imageArray.add(bound_one);
+		imageArray.add(level_text);
+		imageArray.add(levelnum);
+		imageArray.add(levelnum_hun);
+		imageArray.add(levelnum_single);
+		imageArray.add(levelnum_ten);
+		imageArray.add(levelUP);
+		imageArray.add(domdom);
+		imageArray.add(tank);
+		imageArray.add(peanut);
+		imageArray.add(musicBtn);
+		imageArray.add(pause);
+		
+		for (int i = 0; i < 18; i++) {
+			LayoutParams params = imageArray.get(i).getLayoutParams();
+			params.width = (int)(Constant.imageSize[i][0] * Constant.wRatio);
+	        params.height =(int)( Constant.imageSize[i][1] * Constant.hRatio);
+	        imageArray.get(i).setLayoutParams(params);
+	        imageArray.get(i).setX((float)Constant.imageSize[i][2]*Constant.wRatio);
+	        imageArray.get(i).setY((float) (Constant.imageSize[i][3]*Constant.hRatio));
+	        
+		}		
+		
+	}
+	
 	public void costAndBound(){
 		
 		if(flag_bound == 1 && cost < bound) {
 			cost += 1;
 			if(cost > bound) cost = cost - cost%bound;
-		}
-		
-		initial();
-		
+		}		
 	 	num_hun.setImageResource(Constant.images[cost/100%10]);	
 	 	num_ten.setImageResource(Constant.images[cost/10%10]);	
 	 	num_one.setImageResource(Constant.images[cost%10]);	
@@ -212,8 +249,9 @@ public class GameScreenActivity extends ARViewActivity {
 		}
 	}
 	public void MusicControl(View v){
-		musicBtn = (ImageButton)findViewById(R.id.musicBtn);
+		musicBtn = (ImageView)findViewById(R.id.musicBtn);
 		if(playerChange == 0){
+			
 			playerChange = 1;
 			musicBtn.setImageResource(R.drawable.button_soundoff_game);
 			Player.pause();
@@ -433,10 +471,18 @@ public class GameScreenActivity extends ARViewActivity {
 					+ "<<<<<<<exception++++++++++++++++++++++++++++");
 			
 		}
+
+
+		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+		//Log.d("moveStart",tankModel + "<<<<<<<tankModel ++++++++++++++++++++++++++++");	
+		OBHL = new ObjectHandler(metaioSDK, mSurfaceView,OIR);
+//		OBHL.creatObject("tank",  tankModel , 1);
+
 		
 //		Log.d("moveStart",OIR.getSoldierInfoByName("tank").getAtk()+"++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //		OIR.getSoldierInfoByName("soldier")
 		setListener();
+
 	}
 
 	@Override
@@ -465,6 +511,7 @@ public class GameScreenActivity extends ARViewActivity {
 		@Override
 		public void onTrackingEvent(TrackingValuesVector trackingValues)
 		{
+
 			for (int i=0; i<trackingValues.size(); i++)
 			{
 				final TrackingValues v = trackingValues.get(i);
@@ -482,6 +529,7 @@ public class GameScreenActivity extends ARViewActivity {
 				Log.d("pre-dd", "map prepare");
 			}
 			
+
 		}
 
 	}
