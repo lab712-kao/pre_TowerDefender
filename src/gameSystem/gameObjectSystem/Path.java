@@ -117,6 +117,7 @@ public class Path {
 	}
 	private void calPath(){
 		PathPoint point[] = new PathPoint[way.size()];
+		point = way.toArray(point);
 		Arrays.sort(point, compator);
 		way.clear();
 		for (int i = 0; i < point.length-1; i++) {
