@@ -176,5 +176,24 @@
         android:layout_x="250dp"
         android:layout_y="0dp"
         android:text="setEnTower" />
+
+    <ProgressBar
+        android:id="@+id/progress_blood"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_x="367dp"
+        android:layout_y="58dp"
+        android:max="100" />
+
+    <Button
+        android:id="@+id/blood_minus"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="265dp"
+        android:layout_y="173dp"
+        android:text="Blood_minus"
+        android:onClick="mius_blood" />
   
 </AbsoluteLayout>

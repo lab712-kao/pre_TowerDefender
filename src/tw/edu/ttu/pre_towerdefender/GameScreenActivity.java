@@ -15,6 +15,8 @@ import java.util.TimerTask;
 import tw.edu.ttu.pre_towerdefender.R.drawable;
 import gameviews.constants.Constant;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
+
+
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
@@ -52,6 +54,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import android.view.SurfaceView;
 
@@ -73,7 +76,7 @@ public class GameScreenActivity extends ARViewActivity {
 					 levelUP, desh, domdom, tank, peanut,
 					 musicBtn, pause;
 	
-	
+	ProgressBar myProgressBar;
 	private MediaPlayer Player;
 	private ObjectHandler OBHL = null;
 	private MetaioSDKCallbackHandler mMetaioHandler;
@@ -101,7 +104,8 @@ public class GameScreenActivity extends ARViewActivity {
 		GI = new GameInterface(imageArray);
 		setAutoFocus();
 		Player = new MediaPlayer();
-		Player = MediaPlayer.create(GameScreenActivity.this, R.raw.sample);
+		
+		Player = MediaPlayer.create(GameScreenActivity.this, R.raw.game_music_battle);
 		Player.start();
 	}
 	
@@ -121,8 +125,7 @@ public class GameScreenActivity extends ARViewActivity {
 					@Override
 					public void run() {
 						initial();
-						costAndBound();
-						
+						costAndBound();			
 					}
 				});
 			}
@@ -132,13 +135,7 @@ public class GameScreenActivity extends ARViewActivity {
 	public void timerStop(View v){
 		flag_bound ^= 1;		
 	}
-	boolean mPreview = true;
-	
-	public void trytrysee(View v){
-		metaioSDK.startInstantTracking("INSTANT_2D_GRAVITY_SLAM_EXTRAPOLATED", "", mPreview);
-		mPreview = !mPreview;
-	}
-	
+
 	public void initial(){
 		
 		num_hun = (ImageView)findViewById(R.id.cost_hun);
@@ -197,13 +194,16 @@ public class GameScreenActivity extends ARViewActivity {
 		}		
 		
 	}
-	
+	int  myProgress = 0;
 	public void costAndBound(){
 		
+		 myProgressBar = (ProgressBar)findViewById(R.id.progress_blood);
+	        myProgressBar.setProgress(myProgress);
 		if(flag_bound == 1 && cost < bound) {
 			cost += 1;
 			if(cost > bound) cost = cost - cost%bound;
-		}		
+		}
+		
 	 	num_hun.setImageResource(Constant.images[cost/100%10]);	
 	 	num_ten.setImageResource(Constant.images[cost/10%10]);	
 	 	num_one.setImageResource(Constant.images[cost%10]);	
@@ -232,7 +232,7 @@ public class GameScreenActivity extends ARViewActivity {
 		if(cost - 100 >=0 && tankModel!=null&&OBHL!=null)
 		{
 			cost-=100;
-			OBHL.creatObject("tank",  tankModel , 3);
+			OBHL.creatObject("tank",  tankModel , 1);
 		}
 	}
 	public void domOnclick(View v){
@@ -336,17 +336,17 @@ public class GameScreenActivity extends ARViewActivity {
 				// TODO Auto-generated method stub
 				Vector3d co1 = new Vector3d();
 				Vector3d co2 = new Vector3d();
-				if(/*trackingState[0] == 1 && */trackingState[2] == 1 && trackingState[3] == 1) {
+				if(trackingState[0] == 1 && trackingState[2] == 1 && trackingState[3] == 1) {
 					boolean success;
 					TrackingValues theRelation1 = new TrackingValues();
 					TrackingValues theRelation2 = new TrackingValues();
-					/*
+					
 					success = metaioSDK.getCosRelation(1, 3, theRelation1);
 					if(success) {
 						co1 = theRelation1.getTranslation();
 					}
-					*/
-					success = metaioSDK.getCosRelation(3, 4, theRelation2);
+					
+					success = metaioSDK.getCosRelation(1, 4, theRelation2);
 					if(success) {
 						co2 = theRelation2.getTranslation();
 					}
@@ -372,12 +372,10 @@ public class GameScreenActivity extends ARViewActivity {
 						minY = (int)co1.getY();
 					}
 					
-					enTran.setX(randInt(0, (int)co2.getX())*-1);
-					enTran.setY(randInt(0, (int)co2.getY())*-1);
+					enTran.setX(randInt(minX, maxX)*-1);
+					enTran.setY(randInt(minY, maxY)*-1);
 					enTran.setZ(0);
 					
-					ttt.setTranslation(new Vector3d(randInt(0, 10), randInt(0, 10), 0), true);
-					ttt.setVisible(true);
 					Log.d("pre-dd", "x = " + enTran.getX() + " y = " + enTran.getY() + " z = " + enTran.getZ());
 					
 					enTower.setTranslation(enTran);
@@ -428,14 +426,13 @@ public class GameScreenActivity extends ARViewActivity {
 			//tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
 			
 			ttt = metaioSDK.createGeometry(towerModel1);
-			ttt.setCoordinateSystemID(3);
+			ttt.setCoordinateSystemID(1);
 			ttt.setScale(10.0f);
 			ttt.setTranslation(new Vector3d(0, 0, 0));
 			ttt.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
-			ttt.setVisible(false);
 			
 			enTower = metaioSDK.createGeometry(towerModel1);
-			enTower.setCoordinateSystemID(3);
+			enTower.setCoordinateSystemID(1);
 			enTower.setScale(10.0f);
 			enTower.setTranslation(new Vector3d(10, 10, 0));
 			enTower.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));

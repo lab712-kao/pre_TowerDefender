@@ -117,6 +117,7 @@ public class Path {
 	}
 	private void calPath(){
 		PathPoint point[] = new PathPoint[way.size()];
+		point = way.toArray(point);
 		Arrays.sort(point, compator);
 		way.clear();
 		for (int i = 0; i < point.length-1; i++) {
@@ -124,9 +125,10 @@ public class Path {
 			point[i].setAngle(calAngle(point[i+1].getPosition()));
 			way.add(point[i]);
 		}
-		point[point.length-1].setAngle(calAngle(end));
-		point[point.length-1].setNextPoint(new PathPoint(end, calAngle(end)));
-		
+		if(point.length>=1){
+			point[point.length-1].setAngle(calAngle(end));
+			point[point.length-1].setNextPoint(new PathPoint(end, calAngle(end)));
+		}
 	}
 	public PathPoint getNextPathPoint(PathPoint nowPoint){
 		
