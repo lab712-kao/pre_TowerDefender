@@ -125,8 +125,7 @@ public class GameScreenActivity extends ARViewActivity {
 					@Override
 					public void run() {
 						initial();
-						costAndBound();
-						
+						costAndBound();			
 					}
 				});
 			}
@@ -198,6 +197,12 @@ public class GameScreenActivity extends ARViewActivity {
 	int  myProgress = 0;
 	public void costAndBound(){
 		
+		 myProgressBar = (ProgressBar)findViewById(R.id.progress_blood);
+	        myProgressBar.setProgress(myProgress);
+		if(flag_bound == 1 && cost < bound) {
+			cost += 1;
+			if(cost > bound) cost = cost - cost%bound;
+		}
 		
 	 	num_hun.setImageResource(Constant.images[cost/100%10]);	
 	 	num_ten.setImageResource(Constant.images[cost/10%10]);	
