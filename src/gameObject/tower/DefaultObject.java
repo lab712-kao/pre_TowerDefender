@@ -187,11 +187,11 @@ public abstract class DefaultObject {
 				y = k == 0 ? min.getY() : max.getY();
 				for (int t = 0; t < 2; t++) {
 					z = t == 0 ? min.getZ() : max.getZ();
-					bundingBoxPoint.add(new Vector3d(x, y, z).multiply(size.getX()));
+					BundingBoxPoint.add(new Vector3d(x, y, z).multiply(size.getX()));
 				}
 			}
 		}
-		return bundingBoxPoint;
+		return BundingBoxPoint;
 	}
 	public void dead() {
 		if (model != null) {
