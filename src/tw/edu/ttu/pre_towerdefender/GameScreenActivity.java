@@ -133,12 +133,12 @@ public class GameScreenActivity extends ARViewActivity {
 		flag_bound ^= 1;		
 	}
 	boolean mPreview = true;
-	
+	/*
 	public void trytrysee(View v){
 		metaioSDK.startInstantTracking("INSTANT_2D_GRAVITY_SLAM_EXTRAPOLATED", "", mPreview);
 		mPreview = !mPreview;
 	}
-	
+	*/
 	public void initial(){
 		
 		num_hun = (ImageView)findViewById(R.id.cost_hun);
