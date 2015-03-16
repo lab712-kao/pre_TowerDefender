@@ -2,6 +2,7 @@ package gameSystem.gameObjectSystem;
 
 import gameObject.tower.MovingObject;
 import gameObject.tower.DefaultObject;
+import gameSystem.gameObjectSystem.Path.PathPoint;
 
 import java.util.ArrayList;
 
@@ -16,11 +17,12 @@ public class ObjectMover implements Runnable {
 	private DoubleArrayList<MovingObject> objects = null;
 	private Thread thread;
 	private Vector3d enTowerPosition = new Vector3d(0, -1, 0);
-	private PathPlaner pathPlaner;
-	private ArrayList<Vector3d> path;
+//	private PathPlaner pathPlaner;
+//	private ArrayList<Vector3d> path;
+	private Path path;
 
 	private Vector3d begin = new Vector3d(0, 0, 0);
-	private Vector3d goal = new Vector3d((float)100.0, (float)100.0, (float)0.0);
+	private Vector3d end = new Vector3d((float)100.0, (float)100.0, (float)0.0);
 	
 	private final Boolean _STOP = true;
 	
@@ -28,19 +30,22 @@ public class ObjectMover implements Runnable {
 		super();
 		TYPE = type;
 		this.objects = objects;
-		pathPlaner = new PathPlaner(begin, goal);
-		path = pathPlaner.getPath();
+//		pathPlaner = new PathPlaner(begin, goal);
+//		path = pathPlaner.getPath();
+		path = new Path(begin, end);
 		
 		thread = new Thread(this);
 		thread.start();
 	}
-	public ObjectMover(IDType tYPE, DoubleArrayList<MovingObject> objects,Vector3d begin,Vector3d goal) {
+	public ObjectMover(IDType tYPE, DoubleArrayList<MovingObject> objects,Vector3d begin,Vector3d end) {
 		super();
 		TYPE = tYPE;
 		this.objects = objects;
 		this.begin = begin;
-		this.goal = goal;
-		pathPlaner = new PathPlaner(this.begin, this.goal);
+		this.end = end;
+//		pathPlaner = new PathPlaner(this.begin, this.goal);
+		path = new Path(begin, end);
+		
 		thread = new Thread(this);
 		thread.start();
 	}
@@ -87,10 +92,12 @@ public class ObjectMover implements Runnable {
 		enTowerPosition = enPos;
 	}
 	public void addPosition(Vector3d pos){
-		pathPlaner.addPassPos(pos);
+//		pathPlaner.addPassPos(pos);
+		path.addPathPoint(pos);
 	}
-	public void reovePosition(Vector3d pos){
-		pathPlaner.removePassPos(pos);
+	public void reovePosition(PathPoint pos){
+//		pathPlaner.removePassPos(pos);
+		path.removePathPoint(pos);
 	}
 	@Deprecated
 	private ArrayList getCube(BoundingBox box) {
@@ -159,7 +166,7 @@ public class ObjectMover implements Runnable {
 		return (float)Math.atan2(b.getY() - a.getY(), b.getX() - a.getX());
 	}
 	
-
+	@Deprecated
 	private Boolean isOver(MovingObject moveObject){
 				
 		Vector3d v = moveObject.getModelPosition().subtract(begin);
@@ -193,58 +200,40 @@ public class ObjectMover implements Runnable {
 	private boolean move(int index) {
 
 		
-//		Vector3d pos = objects.seek(index, TYPE).getModelPosition();
-//		Log.d("mover-p", "x = " + pos.getX() + ", y = " + pos.getY());
-//		Log.d("mover", "x = " + enTowerPosition.getX() + ", y = " + enTowerPosition.getY());
-//		objects.seek(index, TYPE).setModelFaceAngle(culAngle(pos, enTowerPosition));
-//		objects.seek(index, TYPE).move();
-
-
 		MovingObject movingObject = objects.seek(index, TYPE);
 		
-		if(movingObject.getMoveStatus().equals(_STOP))
-			return true;
-		movingObject.move();
-		
-		if(isOver(movingObject)){
-			if(movingObject.getNextPos()==null||!(movingObject.getNextPos().getX()>goal.getX()&&movingObject.getNextPos().getY()>goal.getY())){
-				
-				movingObject.setNextPos(pathPlaner.getNextPos(movingObject.getModelPosition(), TYPE));
-				
-				movingObject.setModelFaceAngle((float) Math.atan2(movingObject.getModelPosition().getY()-movingObject.getNextPos().getY()
-						, movingObject.getModelPosition().getX()-movingObject.getNextPos().getX()));
-			}else{
-				//do nothing
-				Log.d("moveStart", "stopMove");
+		if(movingObject.isDead())return false;
+		switch (movingObject.moveByPathPoint()) {
+			case MovingObject.STOPING:
+				movingObject.startMove();
+				return true;
+			case MovingObject.AT_END:
+				return true;
+			case MovingObject.NO_PATH_SET:
+				movingObject.setPathPoint(path.getNextPathPoint(null));
+				movingObject.moveByPathPoint();
+				break;
+			default:
+				break;
+		}
+		//collision detection
+		for( int i = 0; i<objects.size(TYPE); i++ ){
+			if( objects.seek(i, TYPE).checkCollision(movingObject) ){
 				movingObject.stopMove();
 			}
 		}
-
-		Log.d("moveStart", "pos"+movingObject.getModelPosition());
-
-		boolean succ=true;
 		
-		if (collisionDetection(movingObject,
-				objects.seek(0, TYPE == IDType.O ? IDType.E : IDType.O))) {
-			//Log.d("moveStart", "collision!!!!!!!!!!!!!!!!!!!!!!!!!");
-			movingObject.back();
-			//return false;
-			succ = false;
-
-		} else {
-			for (int i = 0; i < objects.size(TYPE); i++) {
-
-				if (collisionDetection(movingObject, objects.seek(i, TYPE)) && i!=index) {
-					movingObject.back();
-					//Log.d("moveStart", "collision!!!!!!!!!!!!!!!!!!!!!!!!!");
-					//return false;
-					succ = false;
+		for( int i = 0; i<objects.size(TYPE); i++ ){
+			if( objects.seek(i, TYPE).checkCollision(movingObject) ){
+				movingObject.stopMove();
+				movingObject.setHealth((float) (movingObject.getHealth()-1.0));
+				if(movingObject.getHealth()<=0){
+					movingObject.dead();
 				}
-
 			}
 		}
-
-		return succ;
+		
+		return true;
 	}
 
 }
