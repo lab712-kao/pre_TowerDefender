@@ -6,6 +6,7 @@ import gameSystem.gameObjectSystem.Path.PathPoint;
 import java.util.ArrayList;
 
 import android.R.integer;
+import android.util.Log;
 
 import com.metaio.sdk.jni.BoundingBox;
 import com.metaio.sdk.jni.IGeometry;
@@ -115,14 +116,20 @@ public abstract class MovingObject extends DefaultObject {
 				
 			}
 		}
+		
 		if(point.getNextPoint()!=null){
 			lastTimePos = position;
 			
 			Vector3d p = Hermite.evalHermite(t, position, point.getPosition(), 
-				position.subtract(point.getPosition()), point.getNextPoint().getPosition().subtract(point.getPosition()));//
+				new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
+			
 			position = p;
+			Hermite.evalTangentVectorOfHermite(t, position, point.getPosition(), 
+					new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
+				
 			this.setModelFaceAngle((float) Math.atan2(p.getY(), p.getX()));
 			model.setTranslation(p);
+			Log.d("point","{X:"+p.getX()+" Y:"+p.getY()+"}");
 			return SUCC_MOVE;
 		}
 				

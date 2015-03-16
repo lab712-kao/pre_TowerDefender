@@ -95,12 +95,15 @@ public class Path {
 	private ArrayList<PathPoint> way;
 	private Vector3d begin,end;
 	private final float DEFAULT_ANGLE = 0.0f;
+	private PathPoint DEFAULT_POINT;
 	private PathPoint compator;
 	public Path(Vector3d begin, Vector3d end) {
 		way = new ArrayList<PathPoint>();
 		this.begin = begin;
 		this.end = end;
 		compator = new PathPoint(begin, end);
+		DEFAULT_POINT = new PathPoint(begin, calAngle(end));
+		DEFAULT_POINT.setNextPoint(new PathPoint(end, calAngle(end)));
 		// TODO Auto-generated constructor stub		
 	}
 	
@@ -133,6 +136,8 @@ public class Path {
 	public PathPoint getNextPathPoint(PathPoint nowPoint){
 		
 		if(nowPoint == null){//it mean in the begin
+			if(way.size() == 0)
+				return DEFAULT_POINT;
 			return way.get(0);
 		}
 		

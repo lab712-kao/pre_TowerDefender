@@ -376,7 +376,7 @@ public class GameScreenActivity extends ARViewActivity {
 					enTran.setY(randInt(minY, maxY)*-1);
 					enTran.setZ(0);
 					
-					Log.d("pre-dd", "x = " + enTran.getX() + " y = " + enTran.getY() + " z = " + enTran.getZ());
+//					Log.d("pre-dd", "x = " + enTran.getX() + " y = " + enTran.getY() + " z = " + enTran.getZ());
 					
 					enTower.setTranslation(enTran);
 					enTower.setVisible(true);

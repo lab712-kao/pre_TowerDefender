@@ -211,7 +211,9 @@ public class ObjectMover implements Runnable {
 				return true;
 			case MovingObject.NO_PATH_SET:
 				movingObject.setPathPoint(path.getNextPathPoint(null));
+				Log.d("point",path.getNextPathPoint(null).toString());
 				movingObject.moveByPathPoint();
+				Log.d("point", "pointSet");
 				break;
 			default:
 				break;
