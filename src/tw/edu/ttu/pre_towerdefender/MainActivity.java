@@ -87,6 +87,7 @@ public class MainActivity extends Activity {
 		}	
 	}
 	public void gotoGameActivity(View v) {
+		Player.pause();
 		Intent it = new Intent();
 		it.setClass(this, GameScreenActivity.class);
 		startActivity(it);

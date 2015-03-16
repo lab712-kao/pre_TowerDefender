@@ -15,6 +15,8 @@ import java.util.TimerTask;
 import tw.edu.ttu.pre_towerdefender.R.drawable;
 import gameviews.constants.Constant;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
+
+
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
@@ -52,6 +54,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import android.view.SurfaceView;
 
@@ -73,7 +76,7 @@ public class GameScreenActivity extends ARViewActivity {
 					 levelUP, desh, domdom, tank, peanut,
 					 musicBtn, pause;
 	
-	
+	ProgressBar myProgressBar;
 	private MediaPlayer Player;
 	private ObjectHandler OBHL = null;
 	private MetaioSDKCallbackHandler mMetaioHandler;
@@ -101,7 +104,8 @@ public class GameScreenActivity extends ARViewActivity {
 		GI = new GameInterface(imageArray);
 		setAutoFocus();
 		Player = new MediaPlayer();
-		Player = MediaPlayer.create(GameScreenActivity.this, R.raw.sample);
+		
+		Player = MediaPlayer.create(GameScreenActivity.this, R.raw.game_music_battle);
 		Player.start();
 	}
 	
@@ -132,13 +136,7 @@ public class GameScreenActivity extends ARViewActivity {
 	public void timerStop(View v){
 		flag_bound ^= 1;		
 	}
-	boolean mPreview = true;
-	
-	public void trytrysee(View v){
-		metaioSDK.startInstantTracking("INSTANT_2D_GRAVITY_SLAM_EXTRAPOLATED", "", mPreview);
-		mPreview = !mPreview;
-	}
-	
+
 	public void initial(){
 		
 		num_hun = (ImageView)findViewById(R.id.cost_hun);
@@ -197,13 +195,10 @@ public class GameScreenActivity extends ARViewActivity {
 		}		
 		
 	}
-	
+	int  myProgress = 0;
 	public void costAndBound(){
 		
-		if(flag_bound == 1 && cost < bound) {
-			cost += 1;
-			if(cost > bound) cost = cost - cost%bound;
-		}		
+		
 	 	num_hun.setImageResource(Constant.images[cost/100%10]);	
 	 	num_ten.setImageResource(Constant.images[cost/10%10]);	
 	 	num_one.setImageResource(Constant.images[cost%10]);	
