@@ -102,8 +102,8 @@ public class Path {
 		this.begin = begin;
 		this.end = end;
 		compator = new PathPoint(begin, end);
-		DEFAULT_POINT = new PathPoint(begin, calAngle(end));
-		DEFAULT_POINT.setNextPoint(new PathPoint(end, calAngle(end)));
+		DEFAULT_POINT = new PathPoint(begin, calAngle(begin,end));
+		DEFAULT_POINT.setNextPoint(new PathPoint(end, calAngle(begin,end)));
 		// TODO Auto-generated constructor stub		
 	}
 	
