@@ -1,5 +1,7 @@
 package gameSystem.gameObjectSystem;
 
+import com.metaio.sdk.jni.Vector3d;
+
 public class CatmullRom {
 	
 	public CatmullRom() {
