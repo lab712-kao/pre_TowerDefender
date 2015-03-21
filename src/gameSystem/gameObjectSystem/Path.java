@@ -111,10 +111,10 @@ public class Path {
 		way.add(new PathPoint(pos, DEFAULT_ANGLE));
 		calPath();
 	}
-	private float calAngle(Vector3d A){
+	private float calAngle(Vector3d base,Vector3d A){
 		
 		if(A!=null)
-			return (float) Math.atan2(A.getY(), A.getX());
+			return (float) Math.atan2(A.getY()-base.getY(), A.getX()-base.getX());
 		return DEFAULT_ANGLE;
 		
 	}
@@ -125,7 +125,7 @@ public class Path {
 		way.clear();
 		for (int i = 0; i < point.length-1; i++) {
 			point[i].setNextPoint(point[i+1]);
-			point[i].setAngle(calAngle(point[i+1].getPosition()));
+			point[i].setAngle(calAngle(point[i].getPosition(),point[i+1].getPosition()));
 			way.add(point[i]);
 		}
 		if(point.length>=1){
