@@ -102,7 +102,7 @@ public abstract class MovingObject extends DefaultObject {
 		if(isStop)
 			return STOPING;
 		
-		double t = moveSpeed*Math.cos(faceAngle)*0.01;
+		double t = 0.1;//part of Hermite
 		
 		if(point == null){
 			return NO_PATH_SET;//need to setPathPoint
@@ -117,9 +117,10 @@ public abstract class MovingObject extends DefaultObject {
 			}
 		}
 		
-		if(point.getNextPoint()!=null){
+		if(point.getNextPoint()!=null){//the last point is at position end ,so if null that mean 'at end'
 			lastTimePos = position;
 			
+			//Hermite p = (t,P1,P2,T1,T2)
 			Vector3d p = Hermite.evalHermite(t, position, point.getPosition(), 
 				new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
 			
@@ -127,7 +128,7 @@ public abstract class MovingObject extends DefaultObject {
 			Hermite.evalTangentVectorOfHermite(t, position, point.getPosition(), 
 					new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
 				
-			this.setModelFaceAngle((float) Math.atan2(p.getY(), p.getX()));
+			this.setModelFaceAngle((float) Math.atan2(p.getY()-lastTimePos.getY(), p.getX()-lastTimePos.getX()));
 			model.setTranslation(p);
 			Log.d("point","{X:"+p.getX()+" Y:"+p.getY()+"}");
 			return SUCC_MOVE;
