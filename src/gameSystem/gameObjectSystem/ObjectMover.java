@@ -206,14 +206,15 @@ public class ObjectMover implements Runnable {
 		switch (movingObject.moveByPathPoint()) {
 			case MovingObject.STOPING:
 				movingObject.startMove();
+				Log.d("point", "Restart move");
 				return true;
 			case MovingObject.AT_END:
+				Log.d("point", "In the end");
 				return true;
 			case MovingObject.NO_PATH_SET:
 				movingObject.setPathPoint(path.getNextPathPoint(null));
-				Log.d("point",path.getNextPathPoint(null).toString());
 				movingObject.moveByPathPoint();
-				Log.d("point", "pointSet");
+				Log.d("point", "Set Point:{X:"+path.getNextPathPoint(null).getPosition().getX()+" Y:"+path.getNextPathPoint(null).getPosition().getY()+"}");
 				break;
 			default:
 				break;
@@ -221,12 +222,16 @@ public class ObjectMover implements Runnable {
 		//collision detection
 		for( int i = 0; i<objects.size(TYPE); i++ ){
 			if( objects.seek(i, TYPE).checkCollision(movingObject) ){
+				//if collision unit is own unit and stop this movingObject move until startMove() << be called
 				movingObject.stopMove();
 			}
 		}
 		
 		for( int i = 0; i<objects.size(TYPE); i++ ){
 			if( objects.seek(i, TYPE).checkCollision(movingObject) ){
+				//if collision unit is enemy unit and stop this movingObject move until startMove() << be called
+				//and HP = HP -1
+				//if (HP<=0) means this object is dead 
 				movingObject.stopMove();
 				movingObject.setHealth((float) (movingObject.getHealth()-1.0));
 				if(movingObject.getHealth()<=0){

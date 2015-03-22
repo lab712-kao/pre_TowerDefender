@@ -22,7 +22,7 @@ public class Path {
 			this.position = position;
 			this.angle = angle;
 		}
-		public PathPoint(Vector3d begin, Vector3d end){
+		public PathPoint(Vector3d begin, Vector3d end){// this construct is only use in Comparator
 			if(begin.getX()>end.getX()){
 				xAscending = false;//mean Descending
 			}
@@ -55,7 +55,7 @@ public class Path {
 		}
 		@Override
 		public int compare(PathPoint lhs, PathPoint rhs) {
-			// TODO Auto-generated method stub
+			
 			if(lhs.getPosition().getX() == rhs.getPosition().getX() 
 			&& lhs.getPosition().getY() == rhs.getPosition().getY()){
 				lhs.setIgnore(true);
@@ -94,9 +94,9 @@ public class Path {
 	
 	private ArrayList<PathPoint> way;
 	private Vector3d begin,end;
-	private final float DEFAULT_ANGLE = 0.0f;
-	private PathPoint DEFAULT_POINT;
-	private PathPoint compator;
+	private final float DEFAULT_ANGLE = 0.0f;//default angle in every new Path Point
+	private PathPoint DEFAULT_POINT;//the default Path Point form begin to end
+	private PathPoint compator;//it is use to sort the others Path Point 
 	public Path(Vector3d begin, Vector3d end) {
 		way = new ArrayList<PathPoint>();
 		this.begin = begin;
@@ -104,7 +104,6 @@ public class Path {
 		compator = new PathPoint(begin, end);
 		DEFAULT_POINT = new PathPoint(begin, calAngle(begin,end));
 		DEFAULT_POINT.setNextPoint(new PathPoint(end, calAngle(begin,end)));
-		// TODO Auto-generated constructor stub		
 	}
 	
 	public void addPathPoint(Vector3d pos){
@@ -118,7 +117,7 @@ public class Path {
 		return DEFAULT_ANGLE;
 		
 	}
-	private void calPath(){
+	private void calPath(){//sort the Path Point and set every Path Point 's angle & next position
 		PathPoint point[] = new PathPoint[way.size()];
 		point = way.toArray(point);
 		Arrays.sort(point, compator);
