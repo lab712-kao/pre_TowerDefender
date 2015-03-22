@@ -22,11 +22,11 @@ public class ObjectHandler  {
 		this.sdk = sdk;
 		this.view = view;
 		objects = new DoubleArrayList<MovingObject>();
-		OBMO = new ObjectMover(IDType.O,objects);
-		OBMO.addPosition(new Vector3d(20, 75, 0));
-		OBME = new ObjectMover(IDType.E,objects);
-		OBAO = new ObjectAttacker(IDType.O, objects);
-		OBAE = new ObjectAttacker(IDType.E, objects);	
+//		OBMO = new ObjectMover(IDType.O,objects);
+//		OBMO.addPosition(new Vector3d(20, 75, 0));
+//		OBME = new ObjectMover(IDType.E,objects);
+//		OBAO = new ObjectAttacker(IDType.O, objects);
+//		OBAE = new ObjectAttacker(IDType.E, objects);	
 	}
 
 	public boolean creatObject(String name, String modelPath,
@@ -63,6 +63,10 @@ public class ObjectHandler  {
 	}
 
 	public void setEnermyTowerPosition(Vector3d enTower) {
-		OBMO.setEnTowerPos(enTower);
+		if(OBMO == null){
+			OBMO = new ObjectMover(IDType.O,objects,new Vector3d(0f),enTower);
+			OBMO.addPosition(new Vector3d(20, 75, 0));
+		}
+//		OBMO.setEnTowerPos(enTower);
 	}
 }
