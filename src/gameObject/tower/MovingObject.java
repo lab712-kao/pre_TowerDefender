@@ -18,7 +18,7 @@ public abstract class MovingObject extends DefaultObject {
 	protected float moveAngle;
 	protected Vector3d lastTimePos = null;
 	protected Vector3d nextPos = null;
-	protected Boolean isStop = false;
+	protected Boolean isStop = false,pointSet = false;
 	protected PathPoint point = null;
 	protected double t = 0.1;//part of Hermite
 	public static final int NO_PATH_SET = 1, AT_END = 2, SUCC_MOVE = 3, STOPING = 4;
@@ -103,12 +103,16 @@ public abstract class MovingObject extends DefaultObject {
 		if(isStop)
 			return STOPING;
 		
-		if(point == null){
+		if(point == null && !pointSet){
+			pointSet = true;
 			return NO_PATH_SET;//need to setPathPoint
 		}
-		else if(point.isIgnore() == true || 
-				(Math.abs(point.getPosition().getX()-position.getX())<3 
-						&& Math.abs(point.getPosition().getY()-position.getY())<3) ){
+		else if(point.isIgnore()&&t==1){
+			t=0.1f;
+			lastTimePos = point.getPosition();
+			point = point.getNextPoint();
+			if(point == null)
+				return AT_END;
 			while(point.isIgnore() == true){
 				lastTimePos = point.getPosition();
 				point = point.getNextPoint();
@@ -124,8 +128,8 @@ public abstract class MovingObject extends DefaultObject {
 				new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
 			
 			position = p;
-			Hermite.evalTangentVectorOfHermite(t, position, point.getPosition(), 
-					new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
+//			Hermite.evalTangentVectorOfHermite(t, position, point.getPosition(), 
+//					new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
 				
 			this.setModelFaceAngle((float) Math.atan2(p.getY()-lastTimePos.getY(), p.getX()-lastTimePos.getX()));
 			model.setTranslation(p);
