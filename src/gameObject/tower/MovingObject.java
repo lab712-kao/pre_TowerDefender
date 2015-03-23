@@ -6,6 +6,7 @@ import gameSystem.gameObjectSystem.Path.PathPoint;
 import java.util.ArrayList;
 
 import android.R.integer;
+import android.util.Log;
 
 import com.metaio.sdk.jni.BoundingBox;
 import com.metaio.sdk.jni.IGeometry;
@@ -17,8 +18,9 @@ public abstract class MovingObject extends DefaultObject {
 	protected float moveAngle;
 	protected Vector3d lastTimePos = null;
 	protected Vector3d nextPos = null;
-	protected Boolean isStop = false;
+	protected Boolean isStop = false,pointSet = false;
 	protected PathPoint point = null;
+	protected double t = 0.1;//part of Hermite
 	public static final int NO_PATH_SET = 1, AT_END = 2, SUCC_MOVE = 3, STOPING = 4;
 	
 	public MovingObject(IGeometry model, int coordinateSystemID, Vector3d size,float x, float y, float faceAngle,float moveSpeed,float moveAngle,float health) {
@@ -101,28 +103,39 @@ public abstract class MovingObject extends DefaultObject {
 		if(isStop)
 			return STOPING;
 		
-		double t = moveSpeed*Math.cos(faceAngle)*0.01;
-		
-		if(point == null){
+		if(point == null && !pointSet){
+			pointSet = true;
 			return NO_PATH_SET;//need to setPathPoint
 		}
-		else if(point.isIgnore() == true || 
-				(Math.abs(point.getPosition().getX()-position.getX())<3 
-						&& Math.abs(point.getPosition().getY()-position.getY())<3) ){
+		else if(point.isIgnore()&&t==1){
+			t=0.1f;
+			lastTimePos = point.getPosition();
+			point = point.getNextPoint();
+			if(point == null)
+				return AT_END;
 			while(point.isIgnore() == true){
 				lastTimePos = point.getPosition();
 				point = point.getNextPoint();
 				
 			}
 		}
-		if(point.getNextPoint()!=null){
+		
+		if(point.getNextPoint()!=null){//the last point is at position end ,so if null that mean 'at end'
 			lastTimePos = position;
 			
+			//Hermite p = (t,P1,P2,T1,T2)
 			Vector3d p = Hermite.evalHermite(t, position, point.getPosition(), 
-				position.subtract(point.getPosition()), point.getNextPoint().getPosition().subtract(point.getPosition()));//
+				new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
+			
 			position = p;
-			this.setModelFaceAngle((float) Math.atan2(p.getY(), p.getX()));
+//			Hermite.evalTangentVectorOfHermite(t, position, point.getPosition(), 
+//					new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
+				
+			this.setModelFaceAngle((float) Math.atan2(p.getY()-lastTimePos.getY(), p.getX()-lastTimePos.getX()));
 			model.setTranslation(p);
+			Log.d("point","{X:"+p.getX()+" Y:"+p.getY()+"}");
+			t += 0.1;
+			if(t > 1) t = 1;
 			return SUCC_MOVE;
 		}
 				

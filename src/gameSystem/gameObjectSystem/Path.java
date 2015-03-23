@@ -22,7 +22,7 @@ public class Path {
 			this.position = position;
 			this.angle = angle;
 		}
-		public PathPoint(Vector3d begin, Vector3d end){
+		public PathPoint(Vector3d begin, Vector3d end){// this construct is only use in Comparator
 			if(begin.getX()>end.getX()){
 				xAscending = false;//mean Descending
 			}
@@ -55,7 +55,7 @@ public class Path {
 		}
 		@Override
 		public int compare(PathPoint lhs, PathPoint rhs) {
-			// TODO Auto-generated method stub
+			
 			if(lhs.getPosition().getX() == rhs.getPosition().getX() 
 			&& lhs.getPosition().getY() == rhs.getPosition().getY()){
 				lhs.setIgnore(true);
@@ -94,45 +94,49 @@ public class Path {
 	
 	private ArrayList<PathPoint> way;
 	private Vector3d begin,end;
-	private final float DEFAULT_ANGLE = 0.0f;
-	private PathPoint compator;
+	private final float DEFAULT_ANGLE = 0.0f;//default angle in every new Path Point
+	private PathPoint DEFAULT_POINT;//the default Path Point form begin to end
+	private PathPoint compator;//it is use to sort the others Path Point 
 	public Path(Vector3d begin, Vector3d end) {
 		way = new ArrayList<PathPoint>();
 		this.begin = begin;
 		this.end = end;
 		compator = new PathPoint(begin, end);
-		// TODO Auto-generated constructor stub		
+		DEFAULT_POINT = new PathPoint(begin, calAngle(begin,end));
+		DEFAULT_POINT.setNextPoint(new PathPoint(end, calAngle(begin,end)));
 	}
 	
 	public void addPathPoint(Vector3d pos){
 		way.add(new PathPoint(pos, DEFAULT_ANGLE));
 		calPath();
 	}
-	private float calAngle(Vector3d A){
+	private float calAngle(Vector3d base,Vector3d A){
 		
 		if(A!=null)
-			return (float) Math.atan2(A.getY(), A.getX());
+			return (float) Math.atan2(A.getY()-base.getY(), A.getX()-base.getX());
 		return DEFAULT_ANGLE;
 		
 	}
-	private void calPath(){
+	private void calPath(){//sort the Path Point and set every Path Point 's angle & next position
 		PathPoint point[] = new PathPoint[way.size()];
 		point = way.toArray(point);
 		Arrays.sort(point, compator);
 		way.clear();
 		for (int i = 0; i < point.length-1; i++) {
 			point[i].setNextPoint(point[i+1]);
-			point[i].setAngle(calAngle(point[i+1].getPosition()));
+			point[i].setAngle(calAngle(point[i].getPosition(),point[i+1].getPosition()));
 			way.add(point[i]);
 		}
 		if(point.length>=1){
-			point[point.length-1].setAngle(calAngle(end));
-			point[point.length-1].setNextPoint(new PathPoint(end, calAngle(end)));
+			point[point.length-1].setAngle(calAngle(point[point.length-1].getPosition(),end));
+			point[point.length-1].setNextPoint(new PathPoint(end, calAngle(point[point.length-1].getPosition(),end)));
 		}
 	}
 	public PathPoint getNextPathPoint(PathPoint nowPoint){
 		
 		if(nowPoint == null){//it mean in the begin
+			if(way.size() == 0)
+				return DEFAULT_POINT;
 			return way.get(0);
 		}
 		
