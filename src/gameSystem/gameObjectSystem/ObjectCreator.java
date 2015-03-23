@@ -2,7 +2,9 @@ package gameSystem.gameObjectSystem;
 
 import gameObject.tower.MovingObject;
 import gameObject.tower.Soldier;
+import gameObject.tower.tower;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfo;
+import android.R.integer;
 import android.util.Log;
 import com.metaio.sdk.jni.IGeometry;
 import java.util.Vector;
@@ -27,7 +29,20 @@ public class ObjectCreator implements Runnable {
 	private final Vector3d SIZE = new Vector3d(20.0f);
 	
 	private final float DEFAULTANGLE = 0.0f;
+	public final int SOLIDER=1,BUILDING=2;
+	private int kinds=1;
 
+	//for tower
+	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
+			int coordinateSystemID, ObjectInfo objectInfo, int x, int y){
+		this.coordinateSystemID = coordinateSystemID;
+		this.modelPath = modelPath;
+		this.sdk = sdk;
+		this.objectInfo = objectInfo;
+		
+		this.pos = new Vector3d(x,y,0f);
+	}
+	//for solider
 	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
 			int coordinateSystemID, DoubleArrayList<MovingObject> objects,
 			ObjectInfo objectInfo) {
@@ -86,11 +101,15 @@ public class ObjectCreator implements Runnable {
 		 * Vector3d( // 35.0f), new Vector3d(0, 0, 0), 100, 100, 20)).start();
 		 */
 		Log.d("moveStart", "inCreator+++++++++++++++++++++++=");
-		objects.push(
+		if(kinds == SOLIDER){
+			objects.push(
 				new Soldier(sdk.createGeometry(modelPath), coordinateSystemID,
 						SIZE, pos, objectInfo.getSpeed(),
 						DEFAULTANGLE, objectInfo.getHp(), objectInfo.getAtk(),
 						objectInfo.getRange()), id);
+		}else if(kinds == BUILDING){
+			new tower(sdk.createGeometry(modelPath), coordinateSystemID, SIZE, pos, objectInfo.getHp());
+		}
 //		BoundingBox bb = objects.seek(0, IDType.O).getModelBoundingBox();
 //		Log.d("creator", "maxX: "+bb.getMax().getX() + " , maxY: "+bb.getMax().getY());
 //		Log.d("creator", "minX: "+bb.getMin().getX() + " , minY: "+bb.getMin().getY());
