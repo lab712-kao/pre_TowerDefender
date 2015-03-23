@@ -130,6 +130,7 @@ public class Path {
 		if(point.length>=1){
 			point[point.length-1].setAngle(calAngle(point[point.length-1].getPosition(),end));
 			point[point.length-1].setNextPoint(new PathPoint(end, calAngle(point[point.length-1].getPosition(),end)));
+			way.add(point[point.length-1]);
 		}
 	}
 	public PathPoint getNextPathPoint(PathPoint nowPoint){
