@@ -30,16 +30,16 @@ public class ObjectCreator implements Runnable {
 	
 	private final float DEFAULTANGLE = 0.0f;
 	public final int SOLIDER=1,BUILDING=2;
-	private int kinds=1;
+	private int kinds=SOLIDER;
 
 	//for tower
 	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
-			int coordinateSystemID, ObjectInfo objectInfo, int x, int y){
+			int coordinateSystemID, ObjectInfo objectInfo, int x, int y,int kinds){
 		this.coordinateSystemID = coordinateSystemID;
 		this.modelPath = modelPath;
 		this.sdk = sdk;
 		this.objectInfo = objectInfo;
-		
+		this.kinds = kinds;
 		this.pos = new Vector3d(x,y,0f);
 	}
 	//for solider
