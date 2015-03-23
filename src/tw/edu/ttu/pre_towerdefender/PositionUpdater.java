@@ -21,6 +21,7 @@ public class PositionUpdater {
 		public Models(IGeometry model, String name) {
 			this.model = model;
 			this.name = name;
+			
 		}
 		
 		public String getName() {

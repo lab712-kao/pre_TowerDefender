@@ -20,6 +20,7 @@ public abstract class MovingObject extends DefaultObject {
 	protected Vector3d nextPos = null;
 	protected Boolean isStop = false;
 	protected PathPoint point = null;
+	protected double t = 0.1;//part of Hermite
 	public static final int NO_PATH_SET = 1, AT_END = 2, SUCC_MOVE = 3, STOPING = 4;
 	
 	public MovingObject(IGeometry model, int coordinateSystemID, Vector3d size,float x, float y, float faceAngle,float moveSpeed,float moveAngle,float health) {
@@ -102,8 +103,6 @@ public abstract class MovingObject extends DefaultObject {
 		if(isStop)
 			return STOPING;
 		
-		double t = 0.1;//part of Hermite
-		
 		if(point == null){
 			return NO_PATH_SET;//need to setPathPoint
 		}
@@ -131,6 +130,8 @@ public abstract class MovingObject extends DefaultObject {
 			this.setModelFaceAngle((float) Math.atan2(p.getY()-lastTimePos.getY(), p.getX()-lastTimePos.getX()));
 			model.setTranslation(p);
 			Log.d("point","{X:"+p.getX()+" Y:"+p.getY()+"}");
+			t += 0.1;
+			if(t > 1) t = 1;
 			return SUCC_MOVE;
 		}
 				

@@ -232,7 +232,7 @@ public class GameScreenActivity extends ARViewActivity {
 		if(cost - 100 >=0 && tankModel!=null&&OBHL!=null)
 		{
 			cost-=100;
-			OBHL.creatObject("tank",  tankModel , 1);
+			OBHL.creatObject("tank",  tankModel , 3);
 		}
 	}
 	public void domOnclick(View v){
@@ -334,46 +334,19 @@ public class GameScreenActivity extends ARViewActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Vector3d co1 = new Vector3d();
-				Vector3d co2 = new Vector3d();
-				if(trackingState[0] == 1 && trackingState[2] == 1 && trackingState[3] == 1) {
+				Vector3d co = new Vector3d();
+				
+				if(trackingState[2] == 1 && trackingState[3] == 1) {
 					boolean success;
-					TrackingValues theRelation1 = new TrackingValues();
-					TrackingValues theRelation2 = new TrackingValues();
+					TrackingValues theRelation = new TrackingValues();
 					
-					success = metaioSDK.getCosRelation(1, 3, theRelation1);
+					success = metaioSDK.getCosRelation(3, 4, theRelation);
 					if(success) {
-						co1 = theRelation1.getTranslation();
+						co = theRelation.getTranslation();
 					}
-					
-					success = metaioSDK.getCosRelation(1, 4, theRelation2);
-					if(success) {
-						co2 = theRelation2.getTranslation();
-					}
-					
-					
-					int maxX = 0, maxY = 0, minX = 0, minY = 0;
-					
-					if(co1.getX() > co2.getX()) {
-						maxX = (int)co1.getX();
-						minX = (int)co2.getX();
-					}
-					else {
-						maxX = (int)co2.getX();
-						minX = (int)co1.getX();
-					}
-					
-					if(co1.getY() > co2.getY()) {
-						maxY = (int)co1.getY();
-						minY = (int)co2.getY();
-					}
-					else {
-						maxY = (int)co2.getY();
-						minY = (int)co1.getY();
-					}
-					
-					enTran.setX(randInt(minX, maxX)*-1);
-					enTran.setY(randInt(minY, maxY)*-1);
+								
+					enTran.setX(randInt(0, Math.abs((int)co.getX()))*-1);
+					enTran.setY(randInt(0, Math.abs((int)co.getY()))*-1);
 					enTran.setZ(0);
 					
 //					Log.d("pre-dd", "x = " + enTran.getX() + " y = " + enTran.getY() + " z = " + enTran.getZ());
@@ -426,13 +399,14 @@ public class GameScreenActivity extends ARViewActivity {
 			//tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
 			
 			ttt = metaioSDK.createGeometry(towerModel1);
-			ttt.setCoordinateSystemID(1);
+			ttt.setCoordinateSystemID(3);
 			ttt.setScale(10.0f);
 			ttt.setTranslation(new Vector3d(0, 0, 0));
 			ttt.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
+			ttt.setVisible(false);
 			
 			enTower = metaioSDK.createGeometry(towerModel1);
-			enTower.setCoordinateSystemID(1);
+			enTower.setCoordinateSystemID(3);
 			enTower.setScale(10.0f);
 			enTower.setTranslation(new Vector3d(10, 10, 0));
 			enTower.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
