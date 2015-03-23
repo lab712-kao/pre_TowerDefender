@@ -162,28 +162,29 @@
         android:onClick="MusicControl"  />
 
     <Button
-        android:id="@+id/OKBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="280dp"
-        android:layout_y="38dp"
-        android:text="OK" />
-
-    <Button
         android:id="@+id/setEnTowerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="250dp"
-        android:layout_y="0dp"
+        android:layout_x="231dp"
+        android:layout_y="206dp"
         android:text="setEnTower" />
+
+    <Button
+        android:id="@+id/OKBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="282dp"
+        android:layout_y="151dp"
+        android:text="OK" />
 
     <ProgressBar
         android:id="@+id/progress_blood"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_x="367dp"
-        android:layout_y="58dp"
+        android:progressDrawable="@drawable/progress_style"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_x="298dp"
+        android:layout_y="62dp"
         android:max="100" />
 
     <Button
@@ -191,9 +192,39 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="265dp"
-        android:layout_y="173dp"
-        android:text="Blood_minus"
-        android:onClick="mius_blood" />
+        android:layout_x="424dp"
+        android:layout_y="20dp"
+        android:onClick="minus_blood"
+        android:text="Blood_minus" />
+
+    <ImageView
+        android:id="@+id/power"
+        android:layout_width="260dp"
+        android:layout_height="60dp"
+        android:layout_x="270dp"
+        android:layout_y="42dp"
+        android:src="@drawable/pwer6" />
+
+    <ImageView
+        android:id="@+id/blood_hun"
+        android:layout_width="26dp"
+        android:layout_height="36dp"
+        android:layout_x="310dp"
+        android:layout_y="25dp"
+        android:src="@drawable/num_zero" />
+     <ImageView
+        android:id="@+id/blood_ten"
+        android:layout_width="26dp"
+        android:layout_height="36dp"
+        android:layout_x="335dp"
+        android:layout_y="25dp"
+        android:src="@drawable/num_zero" />
+      <ImageView
+        android:id="@+id/blood_one"
+        android:layout_width="26dp"
+        android:layout_height="36dp"
+        android:layout_x="360dp"
+        android:layout_y="25dp"
+        android:src="@drawable/num_zero" />
   
 </AbsoluteLayout>

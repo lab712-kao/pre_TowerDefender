@@ -98,26 +98,35 @@ public class Constant {
  	store the images and buttons' size
   ------------------------------------------------*/
 	public static int[][] imageSize = new int[][]{
-		{ 24, 32, 143, 62 },  //cost_hun
-		{ 24, 32, 163, 62 },  //cost_ten
-		{ 24, 32, 183, 62 },  //cost_one
-		{ 24, 32, 206, 62 },  //desh
-		{ 24, 32, 226, 62 },  //bound_hun
-		{ 24, 32, 246, 62 },  //bound_ten
-		{ 24, 32, 266, 62 },  //bound_one
-		{ 75, 60, 132, 8 },  //level
-		{ 21, 24, 204, 26 },  //level_num
-		{ 21, 28, 228, 24 },	 //level_hun
-		{ 21, 28, 268, 24 },  //level_ten
-		{ 21, 28, 248, 24 },	 //level_one
-		{ 280, 120, 32, 17 },	 //Level_UP_button
-		{ 115, 140, 31, 122 },	 //domdom_button
-		{ 115, 140, 31, 244 },  //tank_button
-		{ 115, 138, 31, 368 },  //peanut_button
-		{ 120, 120, 890, 85 },	 //sound_control
-		{ 120, 120, 890 ,17 },  //time_pause_button
-		{ 200, 100, 0, 0 },   //start_game_button
-		{ 60, 60, 0, 0 }   //music_control_StartPage
+		{ 24, 32, 143, 62 },  //1.cost_hun
+		{ 24, 32, 163, 62 },  //2.cost_ten
+		{ 24, 32, 183, 62 },  //3.cost_one
+		{ 24, 32, 206, 62 },  //4.desh
+		{ 24, 32, 226, 62 },  //5.bound_hun
+		{ 24, 32, 246, 62 },  //6.bound_ten
+		{ 24, 32, 266, 62 },  //7.bound_one
+		{ 75, 60, 132, 8 },   //8.level
+		{ 21, 24, 204, 26 },  //9.level_num
+		{ 21, 28, 228, 24 },  //10.level_hun
+		{ 21, 28, 268, 24 },  //11.level_ten
+		{ 21, 28, 248, 24 },  //12.level_one
+		{ 280, 120, 32, 17 },	 //13.Level_UP_button
+		{ 115, 140, 31, 122 },	 //14.domdom_button
+		{ 115, 140, 31, 244 },  //15.tank_button
+		{ 115, 138, 31, 368 },  //16.peanut_button
+		
+		
+		{ 120, 120, 890, 85 },	 //17.sound_control
+		{ 120, 120, 890 ,17 },  //18.time_pause_button
+		{ 240, 60, 320, 58 },   //19.power_bar
+		
+		{ 21, 24, 320, 50 },  //20.blood_hun
+		{ 21, 24, 335, 50 },  //21.blood_ten
+		{ 21, 24, 350, 50 },  //22.blood_one
+		
+		{ 200, 100, 0, 0 },   //23.start_game_button
+		{ 60, 60, 0, 0 }   //24.music_control_StartPage
+		
 	};
 
 }

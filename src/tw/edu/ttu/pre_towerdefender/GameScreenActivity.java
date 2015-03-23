@@ -39,7 +39,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.hardware.Camera.CameraInfo;
 
 import android.media.MediaPlayer;
@@ -65,16 +67,16 @@ public class GameScreenActivity extends ARViewActivity {
 	//private Soldier tanks;
 
 	public int bound = 100;
-	public int levelCost = 0;
+	public int levelCost = 0, blood =100;
 	public int cost = 0;
-	public int flag_bound = 1;
+	public int flag_bound = 1, minus_flag = 0;
 	public int playerChange = 0; 
 	
 	public ImageView num_hun, num_ten, num_one, level_text,
 					 levelnum, levelnum_hun, levelnum_ten, levelnum_single,
 					 bound_ten, bound_one, bound_hun, 
 					 levelUP, desh, domdom, tank, peanut,
-					 musicBtn, pause;
+					 musicBtn, pause, power, blood_hun, blood_ten, blood_one;
 	
 	ProgressBar myProgressBar;
 	private MediaPlayer Player;
@@ -136,34 +138,45 @@ public class GameScreenActivity extends ARViewActivity {
 		flag_bound ^= 1;		
 	}
 
+	public void minus_blood( View v ){
+		minus_flag = 1;
+		if( blood>=5 )
+			blood-=5;
+		
+	}
 	public void initial(){
+		
+		Drawable draw=getResources().getDrawable(R.drawable.progress_style);
+		myProgressBar = (ProgressBar)findViewById(R.id.progress_blood);
+		myProgressBar.setProgressDrawable(draw);
+		myProgressBar.getLayoutParams().width = (int) ((Constant.imageSize[18][0]-10)*Constant.wRatio);
+		myProgressBar.getLayoutParams().height = (int) ((Constant.imageSize[18][1]/4)*Constant.hRatio);
+		myProgressBar.setX((Constant.imageSize[18][2]+5)*Constant.wRatio);
+		myProgressBar.setY((Constant.imageSize[18][3]+25)*Constant.hRatio);
 		
 		num_hun = (ImageView)findViewById(R.id.cost_hun);
 		num_ten = (ImageView)findViewById(R.id.cost_ten);
 		num_one = (ImageView)findViewById(R.id.cost_single);
-		
-		desh =  (ImageView)findViewById(R.id.desh);
-		
+		desh =    (ImageView)findViewById(R.id.desh);	
 		bound_hun = (ImageView)findViewById(R.id.bound_hun);
 		bound_ten = (ImageView)findViewById(R.id.bound_ten);
 		bound_one = (ImageView)findViewById(R.id.bound_single);
-		
 		level_text =  (ImageView)findViewById(R.id.level);
-		
-		levelnum = (ImageView)findViewById(R.id.levelnum);
-		
+		levelnum = (ImageView)findViewById(R.id.levelnum);		
 		levelnum_hun=(ImageView)findViewById(R.id.level_hun);
 		levelnum_ten=(ImageView)findViewById(R.id.level_ten);
 		levelnum_single=(ImageView)findViewById(R.id.level_single);
-		
 		levelUP=(ImageView)findViewById(R.id.levelUP);
 		domdom = (ImageView)findViewById(R.id.dom);
 		tank = (ImageView)findViewById(R.id.tank);
-		peanut = (ImageView)findViewById(R.id.nut);
-		
+		peanut = (ImageView)findViewById(R.id.nut);	
 		musicBtn = (ImageView)findViewById(R.id.musicBtn);
 		pause  = (ImageView)findViewById(R.id.pause);
-				
+		power = (ImageView)findViewById(R.id.power);
+		blood_hun = (ImageView)findViewById(R.id.blood_hun);
+		blood_ten = (ImageView)findViewById(R.id.blood_ten);
+		blood_one = (ImageView)findViewById(R.id.blood_one);
+		
 		imageArray.add(num_hun);
 		imageArray.add(num_ten);
 		imageArray.add(num_one);
@@ -182,8 +195,12 @@ public class GameScreenActivity extends ARViewActivity {
 		imageArray.add(peanut);
 		imageArray.add(musicBtn);
 		imageArray.add(pause);
+		imageArray.add(power);
+		imageArray.add(blood_hun);
+		imageArray.add(blood_ten);
+		imageArray.add(blood_one);
 		
-		for (int i = 0; i < 18; i++) {
+		for (int i = 0; i < 22; i++) {
 			LayoutParams params = imageArray.get(i).getLayoutParams();
 			params.width = (int)(Constant.imageSize[i][0] * Constant.wRatio);
 	        params.height =(int)( Constant.imageSize[i][1] * Constant.hRatio);
@@ -197,8 +214,9 @@ public class GameScreenActivity extends ARViewActivity {
 	int  myProgress = 0;
 	public void costAndBound(){
 		
-		 myProgressBar = (ProgressBar)findViewById(R.id.progress_blood);
-	        myProgressBar.setProgress(myProgress);
+		
+	    myProgressBar.setProgress(blood);
+	 
 		if(flag_bound == 1 && cost < bound) {
 			cost += 1;
 			if(cost > bound) cost = cost - cost%bound;
@@ -208,7 +226,11 @@ public class GameScreenActivity extends ARViewActivity {
 	 	num_ten.setImageResource(Constant.images[cost/10%10]);	
 	 	num_one.setImageResource(Constant.images[cost%10]);	
 	 	levelnum_single.setImageResource(R.drawable.num_zero);
-	 	bound_hun.setImageResource(Constant.images[bound/100%10]);		
+	 	bound_hun.setImageResource(Constant.images[bound/100%10]);	
+	 	
+	 	blood_hun.setImageResource(Constant.images[blood/100%10]);
+	 	blood_ten.setImageResource(Constant.images[blood/10%10]);	
+	 	blood_one.setImageResource(Constant.images[blood%10]);	
 	}	
 	public void levelUpOnclick(View v){
 		if(cost - Constant.Levelup_cost[levelCost] >=0)
@@ -290,7 +312,7 @@ public class GameScreenActivity extends ARViewActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+		//Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.game_screen, menu);
 		return true;
 	}
