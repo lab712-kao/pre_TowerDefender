@@ -6,6 +6,8 @@ import java.util.Comparator;
 
 
 
+import android.R.string;
+
 import com.metaio.sdk.jni.Vector3d;
 
 public class Path {
@@ -90,6 +92,13 @@ public class Path {
 		//end function
 		}
 		
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			String string= "{X:"+position.getX()+", Y:"+position.getY()+"},face"+angle;
+			return string;
+		}
+		
 	}
 	
 	private ArrayList<PathPoint> way;
@@ -156,5 +165,15 @@ public class Path {
 			way.get(i).setIgnore(true);
 		}
 		calPath();
+	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		String s = new String();
+		
+		for(PathPoint p:way){
+			s+=p.toString()+'\t';
+		}
+		return s;
 	}
 }
