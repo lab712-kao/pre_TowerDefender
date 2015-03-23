@@ -221,6 +221,7 @@ public class ObjectMover implements Runnable {
 		}
 		//collision detection
 		for( int i = 0; i<objects.size(TYPE); i++ ){
+			if(objects.getIndexOf(movingObject, TYPE)==i)continue;
 			if( objects.seek(i, TYPE).checkCollision(movingObject) ){
 				//if collision unit is own unit and stop this movingObject move until startMove() << be called
 				movingObject.stopMove();
@@ -228,6 +229,7 @@ public class ObjectMover implements Runnable {
 		}
 		
 		for( int i = 0; i<objects.size(TYPE); i++ ){
+			if(objects.getIndexOf(movingObject, TYPE)==i)continue;
 			if( objects.seek(i, TYPE).checkCollision(movingObject) ){
 				//if collision unit is enemy unit and stop this movingObject move until startMove() << be called
 				//and HP = HP -1
