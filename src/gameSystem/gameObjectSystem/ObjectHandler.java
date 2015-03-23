@@ -65,8 +65,13 @@ public class ObjectHandler  {
 	public void setEnermyTowerPosition(Vector3d enTower) {
 		if(OBMO == null){
 			OBMO = new ObjectMover(IDType.O,objects,new Vector3d(0f),enTower);
-			OBMO.addPosition(new Vector3d(20, 75, 0));
+			//OBMO.addPosition(new Vector3d(20, 0, 0));
 		}
 //		OBMO.setEnTowerPos(enTower);
 	}
+	
+	public void addPosition(Vector3d pos) {
+		OBMO.addPosition(pos);
+	}
+	
 }

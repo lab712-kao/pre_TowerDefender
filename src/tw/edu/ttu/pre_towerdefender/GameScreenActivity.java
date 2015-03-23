@@ -27,6 +27,7 @@ import com.metaio.sdk.jni.Rotation;
 
 import com.metaio.sdk.jni.TrackingValues;
 import com.metaio.sdk.jni.TrackingValuesVector;
+import com.metaio.sdk.jni.Vector2d;
 
 import com.metaio.sdk.jni.Vector2di;
 import com.metaio.sdk.jni.Vector3d;
@@ -118,7 +119,7 @@ public class GameScreenActivity extends ARViewActivity {
 	Handler timerhandler = new Handler();
 
 	public void setAutoFocus(){
-
+		
 		timer = new Timer(false);	
 		timer.schedule(new TimerTask(){
 			@Override
@@ -367,15 +368,14 @@ public class GameScreenActivity extends ARViewActivity {
 						co = theRelation.getTranslation();
 					}
 								
-					enTran.setX(randInt(0, Math.abs((int)co.getX()))*-1);
-					enTran.setY(randInt(0, Math.abs((int)co.getY()))*-1);
+					enTran.setX(randInt(Math.abs((int)(co.getX()*0.6)), Math.abs((int)co.getX()))*-1);
+					enTran.setY(randInt(Math.abs((int)(co.getY()*0.6)), Math.abs((int)co.getY()))*-1);
 					enTran.setZ(0);
 					
 //					Log.d("pre-dd", "x = " + enTran.getX() + " y = " + enTran.getY() + " z = " + enTran.getZ());
 					
 					enTower.setTranslation(enTran);
 					enTower.setVisible(true);
-					
 				}
 			}});
 		OKBtn.setOnClickListener(new OnClickListener() {
@@ -384,6 +384,9 @@ public class GameScreenActivity extends ARViewActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				OBHL.setEnermyTowerPosition(enTran);
+				Vector3d tmp = new Vector3d(enTran);
+				tmp.setY(0);
+				OBHL.addPosition(tmp);
 			}
 			
 		});
