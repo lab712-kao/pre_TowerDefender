@@ -38,9 +38,9 @@ public class ObjectMover implements Runnable {
 		thread = new Thread(this);
 		thread.start();
 	}
-	public ObjectMover(IDType tYPE, DoubleArrayList<MovingObject> objects,Vector3d begin,Vector3d end) {
+	public ObjectMover(IDType type, DoubleArrayList<MovingObject> objects,Vector3d begin,Vector3d end) {
 		super();
-		TYPE = tYPE;
+		TYPE = type;
 		OTHERIDTYPE = type==IDType.O? IDType.E:IDType.O;
 		this.objects = objects;
 		this.begin = begin;
