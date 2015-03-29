@@ -110,9 +110,8 @@ public abstract class DefaultObject {
 						&& V.getX() >= min.getX();
 				insideY = V.getY() <= max.getY()
 						&& V.getY() >= min.getY();
-				insideZ = V.getZ() <= max.getZ()
-						&& V.getZ() >= min.getZ();
-				if (insideX && insideY && insideZ) {
+				if (insideX && insideY) {
+					Log.d("point","collision");
 					return true;
 				}
 			}
@@ -179,6 +178,8 @@ public abstract class DefaultObject {
 		ArrayList<Vector3d> BundingBoxPoint = new ArrayList<Vector3d>();
 		Vector3d min = model.getBoundingBox().getMin();
 		Vector3d max = model.getBoundingBox().getMax();
+		Log.d("b-box", "MAX{X:"+model.getBoundingBox().getMax().getX()+", Y:"+model.getBoundingBox().getMax().getY()+"}");
+		Log.d("b-box", "MIN{X:"+model.getBoundingBox().getMin().getX()+", Y:"+model.getBoundingBox().getMin().getY()+"}");
 		float x = 0, y = 0, z = 0;
 		
 		for (int i = 0; i < 2; i++) {
