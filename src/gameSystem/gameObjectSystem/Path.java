@@ -7,6 +7,7 @@ import java.util.Comparator;
 
 
 import android.R.string;
+import android.util.Log;
 
 import com.metaio.sdk.jni.Vector3d;
 
@@ -117,6 +118,10 @@ public class Path {
 	
 	public void addPathPoint(Vector3d pos){
 		way.add(new PathPoint(pos, DEFAULT_ANGLE));
+		Log.d("Path addPathPoint", "way size: " + way.size());
+		for(int i = 0; i < way.size(); i++) {
+			Log.d("Path addPathPoint", "way item"+"["+i+"]: "+way.get(i).position.toString());
+		}
 		calPath();
 	}
 	private float calAngle(Vector3d base,Vector3d A){
@@ -130,6 +135,11 @@ public class Path {
 		PathPoint point[] = new PathPoint[way.size()];
 		point = way.toArray(point);
 		Arrays.sort(point, compator);
+		
+		for(int i = 0; i < point.length; i++) {
+			Log.d("Path calPath", "point item"+"["+i+"]: "+point[i].position.toString());
+		}
+		
 		way.clear();
 		for (int i = 0; i < point.length-1; i++) {
 			point[i].setNextPoint(point[i+1]);

@@ -114,7 +114,7 @@
 							image. 
 							These parameters are not required and are intended 
 							for expert use only. -->
-					<ReferenceImage>tower_1.png</ReferenceImage>
+					<ReferenceImage>num05.jpg</ReferenceImage>
 					<!-- <ReferenceImage WidthMM="100" HeightMM="100">metaioman.png</ReferenceImage> -->
 
 					<!--	Another similarity threshold can be specified here. 
@@ -146,7 +146,7 @@
 							image. 
 							These parameters are not required and are intended 
 							for expert use only. -->
-					<ReferenceImage>tower_2.png</ReferenceImage>
+					<ReferenceImage>num06.jpg</ReferenceImage>
 					<!-- <ReferenceImage WidthMM="100" HeightMM="100">metaioman.png</ReferenceImage> -->
 
 					<!--	Another similarity threshold can be specified here. 

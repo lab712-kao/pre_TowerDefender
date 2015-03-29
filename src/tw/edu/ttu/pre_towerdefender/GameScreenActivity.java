@@ -89,9 +89,11 @@ public class GameScreenActivity extends ARViewActivity {
 	private IGeometry enTower;
 	private IGeometry ttt;
 	private IGeometry margin1, margin2;
+	private IGeometry target1, target2;
 	private SurfaceHolder myHolder;
 	int[] trackingState = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};//10
 	private Button setEnTowerBtn, OKBtn;
+	private boolean enPosReady = false;
 	GameInterface GI = null;
 	public ArrayList<ImageView> imageArray = new ArrayList<ImageView>();
 	
@@ -144,6 +146,8 @@ public class GameScreenActivity extends ARViewActivity {
 		if( blood>=5 )
 			blood-=5;
 		
+		Log.d("position of enTower", "enTower: " + metaioSDK.getScreenCoordinatesFrom3DPosition(3, enTran).toString());
+		
 	}
 	public void initial(){
 		
@@ -152,6 +156,7 @@ public class GameScreenActivity extends ARViewActivity {
 		myProgressBar.setProgressDrawable(draw);
 		myProgressBar.getLayoutParams().width = (int) ((Constant.imageSize[18][0]-10)*Constant.wRatio);
 		myProgressBar.getLayoutParams().height = (int) ((Constant.imageSize[18][1]/4)*Constant.hRatio);
+		
 		myProgressBar.setX((Constant.imageSize[18][2]+5)*Constant.wRatio);
 		myProgressBar.setY((Constant.imageSize[18][3]+25)*Constant.hRatio);
 		
@@ -368,14 +373,15 @@ public class GameScreenActivity extends ARViewActivity {
 						co = theRelation.getTranslation();
 					}
 								
-					enTran.setX(randInt(Math.abs((int)(co.getX()*0.6)), Math.abs((int)co.getX()))*-1);
-					enTran.setY(randInt(Math.abs((int)(co.getY()*0.6)), Math.abs((int)co.getY()))*-1);
+					enTran.setX(randInt(Math.abs((int)(co.getX()*0.6)), Math.abs((int)co.getX())));
+					enTran.setY(randInt(Math.abs((int)(co.getY()*0.6)), Math.abs((int)co.getY())));
 					enTran.setZ(0);
 					
 //					Log.d("pre-dd", "x = " + enTran.getX() + " y = " + enTran.getY() + " z = " + enTran.getZ());
 					
 					enTower.setTranslation(enTran);
 					enTower.setVisible(true);
+					enPosReady = true;
 				}
 			}});
 		OKBtn.setOnClickListener(new OnClickListener() {
@@ -385,7 +391,7 @@ public class GameScreenActivity extends ARViewActivity {
 				// TODO Auto-generated method stub
 				OBHL.setEnermyTowerPosition(enTran);
 				Vector3d tmp = new Vector3d(enTran);
-				tmp.setY(0);
+				tmp.setY((float) (tmp.getY()*0.1));
 				OBHL.addPosition(tmp);
 			}
 			
@@ -421,6 +427,7 @@ public class GameScreenActivity extends ARViewActivity {
 			String chessModel = AssetsManager.getAssetPath("chess.obj");
 			String marginPic1 = AssetsManager.getAssetPath("side.png");
 			String marginPic2 = AssetsManager.getAssetPath("side2.png");
+			String smallTower = AssetsManager.getAssetPath("playerTower.obj");
 			//tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
 			
 			ttt = metaioSDK.createGeometry(towerModel1);
@@ -438,17 +445,28 @@ public class GameScreenActivity extends ARViewActivity {
 			enTower.setVisible(false);
 			
 
-			margin1 = metaioSDK.createGeometryFromImage(marginPic1);
+			margin1 = metaioSDK.createGeometryFromImage(marginPic2);
 			margin1.setCoordinateSystemID(3);
 			margin1.setScale(5.0f);
 			margin1.setTranslation(new Vector3d(0, 0, 0));
 			
-			margin2 = metaioSDK.createGeometryFromImage(marginPic2);
+			margin2 = metaioSDK.createGeometryFromImage(marginPic1);
 			margin2.setCoordinateSystemID(4);
 			margin2.setScale(5.0f);
 			margin2.setTranslation(new Vector3d(0, 0, 0));
 			
-			//T = 
+			target1 = metaioSDK.createGeometry(smallTower);
+			target1.setCoordinateSystemID(1);
+			target1.setScale(10.0f);
+			target1.setTranslation(new Vector3d(0, 0, 0));
+			target1.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
+			
+			target2 = metaioSDK.createGeometry(smallTower);
+			target2.setCoordinateSystemID(2);
+			target2.setScale(10.0f);
+			target2.setTranslation(new Vector3d(0, 0, 0));
+			target2.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();

@@ -125,6 +125,8 @@ public abstract class MovingObject extends DefaultObject {
 			lastTimePos = position;
 			
 			//Hermite p = (t,P1,P2,T1,T2)
+			//Log.d("moving Object", "Position: " + position.toString());
+			//Log.d("moving Object", "Next Position: " + point.getNextPoint().getPosition().toString());
 			Vector3d p = Hermite.evalHermite(t, position, point.getNextPoint().getPosition(), 
 				new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
 			
@@ -134,7 +136,7 @@ public abstract class MovingObject extends DefaultObject {
 				
 			this.setModelFaceAngle((float) Math.atan2(p.getY()-lastTimePos.getY(), p.getX()-lastTimePos.getX()));
 			model.setTranslation(p);
-			Log.d("point","{X:"+p.getX()+" Y:"+p.getY()+"}");
+			//Log.d("point","{X:"+p.getX()+" Y:"+p.getY()+"}");
 			t += 0.1;
 			if(t > 1) t = 1;
 			return SUCC_MOVE;

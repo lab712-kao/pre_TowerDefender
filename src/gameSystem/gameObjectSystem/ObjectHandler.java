@@ -71,7 +71,9 @@ public class ObjectHandler  {
 	}
 	
 	public void addPosition(Vector3d pos) {
-		OBMO.addPosition(pos);
+		if(OBMO != null) {
+			OBMO.addPosition(pos);
+		}
 	}
 	
 }
