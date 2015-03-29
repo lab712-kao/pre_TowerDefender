@@ -229,8 +229,8 @@ public class ObjectMover implements Runnable {
 			if( objects.seek(i, TYPE).checkCollision(movingObject) ){
 				//if collision unit is own unit and stop this movingObject move until startMove() << be called
 				movingObject.stopMove();
-				movingObject.back();
-				return false;
+				
+				break;
 			}
 		}
 		
