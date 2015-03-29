@@ -224,7 +224,7 @@ public class ObjectMover implements Runnable {
 				break;
 		}
 		//collision detection
-		for( int i = 0; i<objects.size(TYPE); i++ ){
+		for( int i = objects.getIndexOf(movingObject, TYPE); i<objects.size(TYPE); i++ ){
 			if(objects.getIndexOf(movingObject, TYPE)==i)continue;
 			if( objects.seek(i, TYPE).checkCollision(movingObject) ){
 				//if collision unit is own unit and stop this movingObject move until startMove() << be called
