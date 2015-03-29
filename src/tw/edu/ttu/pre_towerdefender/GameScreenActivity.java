@@ -6,6 +6,7 @@ import gameObject.tower.Soldier;
 import java.io.IOException;
 import java.util.Random;
 
+import gameSystem.gameObjectSystem.IDType;
 import gameSystem.gameObjectSystem.ObjectHandler;
 
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class GameScreenActivity extends ARViewActivity {
 	private boolean enPosReady = false;
 	GameInterface GI = null;
 	public ArrayList<ImageView> imageArray = new ArrayList<ImageView>();
-	
+	private EnermyProcess enProcess;
 	
 	
 	@Override
@@ -395,6 +396,7 @@ public class GameScreenActivity extends ARViewActivity {
 				OBHL.addPosition(tmp);
 				setEnTowerBtn.setVisibility(View.INVISIBLE);
 				OKBtn.setVisibility(View.INVISIBLE);
+				enProcess.startEnermyProcess();
 			}
 			
 		});
@@ -431,6 +433,7 @@ public class GameScreenActivity extends ARViewActivity {
 			String marginPic2 = AssetsManager.getAssetPath("side2.png");
 			String smallTower = AssetsManager.getAssetPath("playerTower.obj");
 			//tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
+			
 			
 			ttt = metaioSDK.createGeometry(towerModel1);
 			ttt.setCoordinateSystemID(3);
@@ -469,6 +472,8 @@ public class GameScreenActivity extends ARViewActivity {
 			target2.setTranslation(new Vector3d(0, 0, 0));
 			target2.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 			
+			//Log.d("what is the Path", tankModel);
+			enProcess = new EnermyProcess();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -613,5 +618,42 @@ public class GameScreenActivity extends ARViewActivity {
         }  
           
     }  
+	
+	class EnermyProcess implements Runnable {
+
+		Thread enermyThread = null;
+		
+		public EnermyProcess() {
+			enermyThread = new Thread(this);
+		}
+		
+		public void startEnermyProcess() {
+			if(enermyThread != null) {
+				enermyThread.start();
+			}
+		}
+		
+		public void stopEnermyProcess() {
+			if(enermyThread != null) {
+				enermyThread.interrupt();
+			}
+		}
+		
+		@Override
+		public void run() {
+			
+			while(true) {
+				try {
+					Thread.sleep(2000);
+					OBHL.creatObject("tank", tankModel, 3, (int)enTran.getX(), (int)enTran.getY(), IDType.E);
+					//OBHL.creatObject("tank", tankModel, 3, IDType.E);
+					Thread.sleep(8000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
 	
 }

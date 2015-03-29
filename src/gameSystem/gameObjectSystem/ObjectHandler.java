@@ -22,6 +22,8 @@ public class ObjectHandler  {
 		this.sdk = sdk;
 		this.view = view;
 		objects = new DoubleArrayList<MovingObject>();
+		OBMO = null;
+		OBME = null;
 //		OBMO = new ObjectMover(IDType.O,objects);
 //		OBMO.addPosition(new Vector3d(20, 75, 0));
 //		OBME = new ObjectMover(IDType.E,objects);
@@ -67,12 +69,19 @@ public class ObjectHandler  {
 			OBMO = new ObjectMover(IDType.O,objects,new Vector3d(0f),enTower);
 			//OBMO.addPosition(new Vector3d(20, 0, 0));
 		}
+		if(OBME == null){
+			OBME = new ObjectMover(IDType.E,objects,enTower, new Vector3d(0f));
+			//OBMO.addPosition(new Vector3d(20, 0, 0));
+		}
 //		OBMO.setEnTowerPos(enTower);
 	}
 	
 	public void addPosition(Vector3d pos) {
 		if(OBMO != null) {
 			OBMO.addPosition(pos);
+		}
+		if(OBME != null) {
+			OBME.addPosition(pos);
 		}
 	}
 	
