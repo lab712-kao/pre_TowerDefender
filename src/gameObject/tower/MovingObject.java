@@ -112,7 +112,8 @@ public abstract class MovingObject extends DefaultObject {
 			t=0.1f;
 			lastTimePos = point.getPosition();
 			point = point.getNextPoint();
-			while(point.isIgnore() == true){
+			
+			while(point!=null&&point.isIgnore()){
 				lastTimePos = point.getPosition();
 				point = point.getNextPoint();
 				
@@ -124,7 +125,8 @@ public abstract class MovingObject extends DefaultObject {
 			
 			//Hermite p = (t,P1,P2,T1,T2)
 			Vector3d p = Hermite.evalHermite(t, position, point.getPosition(), 
-				new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
+				new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), 
+				new Vector3d( (float) Math.cos(point.getAngle()), (float) Math.sin(point.getAngle()), (float)0.0));//
 			
 			position = p;
 //			Hermite.evalTangentVectorOfHermite(t, position, point.getPosition(), 
