@@ -212,7 +212,7 @@ public class ObjectMover implements Runnable {
 			case MovingObject.AT_END:
 //				Log.d("point", "In the end");
 				movingObject.dead();
-				objects.remove(objects.getIndexOf(movingObject, TYPE), TYPE.O);
+				objects.remove(objects.getIndexOf(movingObject, TYPE), TYPE);
 				
 				return true;
 			case MovingObject.NO_PATH_SET:
@@ -242,9 +242,10 @@ public class ObjectMover implements Runnable {
 				//if (HP<=0) means this object is dead 
 				movingObject.stopMove();
 				movingObject.back();
-				movingObject.setHealth((float) (movingObject.getHealth()-1.0));
+				movingObject.setHealth((float) (movingObject.getHealth()-5.0));
 				if(movingObject.getHealth()<=0){
 					movingObject.dead();
+					objects.remove(objects.getIndexOf(movingObject, TYPE), TYPE);
 					return false;
 				}
 			}
