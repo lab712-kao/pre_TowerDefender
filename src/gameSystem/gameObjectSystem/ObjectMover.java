@@ -41,6 +41,7 @@ public class ObjectMover implements Runnable {
 	public ObjectMover(IDType tYPE, DoubleArrayList<MovingObject> objects,Vector3d begin,Vector3d end) {
 		super();
 		TYPE = tYPE;
+		OTHERIDTYPE = type==IDType.O? IDType.E:IDType.O;
 		this.objects = objects;
 		this.begin = begin;
 		this.end = end;
@@ -200,7 +201,7 @@ public class ObjectMover implements Runnable {
 
 	private boolean move(int index) {
 
-		
+		Log.d("path",path.toString());
 		MovingObject movingObject = objects.seek(index, TYPE);
 		
 		if(movingObject.isDead())return false;
@@ -242,7 +243,7 @@ public class ObjectMover implements Runnable {
 				//if (HP<=0) means this object is dead 
 				movingObject.stopMove();
 				movingObject.back();
-				movingObject.setHealth((float) (movingObject.getHealth()-10.0));
+				movingObject.setHealth(0);
 				Log.d("objectMover", "Attack");
 
 				if(movingObject.getHealth()<=0){
