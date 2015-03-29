@@ -44,7 +44,7 @@ public class ObjectHandler  {
 			int coordinateSystemID, int x, int y,IDType id) {
 		
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
-				objects, OIR.getSoldierInfoByName(name),x, y));
+				objects, OIR.getSoldierInfoByName(name),x, y,id));
 		return false;
 
 	}
@@ -59,7 +59,7 @@ public class ObjectHandler  {
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID,IDType id) {
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
-				objects,OIR.getSoldierInfoByName(name)));
+				objects,OIR.getSoldierInfoByName(name),id));
 		return false;
 
 	}
