@@ -243,7 +243,7 @@ public class ObjectMover implements Runnable {
 				//if (HP<=0) means this object is dead 
 				movingObject.stopMove();
 				movingObject.back();
-				movingObject.setHealth(0);
+				movingObject.setHealth(movingObject.getHealth()-10f);
 				Log.d("objectMover", "Attack");
 
 				if(movingObject.getHealth()<=0){
