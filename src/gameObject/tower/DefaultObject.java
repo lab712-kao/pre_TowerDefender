@@ -98,20 +98,20 @@ public abstract class DefaultObject {
 		if (aObject == null){
 			return false;
 		}else{
-			Vector3d max = this.getModel().getBoundingBox().getMax().multiply(size.getX());
-			Vector3d min = this.getModel().getBoundingBox().getMin().multiply(size.getX());
+			Vector3d max = this.getModel().getBoundingBox().getMax().multiply(size.getX()).add(position);
+			Vector3d min = this.getModel().getBoundingBox().getMin().multiply(size.getX()).add(position);
 			ArrayList<Vector3d> cubeAsPoint = aObject.getModelBundingPointArrayList();
 			boolean insideX = false;
 			boolean insideY = false;
 			boolean insideZ = false;
-
+			
 			for (Vector3d V : cubeAsPoint) {
 				insideX = V.getX() <= max.getX()
 						&& V.getX() >= min.getX();
 				insideY = V.getY() <= max.getY()
 						&& V.getY() >= min.getY();
 				if (insideX && insideY) {
-					Log.d("point","collision");
+					Log.d("box","collision");
 					return true;
 				}
 			}
@@ -176,10 +176,10 @@ public abstract class DefaultObject {
 			return null;
 		}
 		ArrayList<Vector3d> BundingBoxPoint = new ArrayList<Vector3d>();
-		Vector3d min = model.getBoundingBox().getMin();
-		Vector3d max = model.getBoundingBox().getMax();
-		Log.d("b-box", "MAX{X:"+model.getBoundingBox().getMax().getX()+", Y:"+model.getBoundingBox().getMax().getY()+"}");
-		Log.d("b-box", "MIN{X:"+model.getBoundingBox().getMin().getX()+", Y:"+model.getBoundingBox().getMin().getY()+"}");
+		Vector3d min = model.getBoundingBox().getMin().multiply(size.getX()).add(position);
+		Vector3d max = model.getBoundingBox().getMax().multiply(size.getX()).add(position);
+		Log.d("box", "MAX{X:"+max.getX()+", Y:"+max.getY()+"}");
+		Log.d("box", "MIN{X:"+min.getX()+", Y:"+min.getY()+"}");
 		float x = 0, y = 0, z = 0;
 		
 		for (int i = 0; i < 2; i++) {
@@ -188,7 +188,7 @@ public abstract class DefaultObject {
 				y = k == 0 ? min.getY() : max.getY();
 				for (int t = 0; t < 2; t++) {
 					z = t == 0 ? min.getZ() : max.getZ();
-					BundingBoxPoint.add(new Vector3d(x, y, z).multiply(size.getX()));
+					BundingBoxPoint.add(new Vector3d(x, y, z));
 				}
 			}
 		}
