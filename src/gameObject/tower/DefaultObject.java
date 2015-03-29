@@ -32,7 +32,7 @@ public abstract class DefaultObject {
 		model.setCoordinateSystemID(coordinateSystemID);
 		model.setScale(size);
 		model.setTranslation(position);
-		model.setRotation(new Rotation(faceAngle, 0.0f, 0.0f));
+		model.setRotation(new Rotation((float) (Math.PI / 2), 0.0f, faceAngle+(float) (Math.PI / 2)));
 
 	}
 
@@ -48,7 +48,7 @@ public abstract class DefaultObject {
 		model.setCoordinateSystemID(coordinateSystemID);
 		model.setScale(size);
 		model.setTranslation(position);
-		model.setRotation(new Rotation(faceAngle, 0.0f, 0.0f));
+		model.setRotation(new Rotation((float) (Math.PI / 2), 0.0f, faceAngle+(float) (Math.PI / 2)));
 
 	}
 
@@ -65,7 +65,7 @@ public abstract class DefaultObject {
 		model.setCoordinateSystemID(coordinateSystemID);
 		model.setScale(size);
 		model.setTranslation(position);
-		model.setRotation(new Rotation(faceAngle, 0.0f, 0.0f));
+		model.setRotation(new Rotation((float) (Math.PI / 2), 0.0f, faceAngle+(float) (Math.PI / 2)));
 	}
 
 	public DefaultObject(IGeometry model, int coordinateSystemID,
@@ -79,7 +79,7 @@ public abstract class DefaultObject {
 		model.setCoordinateSystemID(coordinateSystemID);
 		model.setScale(size);
 		model.setTranslation(position);
-		model.setRotation(new Rotation(faceAngle, 0.0f, 0.0f));
+		model.setRotation(new Rotation((float) (Math.PI / 2), 0.0f, faceAngle+(float) (Math.PI / 2)));
 	}
 
 	
@@ -131,7 +131,7 @@ public abstract class DefaultObject {
 
 	public void setModelFaceAngle(float faceAngle) {
 		this.faceAngle = faceAngle;
-		model.setRotation(new Rotation(faceAngle, 0.0f, 0.0f));
+		model.setRotation(new Rotation((float) (Math.PI / 2), 0.0f, faceAngle+(float) (Math.PI / 2)));
 	}
 
 	public Vector3d getModelPosition() {
