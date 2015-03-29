@@ -106,29 +106,27 @@ public abstract class MovingObject extends DefaultObject {
 		if(point == null && !pointSet){
 			pointSet = true;
 			return NO_PATH_SET;//need to setPathPoint
-		}else if(point == null && pointSet)
+		}else if(point == null && pointSet){
 			return AT_END;
-		else if(point.isIgnore()&&t==1){
+		}else if(point.isIgnore()||t==1){
 			t=0.1f;
 			lastTimePos = point.getPosition();
 			point = point.getNextPoint();
-			if(point == null)
-				return AT_END;
-			while(point.isIgnore() == true){
+			
+			while(point!=null&&point.isIgnore()){
 				lastTimePos = point.getPosition();
 				point = point.getNextPoint();
 				
 			}
 		}
 		
-		if(point.getNextPoint()!=null){//the last point is at position end ,so if null that mean 'at end'
+		if(point!=null){//the last point is at position end ,so if null that mean 'at end'
 			lastTimePos = position;
 			
 			//Hermite p = (t,P1,P2,T1,T2)
-			//Log.d("moving Object", "Position: " + position.toString());
-			//Log.d("moving Object", "Next Position: " + point.getNextPoint().getPosition().toString());
-			Vector3d p = Hermite.evalHermite(t, position, point.getNextPoint().getPosition(), 
-				new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
+			Vector3d p = Hermite.evalHermite(t, position, point.getPosition(), 
+				new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), 
+				new Vector3d( (float) Math.cos(point.getAngle()), (float) Math.sin(point.getAngle()), (float)0.0));//
 			
 			position = p;
 //			Hermite.evalTangentVectorOfHermite(t, position, point.getPosition(), 

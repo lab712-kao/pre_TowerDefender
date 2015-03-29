@@ -27,6 +27,7 @@ public class ObjectCreator implements Runnable {
 	private String modelPath;
 	
 	private final Vector3d SIZE = new Vector3d(20.0f);
+
 	
 	private final float DEFAULTANGLE = 0.0f;
 	public final int SOLIDER=1,BUILDING=2;
