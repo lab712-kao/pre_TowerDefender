@@ -13,7 +13,7 @@ import com.metaio.sdk.jni.Vector3d;
 
 public class ObjectMover implements Runnable {
 
-	private IDType TYPE;
+	private IDType TYPE,OTHERIDTYPE;
 	private DoubleArrayList<MovingObject> objects = null;
 	private Thread thread;
 	private Vector3d enTowerPosition = new Vector3d(0, -1, 0);
@@ -29,6 +29,7 @@ public class ObjectMover implements Runnable {
 	public ObjectMover(IDType type, DoubleArrayList<MovingObject> objects) {
 		super();
 		TYPE = type;
+		OTHERIDTYPE = type==IDType.O? IDType.E:IDType.O;
 		this.objects = objects;
 //		pathPlaner = new PathPlaner(begin, goal);
 //		path = pathPlaner.getPath();
@@ -210,6 +211,9 @@ public class ObjectMover implements Runnable {
 				break;
 			case MovingObject.AT_END:
 //				Log.d("point", "In the end");
+				movingObject.dead();
+				objects.remove(objects.getIndexOf(movingObject, TYPE), TYPE.O);
+				
 				return true;
 			case MovingObject.NO_PATH_SET:
 				movingObject.setPathPoint(path.getNextPathPoint(null));
@@ -230,9 +234,9 @@ public class ObjectMover implements Runnable {
 			}
 		}
 		
-		for( int i = 0; i<objects.size(TYPE); i++ ){
-			if(objects.getIndexOf(movingObject, TYPE)==i)continue;
-			if( objects.seek(i, TYPE).checkCollision(movingObject) ){
+		for( int i = 0; i<objects.size(OTHERIDTYPE); i++ ){
+//			if(objects.getIndexOf(movingObject, TYPE)==i)continue;
+			if( objects.seek(i, OTHERIDTYPE).checkCollision(movingObject) ){
 				//if collision unit is enemy unit and stop this movingObject move until startMove() << be called
 				//and HP = HP -1
 				//if (HP<=0) means this object is dead 

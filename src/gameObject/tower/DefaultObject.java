@@ -196,7 +196,10 @@ public abstract class DefaultObject {
 	}
 	public void dead() {
 		if (model != null) {
+			
+			model.setVisible(false);
 			model.delete();
+			
 			model = null;
 		}
 	}
