@@ -391,8 +391,10 @@ public class GameScreenActivity extends ARViewActivity {
 				// TODO Auto-generated method stub
 				OBHL.setEnermyTowerPosition(enTran);
 				Vector3d tmp = new Vector3d(enTran);
-				tmp.setY((float) (tmp.getY()*0.1));
+				tmp.setY((float) (tmp.getY()*0.3));
 				OBHL.addPosition(tmp);
+				setEnTowerBtn.setVisibility(View.INVISIBLE);
+				OKBtn.setVisibility(View.INVISIBLE);
 			}
 			
 		});
