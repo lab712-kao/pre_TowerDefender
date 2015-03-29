@@ -135,7 +135,7 @@ public abstract class MovingObject extends DefaultObject {
 			this.setModelFaceAngle((float) Math.atan2(p.getY()-lastTimePos.getY(), p.getX()-lastTimePos.getX()));
 			model.setTranslation(p);
 			//Log.d("point","{X:"+p.getX()+" Y:"+p.getY()+"}");
-			t += 0.1;
+			t += 0.02;
 			if(t > 1) t = 1;
 			return SUCC_MOVE;
 		}
