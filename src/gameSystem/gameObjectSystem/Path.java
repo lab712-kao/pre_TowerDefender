@@ -2,11 +2,14 @@ package gameSystem.gameObjectSystem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 
 
 
 import android.R.string;
+import android.hardware.Camera.Size;
 import android.util.Log;
 
 import com.metaio.sdk.jni.Vector3d;
@@ -134,22 +137,22 @@ public class Path {
 	private void calPath(){//sort the Path Point and set every Path Point 's angle & next position
 		PathPoint point[] = new PathPoint[way.size()];
 		point = way.toArray(point);
-		Arrays.sort(point, compator);
-		
+//		Arrays.sort(point, compator);
+		Collections.sort(way, compator);
 		for(int i = 0; i < point.length; i++) {
 			Log.d("Path calPath", "point item"+"["+i+"]: "+point[i].position.toString());
 		}
 		
-		way.clear();
-		for (int i = 0; i < point.length-1; i++) {
-			point[i].setNextPoint(point[i+1]);
-			point[i].setAngle(calAngle(point[i].getPosition(),point[i+1].getPosition()));
-			way.add(point[i]);
+//		way.clear();
+		for (int i = 0; i < way.size()-1; i++) {
+			way.get(i).setNextPoint(way.get(i+1));
+			way.get(i).setAngle(calAngle(way.get(i).getPosition(),way.get(i+1).getPosition()));
+//			way.add(point[i]);
 		}
-		if(point.length>=1){
-			point[point.length-1].setAngle(calAngle(point[point.length-1].getPosition(),end));
-			point[point.length-1].setNextPoint(new PathPoint(end, calAngle(point[point.length-1].getPosition(),end)));
-			way.add(point[point.length-1]);
+		if(way.size()>=1){
+			way.get(way.size()-1).setAngle(calAngle(way.get(way.size()-1).getPosition(),end));
+			way.get(way.size()-1).setNextPoint(new PathPoint(end, calAngle(way.get(way.size()-1).getPosition(),end)));
+//			way.add(point[point.length-1]);
 		}
 	}
 	public PathPoint getNextPathPoint(PathPoint nowPoint){
@@ -184,6 +187,7 @@ public class Path {
 		for(PathPoint p:way){
 			s+=p.toString()+'\t';
 		}
+		s+=way.get(way.size()-1).toString();
 		return s;
 	}
 }
