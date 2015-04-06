@@ -127,7 +127,7 @@ public class Path {
 //		for(int i = 0; i < way.size(); i++) {
 //			Log.d("Path addPathPoint", "way item"+"["+i+"]: "+way.get(i).position.toString());
 //		}
-		PathPoint p = way.get(0);
+		PathPoint p = getNextPathPoint(null);
 		int i = 0;
 		while(p!=null){
 			
