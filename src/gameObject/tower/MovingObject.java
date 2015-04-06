@@ -113,11 +113,10 @@ public abstract class MovingObject extends DefaultObject {
 			t=0.1f;
 			lastTimePos = point.getPosition();
 			point = point.getNextPoint();
-			
+			Log.d("moveingObject move", "in the not end");
 			while(point!=null&&point.isIgnore()){
 				lastTimePos = point.getPosition();
-				point = point.getNextPoint();
-				
+				point = point.getNextPoint();	
 			}
 		}
 		
