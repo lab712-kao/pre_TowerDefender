@@ -193,4 +193,15 @@ public abstract class MovingObject extends DefaultObject {
 			
 		}
 	}
+	
+	@Override
+	public void dead() {
+		// TODO Auto-generated method stub
+		super.dead();
+		this.lastTimePos = null;
+		this.nextPos = null;
+		this.point = null;
+		this.position = null;
+		this.size = null;
+	}
 }
