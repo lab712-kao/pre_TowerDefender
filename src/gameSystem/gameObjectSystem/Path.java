@@ -135,12 +135,12 @@ public class Path {
 		
 	}
 	private void calPath(){//sort the Path Point and set every Path Point 's angle & next position
-		PathPoint point[] = new PathPoint[way.size()];
-		point = way.toArray(point);
+//		PathPoint point[] = new PathPoint[way.size()];
+//		point = way.toArray(point);
 //		Arrays.sort(point, compator);
 		Collections.sort(way, compator);
-		for(int i = 0; i < point.length; i++) {
-			Log.d("Path calPath", "point item"+"["+i+"]: "+point[i].position.toString());
+		for(int i = 0; i < way.size(); i++) {
+			Log.d("Path calPath", "point item"+"["+i+"]: "+way.get(i).position.toString());
 		}
 		
 //		way.clear();
