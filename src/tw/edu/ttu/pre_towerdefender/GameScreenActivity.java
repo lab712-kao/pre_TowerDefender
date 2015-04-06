@@ -400,7 +400,7 @@ public class GameScreenActivity extends ARViewActivity {
 				OBHL.addPosition(tmp);*/
 				setEnTowerBtn.setVisibility(View.INVISIBLE);
 				OKBtn.setVisibility(View.INVISIBLE);
-				enProcess.startEnermyProcess();
+				//enProcess.startEnermyProcess();
 			}
 			
 		});
