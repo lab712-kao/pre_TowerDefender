@@ -23,13 +23,25 @@ public class Hermite {
 		//Hermite function is P(s) = P1h1(s) + P2h2(s) + T1h2(s) + T2h4(s)
 		//each point of x = s ,and y = P(s)
 		//then vector of each point is P'(s) = P1h1'(s) + P2h2'(s) + T1h2'(s) + T2h4'(s)
-		
+/*		
 		Vector3d P = P1.multiply((float) h1)
 				.add(P2.multiply((float) h2))
 				.add(T1.multiply((float) h3))
 				.add(T2.multiply((float) h4));
-
-		
+*/
+		Vector3d P = new Vector3d();
+		double x = (2*t*t*t - 3*t*t + 1) * P1.getX()
+				+ (t*t*t - 2*t*t + t) * T1.getX()
+                + (-2*t*t*t + 3*t*t) * P2.getX()
+                + (t*t*t - t*t) * T2.getX();
+        double y = (2*t*t*t - 3*t*t + 1) * P1.getY()
+                + (t*t*t - 2*t*t + t) * T1.getY()
+                + (-2*t*t*t + 3*t*t) * P2.getY()
+                + (t*t*t - t*t) * T2.getY();
+		P.setX((float)x);
+		P.setY((float)y);
+		P.setZ(0);
+        
 		return P;
 	}
 	public static Vector3d evalTangentVectorOfHermite(double t, final Vector3d P1, 

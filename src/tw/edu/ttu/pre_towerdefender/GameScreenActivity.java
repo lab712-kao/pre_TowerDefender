@@ -98,7 +98,8 @@ public class GameScreenActivity extends ARViewActivity {
 	GameInterface GI = null;
 	public ArrayList<ImageView> imageArray = new ArrayList<ImageView>();
 	private EnermyProcess enProcess;
-	
+	private String domdomModel = null;
+	private String peanutModel = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -265,16 +266,18 @@ public class GameScreenActivity extends ARViewActivity {
 		}
 	}
 	public void domOnclick(View v){
-		if(cost - 50 >=0)
+		if(cost - 50 >=0 && domdomModel!=null&&OBHL!=null)
 		{
 			cost-=50;
+			OBHL.creatObject("moai",  domdomModel , 3);
 		}
 	}
 	
 	public void peanutsOnclick(View v){
-		if(cost - 150 >=0)
+		if(cost - 150 >=0 && peanutModel!=null&&OBHL!=null)
 		{
 			cost-=150;
+			OBHL.creatObject("tank",  peanutModel , 3);
 		}
 	}
 	public void MusicControl(View v){
@@ -389,11 +392,12 @@ public class GameScreenActivity extends ARViewActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				OBHL.setEnermyTowerPosition(enTran);
+				/*
 				Vector3d tmp = new Vector3d(enTran);
-				tmp.setY((float) (tmp.getY()*0.3));
-				OBHL.addPosition(tmp);
+				tmp.setY((float)(tmp.getY()*0.3));
+				tmp.setX((float)(tmp.getX()*0.5));
+				OBHL.addPosition(tmp);*/
 				setEnTowerBtn.setVisibility(View.INVISIBLE);
 				OKBtn.setVisibility(View.INVISIBLE);
 				enProcess.startEnermyProcess();
@@ -427,11 +431,12 @@ public class GameScreenActivity extends ARViewActivity {
 			
 			String towerModel1 = AssetsManager.getAssetPath("saintriqT3DS.obj");
 			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
-			tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-			String chessModel = AssetsManager.getAssetPath("chess.obj");
 			String marginPic1 = AssetsManager.getAssetPath("side.png");
 			String marginPic2 = AssetsManager.getAssetPath("side2.png");
 			String smallTower = AssetsManager.getAssetPath("playerTower.obj");
+			tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+			domdomModel = AssetsManager.getAssetPath("domdombone2.obj");
+			peanutModel = AssetsManager.getAssetPath("peanuts.obj");
 			//tanks = new Tank(metaioSDK.createGeometry(tankModel), 1, new Vector3d(35.0f), new Vector3d(0, 0, 0), 100,  100, 20);
 			
 			
@@ -462,13 +467,13 @@ public class GameScreenActivity extends ARViewActivity {
 			
 			target1 = metaioSDK.createGeometry(smallTower);
 			target1.setCoordinateSystemID(1);
-			target1.setScale(10.0f);
+			target1.setScale(20.0f);
 			target1.setTranslation(new Vector3d(0, 0, 0));
 			target1.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 			
 			target2 = metaioSDK.createGeometry(smallTower);
 			target2.setCoordinateSystemID(2);
-			target2.setScale(10.0f);
+			target2.setScale(20.0f);
 			target2.setTranslation(new Vector3d(0, 0, 0));
 			target2.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 			
@@ -509,9 +514,23 @@ public class GameScreenActivity extends ARViewActivity {
 	@Override
 	protected void onGeometryTouched(IGeometry geometry) {
 		// TODO Auto-generated method stub	
-		Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
-		String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
-		OBHL.creatObject("tank", tankModel,1, 0, 0);
+		//Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
+		//String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
+		//OBHL.creatObject("tank", tankModel,1, 0, 0);
+		int coodSysNum = geometry.getCoordinateSystemID();
+		if(coodSysNum == 1 || coodSysNum == 2) {
+			boolean success;
+			TrackingValues theRelation = new TrackingValues();
+			Vector3d co;
+			
+			success = metaioSDK.getCosRelation(3, coodSysNum, theRelation);
+			if(success) {
+				co = theRelation.getTranslation();
+				co.setZ(0);
+				OBHL.addPosition(co);
+				Log.d("ScreenAc onGeoTouch", "coodId: "+coodSysNum+", tran: " + co);
+			}
+		}
 	}
 	
 	@Override

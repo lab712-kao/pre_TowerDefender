@@ -187,7 +187,7 @@ public class Path {
 		for(PathPoint p:way){
 			s+=p.toString()+'\t';
 		}
-		s+=way.get(way.size()-1).toString();
+		//s+=way.get(way.size()-1).toString();
 		return s;
 	}
 }

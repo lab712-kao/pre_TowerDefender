@@ -178,8 +178,8 @@ public abstract class DefaultObject {
 		ArrayList<Vector3d> BundingBoxPoint = new ArrayList<Vector3d>();
 		Vector3d min = model.getBoundingBox().getMin().multiply(size.getX()).add(position);
 		Vector3d max = model.getBoundingBox().getMax().multiply(size.getX()).add(position);
-		Log.d("box", "MAX{X:"+max.getX()+", Y:"+max.getY()+"}");
-		Log.d("box", "MIN{X:"+min.getX()+", Y:"+min.getY()+"}");
+		//Log.d("box", "MAX{X:"+max.getX()+", Y:"+max.getY()+"}");
+		//Log.d("box", "MIN{X:"+min.getX()+", Y:"+min.getY()+"}");
 		float x = 0, y = 0, z = 0;
 		
 		for (int i = 0; i < 2; i++) {
