@@ -13,7 +13,7 @@ public class Hermite {
 		
 		double t2 = t*t;
 		double t3 = t2*t;
-		
+		/*
 		//the blending(baisc) function of Hermite
 		double h1 = 2*t3 - 3*t2 + 1;
 		double h2 = -2*t3 + 3*t2;
@@ -28,8 +28,8 @@ public class Hermite {
 				.add(P2.multiply((float) h2))
 				.add(T1.multiply((float) h3))
 				.add(T2.multiply((float) h4));
-
-		/*
+		 */
+		
 		Vector3d P = new Vector3d();
 		double x = (2*t*t*t - 3*t*t + 1) * P1.getX()
 				+ (t*t*t - 2*t*t + t) * T1.getX()
@@ -42,7 +42,7 @@ public class Hermite {
 		P.setX((float)x);
 		P.setY((float)y);
 		P.setZ(0);
-        */
+        
 		return P;
 	}
 	public static Vector3d evalTangentVectorOfHermite(double t, final Vector3d P1, 
