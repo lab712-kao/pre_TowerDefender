@@ -161,7 +161,8 @@ public class Path {
 		}
 		if(way.size()>=1){
 			way.get(way.size()-1).setAngle(calAngle(way.get(way.size()-1).getPosition(),end));
-			way.get(way.size()-1).setNextPoint(new PathPoint(end, calAngle(way.get(way.size()-1).getPosition(),end)));
+			DEFAULT_POINT.setAngle(calAngle(way.get(way.size()-1).getPosition(),end));
+			way.get(way.size()-1).setNextPoint(DEFAULT_POINT);
 //			way.add(point[point.length-1]);
 		}
 	}
@@ -192,7 +193,7 @@ public class Path {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		String s = new String();
+		String s = "";
 		
 		for(PathPoint p:way){
 			s+=p.toString()+'\t';
