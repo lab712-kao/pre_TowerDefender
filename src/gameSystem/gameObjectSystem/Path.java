@@ -122,10 +122,19 @@ public class Path {
 	public void addPathPoint(Vector3d pos){
 		way.add(new PathPoint(pos, DEFAULT_ANGLE));
 		Log.d("Path addPathPoint", "way size: " + way.size());
-		for(int i = 0; i < way.size(); i++) {
-			Log.d("Path addPathPoint", "way item"+"["+i+"]: "+way.get(i).position.toString());
-		}
+
 		calPath();
+//		for(int i = 0; i < way.size(); i++) {
+//			Log.d("Path addPathPoint", "way item"+"["+i+"]: "+way.get(i).position.toString());
+//		}
+		PathPoint p = way.get(0);
+		int i = 0;
+		while(p!=null){
+			
+			Log.d("Path addPathPoint", "way item"+"["+i+"]: "+p.getPosition().toString());
+			p=p.getNextPoint();
+			i++;
+		}
 	}
 	private float calAngle(Vector3d base,Vector3d A){
 		
@@ -139,9 +148,7 @@ public class Path {
 		point = way.toArray(point);
 		Arrays.sort(point, compator);
 //		Collections.sort(way, compator);
-//		for(int i = 0; i < way.size(); i++) {
-//			Log.d("Path clPath", "point item"+"["+i+"]: "+way.get(i).position.toString());
-//		}
+
 		
 		way.clear();
 		for (int i = 0; i < point.length-1; i++) {
