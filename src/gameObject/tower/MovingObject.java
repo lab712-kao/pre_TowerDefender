@@ -22,6 +22,10 @@ public abstract class MovingObject extends DefaultObject {
 	protected PathPoint point = null;
 	protected double t = 0.1;//part of Hermite
 	public static final int NO_PATH_SET = 1, AT_END = 2, SUCC_MOVE = 3, STOPING = 4;
+	private Vector3d forCalVec = new Vector3d();
+	private Vector3d lastPos = new Vector3d();
+	private Vector3d startAng = new Vector3d();
+	private Vector3d endAng = new Vector3d();
 	
 	public MovingObject(IGeometry model, int coordinateSystemID, Vector3d size,float x, float y, float faceAngle,float moveSpeed,float moveAngle,float health) {
 		super(model, coordinateSystemID,size,x, y, health,faceAngle);
@@ -122,39 +126,43 @@ public abstract class MovingObject extends DefaultObject {
 		
 		if(point!=null){//the last point is at position end ,so if null that mean 'at end'
 			//lastTimePos = position;
-			Vector3d localLastPos = position;
+			lastPos = position;
 			
-			Vector3d tmp = new Vector3d();
-			tmp.setX(point.getPosition().getX() - lastTimePos.getX());
-			tmp.setY(point.getPosition().getY() - lastTimePos.getY());
-			tmp.setZ(0);
-			Vector3d startAng = new Vector3d();
+			forCalVec = new Vector3d();
+			forCalVec.setX(point.getPosition().getX() - lastTimePos.getX());
+			forCalVec.setY(point.getPosition().getY() - lastTimePos.getY());
+			forCalVec.setZ(0);
 			
-			if(Math.abs((tmp.getX())) > Math.abs((tmp.getY()))){
-				startAng.setX(tmp.getX()/Math.abs(tmp.getX())*500);
-				startAng.setY(tmp.getY()/Math.abs(tmp.getX())*500);
+			if(Math.abs((forCalVec.getX())) > Math.abs((forCalVec.getY()))){
+				startAng.setX(forCalVec.getX()/Math.abs(forCalVec.getX())*500);
+				startAng.setY(forCalVec.getY()/Math.abs(forCalVec.getX())*500);
 				startAng.setZ(0);
 			}
 			else {
-				startAng.setX(tmp.getX()/Math.abs(tmp.getY())*500);
-				startAng.setY(tmp.getY()/Math.abs(tmp.getY())*500);
+				startAng.setX(forCalVec.getX()/Math.abs(forCalVec.getY())*500);
+				startAng.setY(forCalVec.getY()/Math.abs(forCalVec.getY())*500);
 				startAng.setZ(0);
 			}
+			
+			endAng.setX((float)(Math.cos(point.getAngle())*500));
+			endAng.setY((float)(Math.sin(point.getAngle())*500));
+			endAng.setZ(0.0f);
+			
 			Log.d("moveingObj move", "lastPos: "+lastTimePos.toString());
 			Log.d("moveingObj move", "nextPos "+point.getPosition().toString());
 			Log.d("moveingObj move", "startAng: "+startAng.toString());
-			Log.d("moveingObj move", "endAng: "+new Vector3d( (float) Math.cos(point.getAngle())*500, (float) Math.sin(point.getAngle())*500, (float)0.0).toString());
+			Log.d("moveingObj move", "endAng: "+endAng.toString());
 			
 			//Hermite p = (t,P1,P2,T1,T2)
 			Vector3d p = Hermite.evalHermite(t, lastTimePos, point.getPosition(), 
 				startAng, 
-				new Vector3d( (float) Math.cos(point.getAngle())*500, (float) Math.sin(point.getAngle())*500, (float)0.0));//
+				endAng);//
 			
 			position = p;
 //			Hermite.evalTangentVectorOfHermite(t, position, point.getPosition(), 
 //					new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
 				
-			this.setModelFaceAngle((float) Math.atan2(p.getY()-localLastPos.getY(), p.getX()-localLastPos.getX()));
+			this.setModelFaceAngle((float) Math.atan2(p.getY()-lastPos.getY(), p.getX()-lastPos.getX()));
 			model.setTranslation(p);
 			//Log.d("point","{X:"+p.getX()+" Y:"+p.getY()+"}");
 			t += 0.02;

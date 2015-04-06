@@ -261,14 +261,14 @@ public class GameScreenActivity extends ARViewActivity {
 	public void tankOnclick(View v){
 		if(cost - 100 >=0 && tankModel!=null&&OBHL!=null)
 		{
-			cost-=100;
+			//cost-=100;
 			OBHL.creatObject("tank",  tankModel , 3);
 		}
 	}
 	public void domOnclick(View v){
 		if(cost - 50 >=0 && domdomModel!=null&&OBHL!=null)
 		{
-			cost-=50;
+			//cost-=50;
 			OBHL.creatObject("moai",  domdomModel , 3);
 		}
 	}
@@ -276,7 +276,7 @@ public class GameScreenActivity extends ARViewActivity {
 	public void peanutsOnclick(View v){
 		if(cost - 150 >=0 && peanutModel!=null&&OBHL!=null)
 		{
-			cost-=150;
+			//cost-=150;
 			OBHL.creatObject("tank",  peanutModel , 3);
 		}
 	}
@@ -397,7 +397,9 @@ public class GameScreenActivity extends ARViewActivity {
 				Vector3d tmp = new Vector3d(enTran);
 				tmp.setY((float)(tmp.getY()*0.3));
 				tmp.setX((float)(tmp.getX()*0.5));
-				OBHL.addPosition(tmp);*/
+				*/
+				//OBHL.addPosition(new Vector3d(200, 250, 0));
+				//OBHL.addPosition(new Vector3d(450, 125, 0));
 				setEnTowerBtn.setVisibility(View.INVISIBLE);
 				OKBtn.setVisibility(View.INVISIBLE);
 				//enProcess.startEnermyProcess();
@@ -528,8 +530,12 @@ public class GameScreenActivity extends ARViewActivity {
 			if(success) {
 				co = theRelation.getTranslation();
 				co.setZ(0);
-				Log.d("ScreenAc onGeoTouch", "coodId: "+coodSysNum+", tran: " + co);
-				OBHL.addPosition(co);			
+				Vector3d fuckinGC = new Vector3d();
+				fuckinGC.setX(co.getX());
+				fuckinGC.setY(co.getY());
+				fuckinGC.setZ(0);
+				Log.d("ScreenAc onGeoTouch", "coodId: "+coodSysNum+", tran: " + fuckinGC);
+				OBHL.addPosition(fuckinGC);			
 			}
 		}
 	}
