@@ -145,9 +145,9 @@ public class Path {
 		
 		way.clear();
 		for (int i = 0; i < point.length-1; i++) {
-			way.get(i).setNextPoint(point[i+1]);
-			way.get(i).setAngle(calAngle(point[i].getPosition(),point[i].getPosition()));
-//			way.add(point[i]);
+			point[i].setNextPoint(point[i+1]);
+			point[i].setAngle(calAngle(point[i].getPosition(),point[i+1].getPosition()));
+			way.add(point[i]);
 		}
 		if(point.length>=1){
 			point[point.length-1].setAngle(calAngle(point[point.length-1].getPosition(),end));
