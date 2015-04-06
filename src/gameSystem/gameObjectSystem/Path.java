@@ -167,7 +167,7 @@ public class Path {
 	public PathPoint getNextPathPoint(PathPoint nowPoint){
 		
 		if(nowPoint == null){//it mean in the begin
-			if(way.size() == 0)
+			if(way.isEmpty())
 				return DEFAULT_POINT;
 			return way.get(0);
 		}

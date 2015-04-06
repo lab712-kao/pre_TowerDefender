@@ -445,7 +445,7 @@ public class GameScreenActivity extends ARViewActivity {
 			ttt.setScale(10.0f);
 			ttt.setTranslation(new Vector3d(0, 0, 0));
 			ttt.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
-			ttt.setVisible(false);
+			//ttt.setVisible(false);
 			
 			enTower = metaioSDK.createGeometry(towerModel1);
 			enTower.setCoordinateSystemID(3);
@@ -523,12 +523,13 @@ public class GameScreenActivity extends ARViewActivity {
 			TrackingValues theRelation = new TrackingValues();
 			Vector3d co;
 			
-			success = metaioSDK.getCosRelation(3, coodSysNum, theRelation);
+			success = metaioSDK.getCosRelation(coodSysNum, 3, theRelation);
+			
 			if(success) {
 				co = theRelation.getTranslation();
 				co.setZ(0);
-				OBHL.addPosition(co);
 				Log.d("ScreenAc onGeoTouch", "coodId: "+coodSysNum+", tran: " + co);
+				OBHL.addPosition(co);			
 			}
 		}
 	}

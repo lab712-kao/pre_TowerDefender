@@ -81,7 +81,7 @@ public class ObjectHandler  {
 			OBMO.addPosition(pos);
 		}
 		if(OBME != null) {
-			OBME.addPosition(pos);
+			//OBME.addPosition(pos);
 		}
 		
 	}

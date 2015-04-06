@@ -201,7 +201,7 @@ public class ObjectMover implements Runnable {
 
 	private boolean move(int index) {
 
-		Log.d("path",path.toString());
+		//Log.d("path",path.toString());
 		MovingObject movingObject = objects.seek(index, TYPE);
 		
 		if(movingObject.isDead())return false;
@@ -211,7 +211,7 @@ public class ObjectMover implements Runnable {
 				Log.d("point", "Restart move");
 				break;
 			case MovingObject.AT_END:
-//				Log.d("point", "In the end");
+				Log.d("point", "In the end");
 				movingObject.dead();
 				objects.remove(objects.getIndexOf(movingObject, TYPE), TYPE);
 				
