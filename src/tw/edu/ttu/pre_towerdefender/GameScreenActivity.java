@@ -226,7 +226,9 @@ public class GameScreenActivity extends ARViewActivity {
 	int  myProgress = 0;
 	public void costAndBound(){
 		
-		
+		if(OBHL != null) {
+			blood = OBHL.getEnermyBlood();
+		}
 	    myProgressBar.setProgress(blood);
 	 
 		if(flag_bound == 1 && cost < bound) {

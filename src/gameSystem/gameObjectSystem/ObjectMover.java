@@ -25,6 +25,7 @@ public class ObjectMover implements Runnable {
 	private Vector3d end = new Vector3d((float)100.0, (float)100.0, (float)0.0);
 	
 	private final Boolean _STOP = true;
+	private int enermyBlood = 100;
 	
 	public ObjectMover(IDType type, DoubleArrayList<MovingObject> objects) {
 		super();
@@ -217,6 +218,9 @@ public class ObjectMover implements Runnable {
 				break;
 			case MovingObject.AT_END:
 				Log.d("point", "In the end");
+				if(enermyBlood > 0) {
+					enermyBlood-=5;
+				}
 				movingObject.dead();
 				//objects.remove(index, TYPE);
 				
@@ -272,4 +276,7 @@ public class ObjectMover implements Runnable {
 		return true;
 	}
 
+	public int getEnBlood() {
+		return enermyBlood;
+	}
 }

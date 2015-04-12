@@ -16,6 +16,7 @@ public class ObjectHandler  {
 	private IMetaioSDKAndroid sdk;
 	private MetaioSurfaceView view;
 	private ObjectAttacker OBAO,OBAE;
+	private int enermyBlood = 100;
 	
 	public ObjectHandler(IMetaioSDKAndroid sdk, MetaioSurfaceView view,ObjectInfoReader OIR) {
 		this.OIR = OIR;
@@ -86,4 +87,10 @@ public class ObjectHandler  {
 		
 	}
 	
+	public int getEnermyBlood() {
+		if(OBMO != null) {
+			enermyBlood = OBMO.getEnBlood();
+		}
+		return enermyBlood;
+	}
 }
