@@ -20,8 +20,12 @@ public abstract class MovingObject extends DefaultObject {
 	protected Vector3d nextPos = null;
 	protected Boolean isStop = false,pointSet = false;
 	protected PathPoint point = null;
+
+	protected double tInc = 0;
+
 	protected double t = 0.0f;//part of Hermite
 	protected double timeSlice = 0.02f;
+
 	public static final int NO_PATH_SET = 1, AT_END = 2, SUCC_MOVE = 3, STOPING = 4;
 	private Vector3d forCalVec = new Vector3d();
 	private Vector3d lastPos = new Vector3d();
@@ -99,9 +103,25 @@ public abstract class MovingObject extends DefaultObject {
 		isStop = false;
 	}
 	
+	private void calInc(){
+		double x = position.getX()-point.getPosition().getX();
+		double y = position.getY()-point.getPosition().getY();
+		x = Math.abs(x);
+		y = Math.abs(y);
+		double len = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+		
+		double sizeX = model.getBoundingBox().getMax().getX()*size.getX()-model.getBoundingBox().getMin().getX()*size.getX();
+		double sizeY = model.getBoundingBox().getMax().getY()*size.getY()-model.getBoundingBox().getMin().getY()*size.getY();
+		double size = sizeX>sizeY? sizeX:sizeY;
+		size *= 0.8;
+		tInc = 1/((len/size)*2);
+	}
+	
 	public void setPathPoint(PathPoint point){
 		lastTimePos = position;
+		
 		this.point = point;
+		calInc();
 	}
 	
 	//this function do smooth moving between point and point 
@@ -116,15 +136,19 @@ public abstract class MovingObject extends DefaultObject {
 		}else if(point == null && pointSet){
 			Log.d("movingObject", "inin end");
 			return AT_END;
+
 		}else if(point.isIgnore()||t==1){
 			t=0.0f;
+
 			lastTimePos = point.getPosition();
 			point = point.getNextPoint();
 			Log.d("moveingObject move", "in the not end");
 			while(point!=null&&point.isIgnore()){
 				lastTimePos = point.getPosition();
 				point = point.getNextPoint();	
-			}	
+			}
+			if(point!=null)
+				calInc();
 			
 		}
 		
@@ -148,7 +172,8 @@ public abstract class MovingObject extends DefaultObject {
 			endAng.setX((float)(Math.cos(point.getAngle())*500));
 			endAng.setY((float)(Math.sin(point.getAngle())*500));
 			endAng.setZ(0.0f);
-			t += timeSlice;
+			t += tInc;
+			
 		}
 		
 		if(point!=null){//the last point is at position end ,so if null that mean 'at end'
@@ -178,7 +203,11 @@ public abstract class MovingObject extends DefaultObject {
 			}
 			model.setTranslation(p);
 			//Log.d("point","{X:"+p.getX()+" Y:"+p.getY()+"}");
-			t += timeSlice;
+
+			t += tInc;
+
+//			t += timeSlice;
+
 			if(t > 1) t = 1;
 			return SUCC_MOVE;
 		}
