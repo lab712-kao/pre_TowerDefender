@@ -18,6 +18,7 @@ public class ObjectHandler  {
 	private IMetaioSDKAndroid sdk;
 	private MetaioSurfaceView view;
 	private ObjectAttacker OBAO,OBAE;
+	private int enermyBlood = 100;
 	private double screenZoom =1.0f;
 	
 	public ObjectHandler(IMetaioSDKAndroid sdk, MetaioSurfaceView view,ObjectInfoReader OIR) {
@@ -92,4 +93,10 @@ public class ObjectHandler  {
 		this.screenZoom = screenZoom;
 	}
 	
+	public int getEnermyBlood() {
+		if(OBMO != null) {
+			enermyBlood = OBMO.getEnBlood();
+		}
+		return enermyBlood;
+	}
 }
