@@ -59,6 +59,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import android.view.SurfaceView;
 
@@ -100,6 +101,7 @@ public class GameScreenActivity extends ARViewActivity {
 	private EnermyProcess enProcess;
 	private String domdomModel = null;
 	private String peanutModel = null;
+	private TextView de;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -184,6 +186,8 @@ public class GameScreenActivity extends ARViewActivity {
 		blood_hun = (ImageView)findViewById(R.id.blood_hun);
 		blood_ten = (ImageView)findViewById(R.id.blood_ten);
 		blood_one = (ImageView)findViewById(R.id.blood_one);
+		
+		de = (TextView) findViewById(R.id.textView1);
 		
 		imageArray.add(num_hun);
 		imageArray.add(num_ten);
@@ -402,7 +406,7 @@ public class GameScreenActivity extends ARViewActivity {
 				//OBHL.addPosition(new Vector3d(450, 125, 0));
 				setEnTowerBtn.setVisibility(View.INVISIBLE);
 				OKBtn.setVisibility(View.INVISIBLE);
-				//enProcess.startEnermyProcess();
+				enProcess.startEnermyProcess();
 			}
 			
 		});
@@ -444,14 +448,14 @@ public class GameScreenActivity extends ARViewActivity {
 			
 			ttt = metaioSDK.createGeometry(towerModel1);
 			ttt.setCoordinateSystemID(3);
-			ttt.setScale(10.0f);
+			ttt.setScale(15.0f);
 			ttt.setTranslation(new Vector3d(0, 0, 0));
 			ttt.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 			//ttt.setVisible(false);
 			
 			enTower = metaioSDK.createGeometry(towerModel1);
 			enTower.setCoordinateSystemID(3);
-			enTower.setScale(10.0f);
+			enTower.setScale(15.0f);
 			enTower.setTranslation(new Vector3d(10, 10, 0));
 			enTower.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 			enTower.setVisible(false);
@@ -469,13 +473,13 @@ public class GameScreenActivity extends ARViewActivity {
 			
 			target1 = metaioSDK.createGeometry(smallTower);
 			target1.setCoordinateSystemID(1);
-			target1.setScale(20.0f);
+			target1.setScale(10.0f);
 			target1.setTranslation(new Vector3d(0, 0, 0));
 			target1.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 			
 			target2 = metaioSDK.createGeometry(smallTower);
 			target2.setCoordinateSystemID(2);
-			target2.setScale(20.0f);
+			target2.setScale(10.0f);
 			target2.setTranslation(new Vector3d(0, 0, 0));
 			target2.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 			
@@ -535,6 +539,7 @@ public class GameScreenActivity extends ARViewActivity {
 				fuckinGC.setY(co.getY());
 				fuckinGC.setZ(0);
 				Log.d("ScreenAc onGeoTouch", "coodId: "+coodSysNum+", tran: " + fuckinGC);
+				de.setText("CoodSysNum: "+coodSysNum+", Position: "+fuckinGC.toString()+", Tower Set.");
 				OBHL.addPosition(fuckinGC);			
 			}
 		}

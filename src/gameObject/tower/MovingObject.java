@@ -20,12 +20,14 @@ public abstract class MovingObject extends DefaultObject {
 	protected Vector3d nextPos = null;
 	protected Boolean isStop = false,pointSet = false;
 	protected PathPoint point = null;
-	protected double t = 0.1;//part of Hermite
+	protected double t = 0.0f;//part of Hermite
+	protected double timeSlice = 0.02f;
 	public static final int NO_PATH_SET = 1, AT_END = 2, SUCC_MOVE = 3, STOPING = 4;
 	private Vector3d forCalVec = new Vector3d();
 	private Vector3d lastPos = new Vector3d();
 	private Vector3d startAng = new Vector3d();
 	private Vector3d endAng = new Vector3d();
+	private Vector3d rotAng = new Vector3d();
 	
 	public MovingObject(IGeometry model, int coordinateSystemID, Vector3d size,float x, float y, float faceAngle,float moveSpeed,float moveAngle,float health) {
 		super(model, coordinateSystemID,size,x, y, health,faceAngle);
@@ -112,22 +114,21 @@ public abstract class MovingObject extends DefaultObject {
 			pointSet = true;
 			return NO_PATH_SET;//need to setPathPoint
 		}else if(point == null && pointSet){
+			Log.d("movingObject", "inin end");
 			return AT_END;
 		}else if(point.isIgnore()||t==1){
-			t=0.1f;
+			t=0.0f;
 			lastTimePos = point.getPosition();
 			point = point.getNextPoint();
 			Log.d("moveingObject move", "in the not end");
 			while(point!=null&&point.isIgnore()){
 				lastTimePos = point.getPosition();
 				point = point.getNextPoint();	
-			}
+			}	
+			
 		}
 		
-		if(point!=null){//the last point is at position end ,so if null that mean 'at end'
-			//lastTimePos = position;
-			lastPos = position;
-			
+		if(t == 0.0f && point != null) {
 			forCalVec = new Vector3d();
 			forCalVec.setX(point.getPosition().getX() - lastTimePos.getX());
 			forCalVec.setY(point.getPosition().getY() - lastTimePos.getY());
@@ -147,6 +148,12 @@ public abstract class MovingObject extends DefaultObject {
 			endAng.setX((float)(Math.cos(point.getAngle())*500));
 			endAng.setY((float)(Math.sin(point.getAngle())*500));
 			endAng.setZ(0.0f);
+			t += timeSlice;
+		}
+		
+		if(point!=null){//the last point is at position end ,so if null that mean 'at end'
+			//lastTimePos = position;
+			lastPos = position;
 			
 			Log.d("moveingObj move", "lastPos: "+lastTimePos.toString());
 			Log.d("moveingObj move", "nextPos "+point.getPosition().toString());
@@ -163,9 +170,15 @@ public abstract class MovingObject extends DefaultObject {
 //					new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
 				
 			this.setModelFaceAngle((float) Math.atan2(p.getY()-lastPos.getY(), p.getX()-lastPos.getX()));
+			if(this.getWalkShack() < 0) {
+				this.setWalkShack((float) (Math.PI/18));
+			}
+			else {
+				this.setWalkShack((float) (Math.PI/18*-1));
+			}
 			model.setTranslation(p);
 			//Log.d("point","{X:"+p.getX()+" Y:"+p.getY()+"}");
-			t += 0.02;
+			t += timeSlice;
 			if(t > 1) t = 1;
 			return SUCC_MOVE;
 		}
@@ -202,10 +215,11 @@ public abstract class MovingObject extends DefaultObject {
 		}
 	}
 	
-	@Override
-	public void dead() {
-		// TODO Auto-generated method stub
-		super.dead();
+	public void realDead() {
+		if (model != null) {
+			model.delete();
+			model = null;
+		}
 		this.lastTimePos = null;
 		this.nextPos = null;
 		this.point = null;

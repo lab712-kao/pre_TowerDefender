@@ -226,5 +226,13 @@
         android:layout_x="360dp"
         android:layout_y="25dp"
         android:src="@drawable/num_zero" />
+
+      <TextView
+          android:id="@+id/textView1"
+          android:layout_width="wrap_content"
+          android:layout_height="44dp"
+          android:layout_x="226dp"
+          android:layout_y="429dp"
+          android:text="TextView" />
   
 </AbsoluteLayout>
