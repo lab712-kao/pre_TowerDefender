@@ -203,8 +203,13 @@ public class ObjectMover implements Runnable {
 
 		//Log.d("path",path.toString());
 		MovingObject movingObject = objects.seek(index, TYPE);
+		if(movingObject.isDead()){
+			movingObject.realDead();
+			movingObject = null;
+			objects.remove(index, TYPE);
+			return false;
+		}
 		
-		if(movingObject.isDead())return false;
 		switch (movingObject.moveByPathPoint()) {
 			case MovingObject.STOPING:
 				movingObject.startMove();
@@ -213,7 +218,7 @@ public class ObjectMover implements Runnable {
 			case MovingObject.AT_END:
 				Log.d("point", "In the end");
 				movingObject.dead();
-				objects.remove(objects.getIndexOf(movingObject, TYPE), TYPE);
+				//objects.remove(index, TYPE);
 				
 				return true;
 			case MovingObject.NO_PATH_SET:
@@ -227,29 +232,38 @@ public class ObjectMover implements Runnable {
 		//collision detection
 		for( int i = objects.getIndexOf(movingObject, TYPE); i<objects.size(TYPE); i++ ){
 			if(objects.getIndexOf(movingObject, TYPE)==i)continue;
-			if( objects.seek(i, TYPE).checkCollision(movingObject) ){
-				//if collision unit is own unit and stop this movingObject move until startMove() << be called
-				movingObject.stopMove();
-				
-				break;
+			
+			if(!objects.seek(i, TYPE).isDead() && !movingObject.isDead()) {
+				if( objects.seek(i, TYPE).checkCollision(movingObject, 1) ){
+					//if collision unit is own unit and stop this movingObject move until startMove() << be called
+					movingObject.stopMove();
+					
+					break;
+				}
 			}
 		}
 		
 		for( int i = 0; i<objects.size(OTHERIDTYPE); i++ ){
-//			if(objects.getIndexOf(movingObject, TYPE)==i)continue;
-			if( objects.seek(i, OTHERIDTYPE).checkCollision(movingObject) ){
-				//if collision unit is enemy unit and stop this movingObject move until startMove() << be called
-				//and HP = HP -1
-				//if (HP<=0) means this object is dead 
-				movingObject.stopMove();
-				//movingObject.back();
-				movingObject.setHealth(movingObject.getHealth()-10f);
-				Log.d("objectMover", "Attack");
-
-				if(movingObject.getHealth()<=0){
-					movingObject.dead();
-					objects.remove(objects.getIndexOf(movingObject, TYPE), TYPE);
-					return false;
+			//if(objects.getIndexOf(movingObject, TYPE)==i)continue;
+			if(!objects.seek(i, OTHERIDTYPE).isDead() && !movingObject.isDead()) {
+				if( objects.seek(i, OTHERIDTYPE).checkCollision(movingObject, 1.3) ){
+					//if collision unit is enemy unit and stop this movingObject move until startMove() << be called
+					//and HP = HP -1
+					//if (HP<=0) means this object is dead 
+					movingObject.stopMove();
+					Vector3d otherModelPos = objects.seek(i, OTHERIDTYPE).getModelPosition();
+					//Math.atan2(otherModelPos.getY()-movingObject.getModelPosition().getY(), otherModelPos.getX()-movingObject.getModelPosition().getX())
+					movingObject.setModelFaceAngle((float)Math.atan2(otherModelPos.getY()-movingObject.getModelPosition().getY(), otherModelPos.getX()-movingObject.getModelPosition().getX()));
+					//movingObject.back();
+					//movingObject.setHealth(movingObject.getHealth()-10f);
+					objects.seek(i, OTHERIDTYPE).setHealth(objects.seek(i, OTHERIDTYPE).getHealth() - 10.0f);
+					Log.d("objectMover", "Attack");
+	
+					if(objects.seek(i, OTHERIDTYPE).getHealth()<=0){
+						objects.seek(i, OTHERIDTYPE).dead();
+						//objects.remove(objects.getIndexOf(movingObject, TYPE), TYPE);
+						return false;
+					}
 				}
 			}
 		}
