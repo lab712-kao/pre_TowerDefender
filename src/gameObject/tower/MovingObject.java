@@ -114,7 +114,7 @@ public abstract class MovingObject extends DefaultObject {
 		double sizeY = model.getBoundingBox().getMax().getY()*size.getY()-model.getBoundingBox().getMin().getY()*size.getY();
 		double size = sizeX>sizeY? sizeX:sizeY;
 		size *= 0.8;
-		tInc = 1/((len/size)*2);
+		tInc = 1/((len/size)*5);
 	}
 	
 	public void setPathPoint(PathPoint point){
