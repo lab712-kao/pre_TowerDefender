@@ -20,6 +20,7 @@ public abstract class MovingObject extends DefaultObject {
 	protected Vector3d nextPos = null;
 	protected Boolean isStop = false,pointSet = false;
 	protected PathPoint point = null;
+	protected double tInc = 0;
 	protected double t = 0.1;//part of Hermite
 	public static final int NO_PATH_SET = 1, AT_END = 2, SUCC_MOVE = 3, STOPING = 4;
 	
@@ -93,9 +94,24 @@ public abstract class MovingObject extends DefaultObject {
 		isStop = false;
 	}
 	
+	private void calInc(){
+		double x = position.getX()-point.getPosition().getX();
+		double y = position.getY()-point.getPosition().getY();
+		
+		double len = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+		
+		double sizeX = model.getBoundingBox().getMax().getX()*size.getX()-model.getBoundingBox().getMin().getX()*size.getX();
+		double sizeY = model.getBoundingBox().getMax().getY()*size.getY()-model.getBoundingBox().getMin().getY()*size.getY();
+		double size = sizeX>sizeY? sizeX:sizeY;
+		size *= 0.8;
+		tInc = 1/((len/size)/2);
+	}
+	
 	public void setPathPoint(PathPoint point){
 		lastTimePos = position;
+		
 		this.point = point;
+		calInc();
 	}
 	
 	//this function do smooth moving between point and point 
@@ -109,7 +125,7 @@ public abstract class MovingObject extends DefaultObject {
 			return NO_PATH_SET;//need to setPathPoint
 		}else if(point == null && pointSet){
 			return AT_END;
-		}else if(point.isIgnore()||t==1){
+		}else if(point.isIgnore()||t>=1){
 			t=0.1f;
 			lastTimePos = point.getPosition();
 			point = point.getNextPoint();
@@ -118,6 +134,8 @@ public abstract class MovingObject extends DefaultObject {
 				lastTimePos = point.getPosition();
 				point = point.getNextPoint();	
 			}
+			if(point!=null)
+				calInc();
 		}
 		
 		if(point!=null){//the last point is at position end ,so if null that mean 'at end'
@@ -157,7 +175,7 @@ public abstract class MovingObject extends DefaultObject {
 			this.setModelFaceAngle((float) Math.atan2(p.getY()-localLastPos.getY(), p.getX()-localLastPos.getX()));
 			model.setTranslation(p);
 			//Log.d("point","{X:"+p.getX()+" Y:"+p.getY()+"}");
-			t += 0.02;
+			t += tInc;
 			if(t > 1) t = 1;
 			return SUCC_MOVE;
 		}
