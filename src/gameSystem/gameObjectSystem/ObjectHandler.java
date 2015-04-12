@@ -1,5 +1,7 @@
 package gameSystem.gameObjectSystem;
 
+import java.util.Set;
+
 import com.metaio.sdk.MetaioSurfaceView;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.Vector3d;
@@ -16,6 +18,7 @@ public class ObjectHandler  {
 	private IMetaioSDKAndroid sdk;
 	private MetaioSurfaceView view;
 	private ObjectAttacker OBAO,OBAE;
+	private double screenZoom =1.0f;
 	
 	public ObjectHandler(IMetaioSDKAndroid sdk, MetaioSurfaceView view,ObjectInfoReader OIR) {
 		this.OIR = OIR;
@@ -84,6 +87,9 @@ public class ObjectHandler  {
 			OBME.addPosition(pos);
 		}
 		
+	}
+	public void zoom(double screenZoom) {
+		this.screenZoom = screenZoom;
 	}
 	
 }
