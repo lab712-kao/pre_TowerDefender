@@ -4,6 +4,7 @@ import gameObject.tower.MovingObject;
 import gameObject.tower.Soldier;
 import gameObject.tower.tower;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfo;
+import gameviews.constants.Constant;
 import android.R.integer;
 import android.util.Log;
 import com.metaio.sdk.jni.IGeometry;
@@ -162,6 +163,7 @@ public class ObjectCreator implements Runnable {
 		 * // new Thread(new Tank(sdk.createGeometry(modelPath), 1, new
 		 * Vector3d( // 35.0f), new Vector3d(0, 0, 0), 100, 100, 20)).start();
 		 */
+		SIZE = new Vector3d((Constant.Screen_Width/100));
 		Log.d("moveStart", "inCreator+++++++++++++++++++++++=");
 		if(kinds == SOLIDER){
 			objects.push(
