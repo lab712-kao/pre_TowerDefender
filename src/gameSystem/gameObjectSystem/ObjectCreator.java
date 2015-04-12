@@ -26,7 +26,7 @@ public class ObjectCreator implements Runnable {
 
 	private String modelPath;
 	
-	private final Vector3d SIZE = new Vector3d(10.0f);
+	private Vector3d SIZE = new Vector3d(10.0f);
 
 	
 	private final float DEFAULTANGLE = 0.0f;
@@ -88,6 +88,67 @@ public class ObjectCreator implements Runnable {
 		this.id = id;
 		
 		this.pos = new Vector3d(x,y,0f);
+	}
+	/////////////////////
+	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
+			int coordinateSystemID, ObjectInfo objectInfo, int x, int y,int kinds,double size){
+		this.coordinateSystemID = coordinateSystemID;
+		this.modelPath = modelPath;
+		this.sdk = sdk;
+		this.objectInfo = objectInfo;
+		this.kinds = kinds;
+		this.pos = new Vector3d(x,y,0f);
+		this.SIZE = new Vector3d((float) size);
+	}
+	//for solider
+	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
+			int coordinateSystemID, DoubleArrayList<MovingObject> objects,
+			ObjectInfo objectInfo,double size) {
+		this.coordinateSystemID = coordinateSystemID;
+		this.modelPath = modelPath;
+		this.sdk = sdk;
+		this.objects = objects;
+		this.objectInfo = objectInfo;
+		this.SIZE = new Vector3d((float) size);
+	}
+
+	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
+			int coordinateSystemID, DoubleArrayList<MovingObject> objects,
+			ObjectInfo objectInfo, int x, int y,double size) {
+		this.coordinateSystemID = coordinateSystemID;
+		this.modelPath = modelPath;
+		this.sdk = sdk;
+		this.objects = objects;
+		this.objectInfo = objectInfo;
+		
+		this.pos = new Vector3d(x,y,0f);
+		this.SIZE = new Vector3d((float) size);
+	}
+
+	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
+			int coordinateSystemID, DoubleArrayList<MovingObject> objects,
+			ObjectInfo objectInfo, IDType id,double size) {
+		this.coordinateSystemID = coordinateSystemID;
+		this.modelPath = modelPath;
+		this.sdk = sdk;
+		this.objects = objects;
+		this.objectInfo = objectInfo;
+		this.id = id;
+		this.SIZE = new Vector3d((float) size);
+	}
+
+	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
+			int coordinateSystemID, DoubleArrayList<MovingObject> objects,
+			ObjectInfo objectInfo, int x, int y, IDType id, double size) {
+		this.coordinateSystemID = coordinateSystemID;
+		this.modelPath = modelPath;
+		this.sdk = sdk;
+		this.objects = objects;
+		this.objectInfo = objectInfo;
+		this.id = id;
+		
+		this.pos = new Vector3d(x,y,0f);
+		this.SIZE = new Vector3d((float) size);
 	}
 
 	@Override
