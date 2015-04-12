@@ -114,7 +114,7 @@ public abstract class MovingObject extends DefaultObject {
 		double sizeY = model.getBoundingBox().getMax().getY()*size.getY()-model.getBoundingBox().getMin().getY()*size.getY();
 		double size = sizeX>sizeY? sizeX:sizeY;
 		size *= 0.8;
-		tInc = 1/((len/size)*2);
+		tInc = 1/((len/size)*5);
 	}
 	
 	public void setPathPoint(PathPoint point){
@@ -254,5 +254,31 @@ public abstract class MovingObject extends DefaultObject {
 		this.point = null;
 		this.position = null;
 		this.size = null;
+	}
+	
+	public void attackAnimate(){ 
+		IGeometry tmpModel = this.getModel();
+		Vector3d tmpPos = tmpModel.getTranslation();
+		/*
+		Math.sin(faceAngle);
+		Math.cos(faceAngle);
+		*/
+		if(tmpModel != null) {
+			for(int i = 0; i < 10; i++) {
+				Vector3d calPos = tmpModel.getTranslation();
+				calPos.setX((float)(calPos.getX() + Math.cos(faceAngle)));
+				calPos.setY((float)(calPos.getY() + Math.sin(faceAngle)));
+				tmpModel.setTranslation(calPos);
+			}
+			
+			for(int i = 0; i < 10; i++) {
+				Vector3d calPos = tmpModel.getTranslation();
+				calPos.setX((float)(calPos.getX() - Math.cos(faceAngle)));
+				calPos.setY((float)(calPos.getY() - Math.sin(faceAngle)));
+				tmpModel.setTranslation(calPos);
+			}
+		}
+		
+		tmpModel.setTranslation(tmpPos);
 	}
 }

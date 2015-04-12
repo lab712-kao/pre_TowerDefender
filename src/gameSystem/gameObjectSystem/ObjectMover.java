@@ -63,9 +63,9 @@ public class ObjectMover implements Runnable {
 					move(i);
 					
 					//Log.d("MOVER", "<<<<<<<moving++++++++++++++++++++++++++++");
-					Thread.sleep(10);
+					//Thread.sleep(10);
 				}
-				Thread.sleep(250);
+				Thread.sleep(125);
 				// Log.d("MOVER",
 				// "<<<<<<<SLEEP>>>>>"+objects.size(TYPE)+"<<++++++++++++++++++++++++++++");
 			} catch (InterruptedException e) {
@@ -256,6 +256,7 @@ public class ObjectMover implements Runnable {
 					movingObject.setModelFaceAngle((float)Math.atan2(otherModelPos.getY()-movingObject.getModelPosition().getY(), otherModelPos.getX()-movingObject.getModelPosition().getX()));
 					//movingObject.back();
 					//movingObject.setHealth(movingObject.getHealth()-10f);
+					movingObject.attackAnimate();
 					objects.seek(i, OTHERIDTYPE).setHealth(objects.seek(i, OTHERIDTYPE).getHealth() - 10.0f);
 					Log.d("objectMover", "Attack");
 	
