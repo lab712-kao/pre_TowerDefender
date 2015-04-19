@@ -179,12 +179,12 @@ public abstract class MovingObject extends DefaultObject {
 		if(point!=null){//the last point is at position end ,so if null that mean 'at end'
 			//lastTimePos = position;
 			lastPos = position;
-			
+			/*
 			Log.d("moveingObj move", "lastPos: "+lastTimePos.toString());
 			Log.d("moveingObj move", "nextPos "+point.getPosition().toString());
 			Log.d("moveingObj move", "startAng: "+startAng.toString());
 			Log.d("moveingObj move", "endAng: "+endAng.toString());
-			
+			*/
 			//Hermite p = (t,P1,P2,T1,T2)
 			Vector3d p = Hermite.evalHermite(t, lastTimePos, point.getPosition(), 
 				startAng, 

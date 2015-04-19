@@ -99,4 +99,9 @@ public class ObjectHandler  {
 		}
 		return enermyBlood;
 	}
+	
+	public void removePosition(Vector3d pos) {
+		OBMO.reovePosition(pos);
+		OBME.reovePosition(pos);
+	}
 }
