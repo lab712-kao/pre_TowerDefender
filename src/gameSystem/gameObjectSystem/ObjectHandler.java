@@ -1,5 +1,6 @@
 package gameSystem.gameObjectSystem;
 
+import com.metaio.R.bool;
 import com.metaio.sdk.MetaioSurfaceView;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.Vector3d;
@@ -17,6 +18,7 @@ public class ObjectHandler  {
 	private MetaioSurfaceView view;
 	private int enermyBlood = 100;
 	private double screenZoom =1.0f;
+	private boolean end = false;
 	
 	public ObjectHandler(IMetaioSDKAndroid sdk, MetaioSurfaceView view,ObjectInfoReader OIR) {
 		this.OIR = OIR;
@@ -29,7 +31,7 @@ public class ObjectHandler  {
 
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID, int x, int y) {
-		
+		if(end) return false;
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects, OIR.getSoldierInfoByName(name),x, y));
 		return false;
@@ -38,7 +40,7 @@ public class ObjectHandler  {
 
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID, int x, int y,IDType id) {
-		
+		if(end) return false;
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects, OIR.getSoldierInfoByName(name),x, y,id));
 		return false;
@@ -47,6 +49,7 @@ public class ObjectHandler  {
 	
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID) {
+		if(end) return false;
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects,OIR.getSoldierInfoByName(name)));
 		return false;
@@ -54,6 +57,7 @@ public class ObjectHandler  {
 	}
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID,IDType id) {
+		if(end) return false;
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects,OIR.getSoldierInfoByName(name),id));
 		return false;
@@ -92,6 +96,8 @@ public class ObjectHandler  {
 		return enermyBlood;
 	}
 	public void endGame(){
+		if(end)
+			return;
 		OBME.close();
 		OBMO.close();
 		objects.clearAll();
@@ -100,7 +106,8 @@ public class ObjectHandler  {
 		objects = null;
 		sdk = null;
 		OIR = null;
-		view = null;	
+		view = null;
+		end = true;
 		System.gc();
 	}
 }
