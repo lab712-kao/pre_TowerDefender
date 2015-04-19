@@ -222,7 +222,8 @@ public class GameScreenActivity extends ARViewActivity {
 				
 				//Log.d("gameScreen addmarker", "succ");
 				
-				if(co.getX() < range.getX()*-1 && co.getY() < range.getY()*-1){
+				if(co.getX() < range.getX()*-1 && co.getX() > 0 &&
+				   co.getY() < range.getY()*-1 && co.getY() > 0){
 					
 					//Log.d("gameScreen addmarker", "in range");
 					if(available[coodID - 1]) {

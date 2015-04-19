@@ -190,9 +190,9 @@ public class Path {
 	
 	public void removePathPoint(Vector3d point){
 		
-		//Log.d("Path remove", "point:["+point.toString()+"]");
+		Log.d("Path remove", "point:["+point.toString()+"]");
 		for(PathPoint p:way) {
-			//Log.d("Path remove", "p:["+p.toString()+"]");
+			Log.d("Path remove", "p:["+p.toString()+"]");
 			if(p.getPosition().equals(point)){
 				p.setIgnore(true);
 			}
