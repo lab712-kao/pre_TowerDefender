@@ -117,6 +117,14 @@ public class Path {
 //		DEFAULT_POINT.setNextPoint(new PathPoint(end, calAngle(begin,end)));
 	}
 	
+	public void clear(){
+		way.clear();
+		begin = null;
+		end = null;
+		DEFAULT_POINT = null;
+		compator = null;
+	}
+	
 	public void addPathPoint(Vector3d pos){
 		way.add(new PathPoint(pos, DEFAULT_ANGLE));
 		Log.d("Path addPathPoint", "way size: " + way.size());

@@ -11,6 +11,11 @@ public class DoubleArrayList<E> {
 		own = new ArrayList<E>();
 		enemy = new ArrayList<E>();
 	}
+	
+	public void clearAll() {
+		own.clear();
+		enemy.clear();
+	}
 
 	public void push(E object, IDType T) {
 		if (T == IDType.O) {

@@ -15,7 +15,6 @@ public class ObjectHandler  {
 	private ObjectMover OBMO,OBME;
 	private IMetaioSDKAndroid sdk;
 	private MetaioSurfaceView view;
-	private ObjectAttacker OBAO,OBAE;
 	private int enermyBlood = 100;
 	private double screenZoom =1.0f;
 	
@@ -26,11 +25,6 @@ public class ObjectHandler  {
 		objects = new DoubleArrayList<MovingObject>();
 		OBMO = null;
 		OBME = null;
-//		OBMO = new ObjectMover(IDType.O,objects);
-//		OBMO.addPosition(new Vector3d(20, 75, 0));
-//		OBME = new ObjectMover(IDType.E,objects);
-//		OBAO = new ObjectAttacker(IDType.O, objects);
-//		OBAE = new ObjectAttacker(IDType.E, objects);	
 	}
 
 	public boolean creatObject(String name, String modelPath,
@@ -96,5 +90,17 @@ public class ObjectHandler  {
 			enermyBlood = OBMO.getEnBlood();
 		}
 		return enermyBlood;
+	}
+	public void endGame(){
+		OBME.close();
+		OBMO.close();
+		objects.clearAll();
+		OBME = null;
+		OBMO = null;
+		objects = null;
+		sdk = null;
+		OIR = null;
+		view = null;	
+		System.gc();
 	}
 }

@@ -204,6 +204,9 @@ public class GameScreenActivity extends ARViewActivity {
 		
 		if(OBHL != null) {
 			blood = OBHL.getEnermyBlood();
+			if(blood <=0){
+				OBHL.endGame();
+			}
 		}
 	    myProgressBar.setProgress(blood);
 	 
