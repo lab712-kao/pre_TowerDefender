@@ -1,7 +1,5 @@
 package gameSystem.gameObjectSystem.gameObjectInfo;
 
-import android.R.integer;
-
 public class ObjectInfo {
 	public enum TYPE{Soldier,Tower};
 	private TYPE type;

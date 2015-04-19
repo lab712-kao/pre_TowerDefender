@@ -52,6 +52,12 @@ public class ObjectMover implements Runnable {
 		thread = new Thread(this);
 		thread.start();
 	}
+	public void close(){
+		if(thread.isAlive()){
+			thread.interrupt();
+			path.clear();
+		}
+	}
 	
 	@Override
 	public void run() {

@@ -3,12 +3,8 @@ package gameObject.tower;
 import gameSystem.gameObjectSystem.Hermite;
 import gameSystem.gameObjectSystem.Path.PathPoint;
 
-import java.util.ArrayList;
-
-import android.R.integer;
 import android.util.Log;
 
-import com.metaio.sdk.jni.BoundingBox;
 import com.metaio.sdk.jni.IGeometry;
 import com.metaio.sdk.jni.Vector3d;
 

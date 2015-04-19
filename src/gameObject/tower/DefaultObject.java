@@ -2,12 +2,10 @@ package gameObject.tower;
 
 import java.util.ArrayList;
 
-import android.R.integer;
 import android.util.Log;
 
 import com.metaio.sdk.jni.BoundingBox;
 import com.metaio.sdk.jni.IGeometry;
-import com.metaio.sdk.jni.MetaioSDK;
 import com.metaio.sdk.jni.Rotation;
 import com.metaio.sdk.jni.Vector3d;
 

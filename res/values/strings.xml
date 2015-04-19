@@ -6,5 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_game_screen">GameScreenActivity</string>
     <string name="metaioSDKSignature">KDjcxXXFkVkXfLlPlFQ8PjWM/GR/NDdyhZbgYiJLM+c=</string>
+    <string name="title_activity_result">ResultActivit</string>
 
 </resources>

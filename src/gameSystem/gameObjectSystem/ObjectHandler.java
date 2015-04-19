@@ -1,7 +1,5 @@
 package gameSystem.gameObjectSystem;
 
-import java.util.Set;
-
 import com.metaio.sdk.MetaioSurfaceView;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.Vector3d;
@@ -17,9 +15,9 @@ public class ObjectHandler  {
 	private ObjectMover OBMO,OBME;
 	private IMetaioSDKAndroid sdk;
 	private MetaioSurfaceView view;
-	private ObjectAttacker OBAO,OBAE;
 	private int enermyBlood = 100;
 	private double screenZoom =1.0f;
+	private boolean end = false;
 	
 	public ObjectHandler(IMetaioSDKAndroid sdk, MetaioSurfaceView view,ObjectInfoReader OIR) {
 		this.OIR = OIR;
@@ -28,16 +26,11 @@ public class ObjectHandler  {
 		objects = new DoubleArrayList<MovingObject>();
 		OBMO = null;
 		OBME = null;
-//		OBMO = new ObjectMover(IDType.O,objects);
-//		OBMO.addPosition(new Vector3d(20, 75, 0));
-//		OBME = new ObjectMover(IDType.E,objects);
-//		OBAO = new ObjectAttacker(IDType.O, objects);
-//		OBAE = new ObjectAttacker(IDType.E, objects);	
 	}
 
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID, int x, int y) {
-		
+		if(end) return false;
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects, OIR.getSoldierInfoByName(name),x, y));
 		return false;
@@ -46,7 +39,7 @@ public class ObjectHandler  {
 
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID, int x, int y,IDType id) {
-		
+		if(end) return false;
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects, OIR.getSoldierInfoByName(name),x, y,id));
 		return false;
@@ -55,6 +48,7 @@ public class ObjectHandler  {
 	
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID) {
+		if(end) return false;
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects,OIR.getSoldierInfoByName(name)));
 		return false;
@@ -62,6 +56,7 @@ public class ObjectHandler  {
 	}
 	public boolean creatObject(String name, String modelPath,
 			int coordinateSystemID,IDType id) {
+		if(end) return false;
 		view.queueEvent(new ObjectCreator(sdk, modelPath, coordinateSystemID,
 				objects,OIR.getSoldierInfoByName(name),id));
 		return false;
@@ -103,5 +98,22 @@ public class ObjectHandler  {
 	public void removePosition(Vector3d pos) {
 		OBMO.reovePosition(pos);
 		OBME.reovePosition(pos);
+	}
+
+	public void endGame(){
+		if(end)
+			return;
+		OBME.close();
+		OBMO.close();
+		objects.clearAll();
+		OBME = null;
+		OBMO = null;
+		objects = null;
+		sdk = null;
+		OIR = null;
+		view = null;
+		end = true;
+		System.gc();
+
 	}
 }
