@@ -20,6 +20,7 @@ import com.metaio.sdk.jni.Vector3d;
 import com.metaio.tools.SystemInfo;
 import com.metaio.tools.io.AssetsManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -206,6 +207,10 @@ public class GameScreenActivity extends ARViewActivity {
 			blood = OBHL.getEnermyBlood();
 			if(blood <=0){
 				OBHL.endGame();
+				timer.cancel();
+				Intent it = new Intent();
+				it.setClass(this, ResultActivit.class);
+				startActivity(it);
 			}
 		}
 	    myProgressBar.setProgress(blood);
