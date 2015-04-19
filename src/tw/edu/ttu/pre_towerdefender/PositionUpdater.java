@@ -83,6 +83,7 @@ public class PositionUpdater {
 	}
 
 	private Runnable updateTimer = new Runnable() {
+		@Override
 		public void run() {
 			synchronized(modelPos) {
 				Iterator<Models> it = modelPos.iterator();

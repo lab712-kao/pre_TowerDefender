@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import com.metaio.sdk.jni.BoundingBox;
 import com.metaio.sdk.jni.Vector3d;
 
-import android.R.bool;
-import android.R.integer;
 import android.util.Log;
 import gameObject.tower.DefaultObject;
 import gameObject.tower.MovingObject;
@@ -34,9 +32,9 @@ public class ObjectAttacker implements Runnable {
 				for (i = 0; i < objects.size(type); i++) {
 					attack(i);
 					Log.d("MOVER", "<<<<<<<moving++++++++++++++++++++++++++++");
-					thread.sleep(10);
+					Thread.sleep(10);
 				}
-				thread.sleep(500);
+				Thread.sleep(500);
 				// Log.d("MOVER",
 				// "<<<<<<<SLEEP>>>>>"+objects.size(TYPE)+"<<++++++++++++++++++++++++++++");
 			} catch (InterruptedException e) {

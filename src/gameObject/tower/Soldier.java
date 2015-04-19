@@ -1,11 +1,6 @@
 package gameObject.tower;
 
-import android.R.integer;
-import android.os.SystemClock;
-import android.util.Log;
-
 import com.metaio.sdk.jni.IGeometry;
-import com.metaio.sdk.jni.LLACoordinate;
 import com.metaio.sdk.jni.Vector3d;
 
 public class Soldier extends MovingObject{

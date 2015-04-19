@@ -5,12 +5,7 @@ import gameObject.tower.Soldier;
 import gameObject.tower.tower;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfo;
 import gameviews.constants.Constant;
-import android.R.integer;
 import android.util.Log;
-import com.metaio.sdk.jni.IGeometry;
-import java.util.Vector;
-
-import com.metaio.sdk.jni.BoundingBox;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.Vector3d;
 public class ObjectCreator implements Runnable {

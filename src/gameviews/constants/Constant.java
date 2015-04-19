@@ -1,9 +1,6 @@
 
 package gameviews.constants;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.util.TypedValue;
 import tw.edu.ttu.pre_towerdefender.R;
 
 public class Constant {

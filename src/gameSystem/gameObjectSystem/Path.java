@@ -1,15 +1,11 @@
 package gameSystem.gameObjectSystem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
 
 
-import android.R.string;
-import android.hardware.Camera.Size;
 import android.util.Log;
 
 import com.metaio.sdk.jni.Vector3d;

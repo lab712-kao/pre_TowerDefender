@@ -6,13 +6,11 @@ import gameviews.constants.Constant;
 import tw.edu.ttu.pre_towerdefender.MainActivity;
 import tw.edu.ttu.pre_towerdefender.R;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -24,12 +22,12 @@ implements SurfaceHolder.Callback{
 	
 	Bitmap[] logos = new Bitmap[1];
 	Bitmap currentLogo ;
-int currentAlpha=0;//¥Ø«eªº¤£³z©ú­È
+int currentAlpha=0;//ï¿½Ø«eï¿½ï¿½ï¿½ï¿½ï¿½zï¿½ï¿½ï¿½
 	
-	int screenWidth=Constant.Screen_Width;//¿Ã¹õ¼e«×
-	int screenHeight=Constant.Screen_Height;//¿Ã¹õ°ª«×
+	int screenWidth=Constant.Screen_Width;//ï¿½Ã¹ï¿½ï¿½eï¿½ï¿½
+	int screenHeight=Constant.Screen_Height;//ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½ï¿½
 	
-	int sleepSpan=100;//°Êµeªº®É©µms
+	int sleepSpan=100;//ï¿½Êµeï¿½ï¿½ï¿½É©ï¿½ms
 	int currentX;
 	int currentY;
 	public WelcomeView(MainActivity activity) {
@@ -47,13 +45,14 @@ int currentAlpha=0;//¥Ø«eªº¤£³z©ú­È
 		}
 	}
 
+	@Override
 	public void onDraw(Canvas canvas){
-		//Ã¸¨î¶Â¶ñ¥R¯x§Î²M­I´º
-		paint.setColor(Color.BLACK);//³]©wµeµ§±m¦â
+		//Ã¸ï¿½ï¿½Â¶ï¿½Rï¿½xï¿½Î²Mï¿½Iï¿½ï¿½
+		paint.setColor(Color.BLACK);//ï¿½]ï¿½wï¿½eï¿½ï¿½ï¿½mï¿½ï¿½
 		paint.setAlpha(255);
 		canvas.drawRect(0, 0, screenWidth, screenHeight, paint);
 		
-		//¶i¦æ¥­­±¶K¹Ï
+		//ï¿½iï¿½æ¥­ï¿½ï¿½ï¿½Kï¿½ï¿½
 		if(currentLogo==null)return;
 		paint.setAlpha(currentAlpha);		
 		canvas.drawBitmap(currentLogo, currentX, currentY, paint);	
@@ -62,27 +61,28 @@ int currentAlpha=0;//¥Ø«eªº¤£³z©ú­È
 	public void surfaceCreated(SurfaceHolder holder) {
 		new Thread()
 		{
+			@Override
 			@SuppressLint("WrongCall") public void run()
 			{
 				for(Bitmap bm:logos)
 				{
 					currentLogo=bm;
-					//­pºâ¹Ï¤ù¦ì¸m
+					//ï¿½pï¿½ï¿½Ï¤ï¿½ï¿½m
 					currentX=screenWidth/2-bm.getWidth()/2;
 					currentY=screenHeight/2-bm.getHeight()/2;
 					
 					for(int i=255;i>-10;i=i-10)
-					{//°ÊºAÅÜ§ó¹Ï¤ùªº³z©ú«×­È¨Ã¤£Â_­«Ã¸	
+					{//ï¿½ÊºAï¿½Ü§ï¿½Ï¤ï¿½zï¿½ï¿½×­È¨Ã¤ï¿½ï¿½_ï¿½ï¿½Ã¸	
 						currentAlpha=i;
 						if(currentAlpha<0)
 						{
 							currentAlpha=0;
 						}
 						SurfaceHolder myholder=WelcomeView.this.getHolder();
-						Canvas canvas = myholder.lockCanvas();//¨ú±oµe¥¬
+						Canvas canvas = myholder.lockCanvas();//ï¿½ï¿½oï¿½eï¿½ï¿½
 						try{
 							synchronized(myholder){
-								onDraw(canvas);//Ã¸¨î
+								onDraw(canvas);//Ã¸ï¿½ï¿½
 							}
 						}
 						catch(Exception e){
@@ -96,7 +96,7 @@ int currentAlpha=0;//¥Ø«eªº¤£³z©ú­È
 						try
 						{
 							if(i==255)
-							{//­Y¬O·s¹Ï¤ù¡A¦hµ¥«Ý¤@·|
+							{//ï¿½Yï¿½Oï¿½sï¿½Ï¤ï¿½Aï¿½hï¿½ï¿½ï¿½Ý¤@ï¿½|
 								Thread.sleep(1000);
 							}
 							Thread.sleep(sleepSpan);
