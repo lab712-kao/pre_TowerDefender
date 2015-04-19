@@ -1,42 +1,28 @@
 package tw.edu.ttu.pre_towerdefender;
 
-
 import gameObject.tower.Soldier;
-
 import java.io.IOException;
 import java.util.Random;
-
 import gameSystem.gameObjectSystem.IDType;
 import gameSystem.gameObjectSystem.ObjectHandler;
-
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import tw.edu.ttu.pre_towerdefender.R.drawable;
 import gameviews.constants.Constant;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfoReader;
-
-
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
-
 import com.metaio.sdk.jni.IMetaioSDKCallback;
-
 import com.metaio.sdk.jni.Rotation;
-
 import com.metaio.sdk.jni.TrackingValues;
 import com.metaio.sdk.jni.TrackingValuesVector;
 import com.metaio.sdk.jni.Vector2d;
-
 import com.metaio.sdk.jni.Vector2di;
 import com.metaio.sdk.jni.Vector3d;
-
-
 import com.metaio.tools.SystemInfo;
 import com.metaio.tools.io.AssetsManager;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -45,11 +31,9 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.hardware.Camera.CameraInfo;
-
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -60,9 +44,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import android.view.SurfaceView;
-
 import android.view.SurfaceHolder;
 
 public class GameScreenActivity extends ARViewActivity { 

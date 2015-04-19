@@ -195,11 +195,11 @@ public abstract class MovingObject extends DefaultObject {
 //					new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
 				
 			this.setModelFaceAngle((float) Math.atan2(p.getY()-lastPos.getY(), p.getX()-lastPos.getX()));
-			if(this.getWalkShack() < 0) {
-				this.setWalkShack((float) (Math.PI/18));
+			if(this.getWalkShack() >= -1*(Math.PI/6) && this.getWalkShack() < 0) {
+				this.setWalkShack(this.getWalkShack() + (float)(Math.PI/36));
 			}
-			else {
-				this.setWalkShack((float) (Math.PI/18*-1));
+			else if(this.getWalkShack() <= 1*(Math.PI/6) && this.getWalkShack() >= 0){
+				this.setWalkShack(this.getWalkShack() - (float)(Math.PI/36));
 			}
 			model.setTranslation(p);
 			//Log.d("point","{X:"+p.getX()+" Y:"+p.getY()+"}");
@@ -219,7 +219,7 @@ public abstract class MovingObject extends DefaultObject {
 	public void move() {
 		float speedX = (float)(moveSpeed*Math.cos(faceAngle)+position.getX());
 		float speedY = (float)(moveSpeed*Math.sin(faceAngle)+position.getY());
-		
+		int i;
 		if(isStop)
 			return;
 
