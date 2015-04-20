@@ -4,12 +4,8 @@ import gameObject.tower.MovingObject;
 import gameObject.tower.Soldier;
 import gameObject.tower.tower;
 import gameSystem.gameObjectSystem.gameObjectInfo.ObjectInfo;
-import android.R.integer;
+import gameviews.constants.Constant;
 import android.util.Log;
-import com.metaio.sdk.jni.IGeometry;
-import java.util.Vector;
-
-import com.metaio.sdk.jni.BoundingBox;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.Vector3d;
 public class ObjectCreator implements Runnable {
@@ -26,7 +22,7 @@ public class ObjectCreator implements Runnable {
 
 	private String modelPath;
 	
-	private final Vector3d SIZE = new Vector3d(10.0f);
+	private Vector3d SIZE = new Vector3d(10.0f);
 
 	
 	private final float DEFAULTANGLE = 0.0f;
@@ -89,6 +85,67 @@ public class ObjectCreator implements Runnable {
 		
 		this.pos = new Vector3d(x,y,0f);
 	}
+	/////////////////////
+	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
+			int coordinateSystemID, ObjectInfo objectInfo, int x, int y,int kinds,double size){
+		this.coordinateSystemID = coordinateSystemID;
+		this.modelPath = modelPath;
+		this.sdk = sdk;
+		this.objectInfo = objectInfo;
+		this.kinds = kinds;
+		this.pos = new Vector3d(x,y,0f);
+		this.SIZE = new Vector3d((float) size);
+	}
+	//for solider
+	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
+			int coordinateSystemID, DoubleArrayList<MovingObject> objects,
+			ObjectInfo objectInfo,double size) {
+		this.coordinateSystemID = coordinateSystemID;
+		this.modelPath = modelPath;
+		this.sdk = sdk;
+		this.objects = objects;
+		this.objectInfo = objectInfo;
+		this.SIZE = new Vector3d((float) size);
+	}
+
+	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
+			int coordinateSystemID, DoubleArrayList<MovingObject> objects,
+			ObjectInfo objectInfo, int x, int y,double size) {
+		this.coordinateSystemID = coordinateSystemID;
+		this.modelPath = modelPath;
+		this.sdk = sdk;
+		this.objects = objects;
+		this.objectInfo = objectInfo;
+		
+		this.pos = new Vector3d(x,y,0f);
+		this.SIZE = new Vector3d((float) size);
+	}
+
+	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
+			int coordinateSystemID, DoubleArrayList<MovingObject> objects,
+			ObjectInfo objectInfo, IDType id,double size) {
+		this.coordinateSystemID = coordinateSystemID;
+		this.modelPath = modelPath;
+		this.sdk = sdk;
+		this.objects = objects;
+		this.objectInfo = objectInfo;
+		this.id = id;
+		this.SIZE = new Vector3d((float) size);
+	}
+
+	public ObjectCreator(IMetaioSDKAndroid sdk, String modelPath,
+			int coordinateSystemID, DoubleArrayList<MovingObject> objects,
+			ObjectInfo objectInfo, int x, int y, IDType id, double size) {
+		this.coordinateSystemID = coordinateSystemID;
+		this.modelPath = modelPath;
+		this.sdk = sdk;
+		this.objects = objects;
+		this.objectInfo = objectInfo;
+		this.id = id;
+		
+		this.pos = new Vector3d(x,y,0f);
+		this.SIZE = new Vector3d((float) size);
+	}
 
 	@Override
 	public void run() {
@@ -101,6 +158,7 @@ public class ObjectCreator implements Runnable {
 		 * // new Thread(new Tank(sdk.createGeometry(modelPath), 1, new
 		 * Vector3d( // 35.0f), new Vector3d(0, 0, 0), 100, 100, 20)).start();
 		 */
+		SIZE = new Vector3d((Constant.Screen_Width/100));
 		Log.d("moveStart", "inCreator+++++++++++++++++++++++=");
 		if(kinds == SOLIDER){
 			objects.push(

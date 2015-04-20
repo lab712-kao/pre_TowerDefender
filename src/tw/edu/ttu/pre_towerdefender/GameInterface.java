@@ -1,11 +1,8 @@
 package tw.edu.ttu.pre_towerdefender;
 
-import gameviews.constants.Constant;
-
 import java.util.ArrayList;
 
 import tw.edu.ttu.pre_towerdefender.R.drawable;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 
 public class GameInterface {

@@ -1,14 +1,7 @@
 package gameObject.tower;
 
-import android.R.raw;
-import android.util.Log;
-
-import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
-import com.metaio.sdk.jni.IMetaioSDKAndroid;
-import com.metaio.sdk.jni.Rotation;
 import com.metaio.sdk.jni.Vector3d;
-import com.metaio.tools.io.AssetsManager;
 
 public class tower extends DefaultObject{
 	

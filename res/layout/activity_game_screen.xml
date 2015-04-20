@@ -218,6 +218,7 @@
         android:layout_x="335dp"
         android:layout_y="25dp"
         android:src="@drawable/num_zero" />
+     
       <ImageView
         android:id="@+id/blood_one"
         android:layout_width="26dp"
@@ -225,6 +226,7 @@
         android:layout_x="360dp"
         android:layout_y="25dp"
         android:src="@drawable/num_zero" />
+
 
        <Button
            android:id="@+id/blood_minus"
@@ -245,5 +247,14 @@
            android:layout_y="-13dp"
            android:onClick="minus_blood_evil"
            android:text="Blood_evil" />
+
+      <TextView
+          android:id="@+id/textView1"
+          android:layout_width="wrap_content"
+          android:layout_height="44dp"
+          android:layout_x="226dp"
+          android:layout_y="429dp"
+          android:text="TextView" />
+
   
 </AbsoluteLayout>

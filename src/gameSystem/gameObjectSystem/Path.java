@@ -1,15 +1,11 @@
 package gameSystem.gameObjectSystem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
 
 
-import android.R.string;
-import android.hardware.Camera.Size;
 import android.util.Log;
 
 import com.metaio.sdk.jni.Vector3d;
@@ -121,6 +117,14 @@ public class Path {
 //		DEFAULT_POINT.setNextPoint(new PathPoint(end, calAngle(begin,end)));
 	}
 	
+	public void clear(){
+		way.clear();
+		begin = null;
+		end = null;
+		DEFAULT_POINT = null;
+		compator = null;
+	}
+	
 	public void addPathPoint(Vector3d pos){
 		way.add(new PathPoint(pos, DEFAULT_ANGLE));
 		Log.d("Path addPathPoint", "way size: " + way.size());
@@ -161,7 +165,8 @@ public class Path {
 		}
 		if(way.size()>=1){
 			way.get(way.size()-1).setAngle(calAngle(way.get(way.size()-1).getPosition(),end));
-			way.get(way.size()-1).setNextPoint(new PathPoint(end, calAngle(way.get(way.size()-1).getPosition(),end)));
+			DEFAULT_POINT.setAngle(calAngle(way.get(way.size()-1).getPosition(),end));
+			way.get(way.size()-1).setNextPoint(DEFAULT_POINT);
 //			way.add(point[point.length-1]);
 		}
 	}
@@ -192,7 +197,7 @@ public class Path {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		String s = new String();
+		String s = "";
 		
 		for(PathPoint p:way){
 			s+=p.toString()+'\t';

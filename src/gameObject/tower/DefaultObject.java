@@ -2,12 +2,10 @@ package gameObject.tower;
 
 import java.util.ArrayList;
 
-import android.R.integer;
 import android.util.Log;
 
 import com.metaio.sdk.jni.BoundingBox;
 import com.metaio.sdk.jni.IGeometry;
-import com.metaio.sdk.jni.MetaioSDK;
 import com.metaio.sdk.jni.Rotation;
 import com.metaio.sdk.jni.Vector3d;
 
@@ -15,8 +13,10 @@ public abstract class DefaultObject {
 	protected IGeometry model = null;
 	protected float health;
 	protected float faceAngle;
+	protected float walkShack;
 	protected Vector3d position;
 	protected Vector3d size;
+	protected boolean dead = false;
 
 	// ----------------------------------------- have face
 	// angle----------------------------------------------------------
@@ -28,7 +28,8 @@ public abstract class DefaultObject {
 		this.health = health;
 		this.size = size;
 		faceAngle = (float) (Math.PI / 2);
-
+		walkShack = 0.0f;
+		
 		model.setCoordinateSystemID(coordinateSystemID);
 		model.setScale(size);
 		model.setTranslation(position);
@@ -44,7 +45,8 @@ public abstract class DefaultObject {
 		this.health = health;
 		this.size = size;
 		faceAngle = (float) (Math.PI / 2);
-
+		walkShack = 0.0f;
+		
 		model.setCoordinateSystemID(coordinateSystemID);
 		model.setScale(size);
 		model.setTranslation(position);
@@ -61,7 +63,8 @@ public abstract class DefaultObject {
 		this.health = health;
 		this.size = size;
 		this.faceAngle = faceAngle;
-
+		walkShack = 0.0f;
+		
 		model.setCoordinateSystemID(coordinateSystemID);
 		model.setScale(size);
 		model.setTranslation(position);
@@ -75,6 +78,7 @@ public abstract class DefaultObject {
 		this.health = health;
 		this.size = size;
 		this.faceAngle = faceAngle;
+		walkShack = 0.0f;
 		
 		model.setCoordinateSystemID(coordinateSystemID);
 		model.setScale(size);
@@ -94,12 +98,12 @@ public abstract class DefaultObject {
 	public IGeometry getModel() {
 		return model;
 	}
-	public Boolean checkCollision(DefaultObject aObject){
+	public Boolean checkCollision(DefaultObject aObject, double boundingScale){
 		if (aObject == null){
 			return false;
 		}else{
-			Vector3d max = this.getModel().getBoundingBox().getMax().multiply(size.getX()).add(position);
-			Vector3d min = this.getModel().getBoundingBox().getMin().multiply(size.getX()).add(position);
+			Vector3d max = this.getModel().getBoundingBox().getMax().multiply((float)(size.getX()*boundingScale)).add(position);
+			Vector3d min = this.getModel().getBoundingBox().getMin().multiply((float)(size.getX()*boundingScale)).add(position);
 			ArrayList<Vector3d> cubeAsPoint = aObject.getModelBundingPointArrayList();
 			boolean insideX = false;
 			boolean insideY = false;
@@ -111,7 +115,7 @@ public abstract class DefaultObject {
 				insideY = V.getY() <= max.getY()
 						&& V.getY() >= min.getY();
 				if (insideX && insideY) {
-					Log.d("box","collision");
+					//Log.d("box","collision");
 					return true;
 				}
 			}
@@ -140,6 +144,15 @@ public abstract class DefaultObject {
 	public void setModelPosition(Vector3d position) {
 		this.position = position;
 		model.setTranslation(position);
+	}
+	
+	public float getWalkShack() {
+		return walkShack;
+	}
+	
+	public void setWalkShack(float walkShack) {
+		this.walkShack = walkShack;
+		model.setRotation(new Rotation((float) (Math.PI / 2), walkShack, faceAngle+(float) (Math.PI / 2)));
 	}
 
 	public int getModelCoordinateSystemID() {
@@ -176,8 +189,8 @@ public abstract class DefaultObject {
 			return null;
 		}
 		ArrayList<Vector3d> BundingBoxPoint = new ArrayList<Vector3d>();
-		Vector3d min = model.getBoundingBox().getMin().multiply(size.getX()).add(position);
-		Vector3d max = model.getBoundingBox().getMax().multiply(size.getX()).add(position);
+		Vector3d min = model.getBoundingBox().getMin().multiply((size.getX()*0.8f)).add(position);
+		Vector3d max = model.getBoundingBox().getMax().multiply((size.getX()*0.8f)).add(position);
 		//Log.d("box", "MAX{X:"+max.getX()+", Y:"+max.getY()+"}");
 		//Log.d("box", "MIN{X:"+min.getX()+", Y:"+min.getY()+"}");
 		float x = 0, y = 0, z = 0;
@@ -195,19 +208,11 @@ public abstract class DefaultObject {
 		return BundingBoxPoint;
 	}
 	public void dead() {
-		if (model != null) {
-			
-			model.setVisible(false);
-			model.delete();
-			
-			model = null;
-		}
+		model.setVisible(false);
+		dead = true;
 	}
 
 	public Boolean isDead() {
-		if (model != null)
-			return false;
-		else
-			return true;
+		return dead;
 	}
 }
