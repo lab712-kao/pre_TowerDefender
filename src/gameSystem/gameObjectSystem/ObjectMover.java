@@ -4,8 +4,14 @@ import gameObject.tower.MovingObject;
 import gameObject.tower.DefaultObject;
 import gameSystem.gameObjectSystem.Path.PathPoint;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
+import tw.edu.ttu.pre_towerdefender.R;
+
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.net.rtp.AudioStream;
 import android.util.Log;
 
 import com.metaio.sdk.jni.BoundingBox;
@@ -228,9 +234,10 @@ public class ObjectMover implements Runnable {
 		for( int i = objects.getIndexOf(movingObject, TYPE); i<objects.size(TYPE); i++ ){
 			if(objects.getIndexOf(movingObject, TYPE)==i)continue;
 			if( objects.seek(i, TYPE).checkCollision(movingObject) ){
-				//if collision unit is own unit and stop this movingObject move until startMove() << be called
-				movingObject.stopMove();
-				
+				{//if collision unit is own unit and stop this movingObject move until startMove() << be called
+					movingObject.stopMove();
+					
+				}
 				break;
 			}
 		}

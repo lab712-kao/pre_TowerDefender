@@ -8,7 +8,6 @@ import java.util.Random;
 
 import gameSystem.gameObjectSystem.IDType;
 import gameSystem.gameObjectSystem.ObjectHandler;
-
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -46,7 +45,9 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.hardware.Camera.CameraInfo;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -69,18 +70,19 @@ public class GameScreenActivity extends ARViewActivity {
 	//private Soldier tanks;
 
 	public int bound = 100;
-	public int levelCost = 0, blood =100;
+	public int blood_evil = 100;
+	public int levelCost = 0, blood = 0;
 	public int cost = 0;
-	public int flag_bound = 1, minus_flag = 0;
+	public int flag_bound = 1, minus_flag = 0,minus_flag_evil = 0;
 	public int playerChange = 0; 
 	
 	public ImageView num_hun, num_ten, num_one, level_text,
 					 levelnum, levelnum_hun, levelnum_ten, levelnum_single,
 					 bound_ten, bound_one, bound_hun, 
 					 levelUP, desh, domdom, tank, peanut,
-					 musicBtn, pause, power, blood_hun, blood_ten, blood_one;
+					 musicBtn, pause, power, blood_hun, blood_ten, blood_one,mask;
 	
-	ProgressBar myProgressBar;
+	ProgressBar myProgressBar,evilProgressBar;
 	private MediaPlayer Player;
 	private ObjectHandler OBHL = null;
 	private MetaioSDKCallbackHandler mMetaioHandler;
@@ -145,22 +147,42 @@ public class GameScreenActivity extends ARViewActivity {
 
 	public void minus_blood( View v ){
 		minus_flag = 1;
-		if( blood>=5 )
-			blood-=5;
+		if( blood<=100 )
+			blood+=5;
 		
 		Log.d("position of enTower", "enTower: " + metaioSDK.getScreenCoordinatesFrom3DPosition(3, enTran).toString());
+		
+	}
+	private int alertId1 = 0,alertId2= 0,alertId3= 0,alertId4=0;
+	private SoundPool soundPool1,soundPool2,soundPool3,soundPool4;
+	public void minus_blood_evil( View v ){
+		
+		minus_flag_evil = 1;
+		if( blood_evil>=0 )
+			blood_evil-=5;
 		
 	}
 	public void initial(){
 		
 		Drawable draw=getResources().getDrawable(R.drawable.progress_style);
+		Drawable draw_evil=getResources().getDrawable(R.drawable.progress_style_evil);
 		myProgressBar = (ProgressBar)findViewById(R.id.progress_blood);
+		evilProgressBar = (ProgressBar)findViewById(R.id.evil_blood);
+
 		myProgressBar.setProgressDrawable(draw);
-		myProgressBar.getLayoutParams().width = (int) ((Constant.imageSize[18][0]-10)*Constant.wRatio);
-		myProgressBar.getLayoutParams().height = (int) ((Constant.imageSize[18][1]/4)*Constant.hRatio);
+		evilProgressBar.setProgressDrawable(draw_evil);
 		
-		myProgressBar.setX((Constant.imageSize[18][2]+5)*Constant.wRatio);
-		myProgressBar.setY((Constant.imageSize[18][3]+25)*Constant.hRatio);
+		myProgressBar.getLayoutParams().width = (int) ((Constant.imageSize[18][0]-30)/2*Constant.wRatio);
+		myProgressBar.getLayoutParams().height = (int) ((Constant.imageSize[18][1]/7)*Constant.hRatio);
+		myProgressBar.setX((Constant.imageSize[18][2]+10)*Constant.wRatio);
+		myProgressBar.setY((Constant.imageSize[18][3]+68)*Constant.hRatio);
+		
+		evilProgressBar.getLayoutParams().width = (int) ((Constant.imageSize[18][0]-30)/2*Constant.wRatio);
+		evilProgressBar.getLayoutParams().height = (int) ((Constant.imageSize[18][1]/7)*Constant.hRatio);
+		evilProgressBar.setX((Constant.imageSize[18][2]+10+(Constant.imageSize[18][0]-30)/2)*Constant.wRatio);
+		evilProgressBar.setY((Constant.imageSize[18][3]+58)*Constant.hRatio);
+		
+		
 		
 		num_hun = (ImageView)findViewById(R.id.cost_hun);
 		num_ten = (ImageView)findViewById(R.id.cost_ten);
@@ -229,7 +251,9 @@ public class GameScreenActivity extends ARViewActivity {
 			cost += 1;
 			if(cost > bound) cost = cost - cost%bound;
 		}
-		
+		evilProgressBar.setProgress(blood_evil);
+		 
+			
 	 	num_hun.setImageResource(Constant.images[cost/100%10]);	
 	 	num_ten.setImageResource(Constant.images[cost/10%10]);	
 	 	num_one.setImageResource(Constant.images[cost%10]);	
@@ -241,9 +265,11 @@ public class GameScreenActivity extends ARViewActivity {
 	 	blood_one.setImageResource(Constant.images[blood%10]);	
 	}	
 	public void levelUpOnclick(View v){
-		if(cost - Constant.Levelup_cost[levelCost] >=0)
+		
 			if(levelCost<7){
 			
+				
+				if(cost - Constant.Levelup_cost[levelCost] >=0){
 				bound+=100;
 				cost-=Constant.Levelup_cost[levelCost];
 				levelCost++;
@@ -256,18 +282,21 @@ public class GameScreenActivity extends ARViewActivity {
 				levelnum_single.setImageResource(0);
 				levelUP.setEnabled(false);	
 			}
+			}
 			
 	}
 	public void tankOnclick(View v){
+		
 		if(cost - 100 >=0 && tankModel!=null&&OBHL!=null)
 		{
+			
 			cost-=100;
 			OBHL.creatObject("tank",  tankModel , 3);
 		}
 	}
 	public void domOnclick(View v){
 		if(cost - 50 >=0 && domdomModel!=null&&OBHL!=null)
-		{
+		{		
 			cost-=50;
 			OBHL.creatObject("moai",  domdomModel , 3);
 		}
@@ -276,6 +305,7 @@ public class GameScreenActivity extends ARViewActivity {
 	public void peanutsOnclick(View v){
 		if(cost - 150 >=0 && peanutModel!=null&&OBHL!=null)
 		{
+			
 			cost-=150;
 			OBHL.creatObject("tank",  peanutModel , 3);
 		}

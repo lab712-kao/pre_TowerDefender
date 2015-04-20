@@ -18,7 +18,7 @@
         android:layout_x="2dp"
         android:layout_y="125dp"
         android:onClick="domOnclick"
-        android:src="@drawable/button_domdom" />
+        android:src="@drawable/domdom" />
 
     <ImageView
         android:id="@+id/tank"
@@ -186,16 +186,15 @@
         android:layout_x="298dp"
         android:layout_y="62dp"
         android:max="100" />
-
-    <Button
-        android:id="@+id/blood_minus"
-        style="?android:attr/buttonStyleSmall"
+     <ProgressBar
+        android:id="@+id/evil_blood"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/progress_style_evil"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="424dp"
-        android:layout_y="20dp"
-        android:onClick="minus_blood"
-        android:text="Blood_minus" />
+        android:layout_height="10dp"
+        android:layout_x="300dp"
+        android:layout_y="62dp"
+        android:max="100" />
 
     <ImageView
         android:id="@+id/power"
@@ -203,7 +202,7 @@
         android:layout_height="60dp"
         android:layout_x="270dp"
         android:layout_y="42dp"
-        android:src="@drawable/pwer6" />
+        android:src="@drawable/pp" />
 
     <ImageView
         android:id="@+id/blood_hun"
@@ -226,5 +225,25 @@
         android:layout_x="360dp"
         android:layout_y="25dp"
         android:src="@drawable/num_zero" />
+
+       <Button
+           android:id="@+id/blood_minus"
+           style="?android:attr/buttonStyleSmall"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_x="224dp"
+           android:layout_y="-13dp"
+           android:onClick="minus_blood"
+           android:text="Blood_plyr" />
+
+       <Button
+           android:id="@+id/blood_minus_evil"
+           style="?android:attr/buttonStyleSmall"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_x="334dp"
+           android:layout_y="-13dp"
+           android:onClick="minus_blood_evil"
+           android:text="Blood_evil" />
   
 </AbsoluteLayout>

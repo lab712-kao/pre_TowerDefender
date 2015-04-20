@@ -98,6 +98,7 @@ public class Constant {
  	store the images and buttons' size
   ------------------------------------------------*/
 	public static int[][] imageSize = new int[][]{
+		//{w, h, X, Y}
 		{ 24, 32, 143, 62 },  //1.cost_hun
 		{ 24, 32, 163, 62 },  //2.cost_ten
 		{ 24, 32, 183, 62 },  //3.cost_one
@@ -111,14 +112,14 @@ public class Constant {
 		{ 21, 28, 268, 24 },  //11.level_ten
 		{ 21, 28, 248, 24 },  //12.level_one
 		{ 280, 120, 32, 17 },	 //13.Level_UP_button
-		{ 115, 140, 31, 122 },	 //14.domdom_button
-		{ 115, 140, 31, 244 },  //15.tank_button
-		{ 115, 138, 31, 368 },  //16.peanut_button
+		{ 115, 95, -10, 122 },	 //14.domdom_button
+		{ 115, 95, 20, 244 },  //15.tank_button
+		{ 115, 95, 22, 368 },  //16.peanut_button
 		
 		
 		{ 120, 120, 890, 85 },	 //17.sound_control
 		{ 120, 120, 890 ,17 },  //18.time_pause_button
-		{ 240, 60, 320, 58 },   //19.power_bar
+		{ 510, 140, 320, 12 },   //19.power_bar
 		
 		{ 21, 24, 320, 50 },  //20.blood_hun
 		{ 21, 24, 335, 50 },  //21.blood_ten
