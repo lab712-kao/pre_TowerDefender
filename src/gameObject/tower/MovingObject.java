@@ -138,6 +138,10 @@ public abstract class MovingObject extends DefaultObject {
 		}else if(point.isIgnore()||t==1){
 			//t=0.0f;
 
+			if(t == 1) {
+				doEffect();
+			}
+			
 			if(!point.isIgnore()) {
 				t = 0.0f;
 				lastTimePos = point.getPosition();
@@ -201,11 +205,11 @@ public abstract class MovingObject extends DefaultObject {
 //					new Vector3d((float)Math.cos(faceAngle), (float)Math.sin(faceAngle), (float)0.0), new Vector3d( (float) Math.cos(point.getNextPoint().getAngle()), (float) Math.sin(point.getNextPoint().getAngle()), (float)0.0));//
 				
 			this.setModelFaceAngle((float) Math.atan2(p.getY()-lastPos.getY(), p.getX()-lastPos.getX()));
-			if(this.getWalkShack() >= -1*(Math.PI/6) && this.getWalkShack() < 0) {
-				this.setWalkShack(this.getWalkShack() + (float)(Math.PI/36));
+			if(this.getWalkShack() >= -1*(Math.PI/3) && this.getWalkShack() < 0) {
+				this.setWalkShack(this.getWalkShack() + (float)(Math.PI/50));
 			}
-			else if(this.getWalkShack() <= 1*(Math.PI/6) && this.getWalkShack() >= 0){
-				this.setWalkShack(this.getWalkShack() - (float)(Math.PI/36));
+			else if(this.getWalkShack() <= 1*(Math.PI/3) && this.getWalkShack() >= 0){
+				this.setWalkShack(this.getWalkShack() - (float)(Math.PI/50));
 			}
 			model.setTranslation(p);
 			//Log.d("point","{X:"+p.getX()+" Y:"+p.getY()+"}");
@@ -227,7 +231,7 @@ public abstract class MovingObject extends DefaultObject {
 			int effectNumber = nowPoint.getEffect().getEffectNumber();
 			switch (effectNumber) {
 			case Effect.ZOOM:
-				this.model.setScale(this.model.getScale().multiply(1.5f));
+				this.model.setScale(this.model.getScale().multiply(1.2f));
 				break;
 			case Effect.SMALL:
 				this.model.setScale(this.model.getScale().multiply(0.7f));
@@ -292,18 +296,30 @@ public abstract class MovingObject extends DefaultObject {
 		Math.cos(faceAngle);
 		*/
 		if(tmpModel != null) {
-			for(int i = 0; i < 25; i++) {
+			for(int i = 0; i < 8; i++) {
 				Vector3d calPos = tmpModel.getTranslation();
-				calPos.setX((float)(calPos.getX() + Math.cos(faceAngle)));
-				calPos.setY((float)(calPos.getY() + Math.sin(faceAngle)));
+				calPos.setX((float)(calPos.getX() + Math.cos(faceAngle)*2.4));
+				calPos.setY((float)(calPos.getY() + Math.sin(faceAngle)*2.4));
 				tmpModel.setTranslation(calPos);
+				try {
+					Thread.sleep(5);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
-			for(int i = 0; i < 25; i++) {
+			for(int i = 0; i < 8; i++) {
 				Vector3d calPos = tmpModel.getTranslation();
-				calPos.setX((float)(calPos.getX() - Math.cos(faceAngle)));
-				calPos.setY((float)(calPos.getY() - Math.sin(faceAngle)));
+				calPos.setX((float)(calPos.getX() - Math.cos(faceAngle)*2.4));
+				calPos.setY((float)(calPos.getY() - Math.sin(faceAngle)*2.4));
 				tmpModel.setTranslation(calPos);
+				try {
+					Thread.sleep(5);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		

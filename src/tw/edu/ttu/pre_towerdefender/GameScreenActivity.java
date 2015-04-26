@@ -305,23 +305,27 @@ public class GameScreenActivity extends ARViewActivity {
 	public void costAndBound(){
 		
 		if(OBHL != null) {
-			blood = OBHL.getEnermyBlood();
-			if(blood <=0){
+			blood_evil = OBHL.getEnermyBlood();
+			blood = OBHL.getMyBlood();
+			
+			if(blood_evil <=0 || blood <= 0){
 				OBHL.endGame();
 				timer.cancel();
 				Intent it = new Intent();
+				Bundle bu = new Bundle();
+				bu.putString("KEY_WIN", (blood_evil<=0?"Player":"Enermy"));
+				it.putExtras(bu);
 				it.setClass(this, ResultActivit.class);
 				startActivity(it);
 			}
 		}
 	    myProgressBar.setProgress(blood);
-	 
+	    evilProgressBar.setProgress(blood_evil);
+	    
 		if(flag_bound == 1 && cost < bound) {
 			cost += 1;
 			if(cost > bound) cost = cost - cost%bound;
 		}
-		evilProgressBar.setProgress(blood_evil);
-		 
 			
 	 	num_hun.setImageResource(Constant.images[cost/100%10]);	
 	 	num_ten.setImageResource(Constant.images[cost/10%10]);	
@@ -335,28 +339,16 @@ public class GameScreenActivity extends ARViewActivity {
 	 	
 	 	//0123
 	 	
-	 	/*
-	 	int coodSysNum = geometry.getCoordinateSystemID();
-		if(coodSysNum == 1 || coodSysNum == 2) {
+	 	if(trackingState[2] == 1 && trackingState[3] == 1) {
 			boolean success;
 			TrackingValues theRelation = new TrackingValues();
-			Vector3d co;
 			
-			success = metaioSDK.getCosRelation(coodSysNum, 3, theRelation);
-			
+			success = metaioSDK.getCosRelation(3, 4, theRelation);
 			if(success) {
-				co = theRelation.getTranslation();
-				co.setZ(0);
-				Vector3d fuckinGC = new Vector3d();
-				fuckinGC.setX(co.getX());
-				fuckinGC.setY(co.getY());
-				fuckinGC.setZ(0);
-				Log.d("ScreenAc onGeoTouch", "coodId: "+coodSysNum+", tran: " + fuckinGC);
-				de.setText("CoodSysNum: "+coodSysNum+", Position: "+fuckinGC.toString()+", Tower Set.");
-				OBHL.addPosition(fuckinGC);			
+				range = new Vector3d(theRelation.getTranslation());
 			}
 		}
-	 	*/
+	 	
 	 	if(gameStart) {
 	 		checkMarkerAdd(1);
 	 		checkMarkerAdd(2);
@@ -823,7 +815,8 @@ public class GameScreenActivity extends ARViewActivity {
 					Thread.sleep(2000);
 					OBHL.creatObject("tank", tankModel, 3, (int)enTran.getX(), (int)enTran.getY(), IDType.E);
 					//OBHL.creatObject("tank", tankModel, 3, IDType.E);
-					Thread.sleep(8000);
+					Thread.sleep(5000);
+					OBHL.creatObject("moai", domdomModel, 3, (int)enTran.getX(), (int)enTran.getY(), IDType.E);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

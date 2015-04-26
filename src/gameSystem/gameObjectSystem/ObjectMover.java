@@ -78,7 +78,7 @@ public class ObjectMover implements Runnable {
 					//Log.d("MOVER", "<<<<<<<moving++++++++++++++++++++++++++++");
 					//Thread.sleep(10);
 				}
-				Thread.sleep(125);
+				Thread.sleep(80);
 				// Log.d("MOVER",
 				// "<<<<<<<SLEEP>>>>>"+objects.size(TYPE)+"<<++++++++++++++++++++++++++++");
 			} catch (InterruptedException e) {

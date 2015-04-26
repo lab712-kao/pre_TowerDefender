@@ -16,6 +16,7 @@ public class ObjectHandler  {
 	private IMetaioSDKAndroid sdk;
 	private MetaioSurfaceView view;
 	private int enermyBlood = 100;
+	private int myBlood = 100;
 	private double screenZoom =1.0f;
 	private boolean end = false;
 	
@@ -93,6 +94,13 @@ public class ObjectHandler  {
 			enermyBlood = OBMO.getEnBlood();
 		}
 		return enermyBlood;
+	}
+	
+	public int getMyBlood() {
+		if(OBME != null) {
+			myBlood = OBME.getEnBlood();
+		}
+		return myBlood;
 	}
 	
 	public void removePosition(Vector3d pos) {

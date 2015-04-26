@@ -134,6 +134,7 @@ public class Path {
 	
 	public PathPoint addPathPoint(Vector3d pos){
 		PathPoint newPathPoint = new PathPoint(pos, DEFAULT_ANGLE);
+		newPathPoint.setEffect(new Effect("Bigger", Effect.ZOOM, 0, "what!?Description!?"));
 		way.add(newPathPoint);
 		Log.d("Path addPathPoint", "way size: " + way.size());
 

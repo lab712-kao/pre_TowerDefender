@@ -6,13 +6,27 @@ import android.app.AliasActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class ResultActivit extends Activity {
 
+	private TextView whoWon;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
+		
+		whoWon = (TextView)findViewById(R.id.resultTextView);
+		
+		Bundle bundle;
+		bundle = this.getIntent().getExtras();
+		if(bundle.getString("KEY_WIN").equals("Player")) {
+			whoWon.setText("Player won!");
+		}
+		else {
+			whoWon.setText("Enermy won!");
+		}
 	}
 
 	@Override
