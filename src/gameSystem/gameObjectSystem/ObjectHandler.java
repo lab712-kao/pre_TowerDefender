@@ -1,6 +1,5 @@
 package gameSystem.gameObjectSystem;
 
-import com.metaio.R.bool;
 import com.metaio.sdk.MetaioSurfaceView;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.Vector3d;
