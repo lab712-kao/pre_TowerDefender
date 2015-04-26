@@ -268,14 +268,14 @@ public abstract class MovingObject extends DefaultObject {
 		Math.cos(faceAngle);
 		*/
 		if(tmpModel != null) {
-			for(int i = 0; i < 10; i++) {
+			for(int i = 0; i < 25; i++) {
 				Vector3d calPos = tmpModel.getTranslation();
 				calPos.setX((float)(calPos.getX() + Math.cos(faceAngle)));
 				calPos.setY((float)(calPos.getY() + Math.sin(faceAngle)));
 				tmpModel.setTranslation(calPos);
 			}
 			
-			for(int i = 0; i < 10; i++) {
+			for(int i = 0; i < 25; i++) {
 				Vector3d calPos = tmpModel.getTranslation();
 				calPos.setX((float)(calPos.getX() - Math.cos(faceAngle)));
 				calPos.setY((float)(calPos.getY() - Math.sin(faceAngle)));
