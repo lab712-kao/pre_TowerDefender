@@ -73,6 +73,7 @@ public class GameScreenActivity extends ARViewActivity {
 	private IGeometry ttt;
 	private IGeometry margin1, margin2;
 	private IGeometry target1, target2;
+	private IGeometry spot1, spot2;
 	private SurfaceHolder myHolder;
 	int[] trackingState = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};//10
 	private Button setEnTowerBtn, OKBtn;
@@ -83,6 +84,12 @@ public class GameScreenActivity extends ARViewActivity {
 	private String domdomModel = null;
 	private String peanutModel = null;
 	private TextView de;
+	private Vector3d range;
+	private boolean gameStart = false;
+	
+	private boolean[] available = {true, true};
+	private Vector3d[] addedTowerPosition = {new Vector3d(0, 0, 0), new Vector3d(0, 0, 0)};
+	private int[] setPositionCount = {0, 0};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -224,6 +231,76 @@ public class GameScreenActivity extends ARViewActivity {
 		}		
 		
 	}
+	
+	private void checkMarkerAdd(int coodID) {
+		if(trackingState[coodID - 1] == 1 && trackingState[2] == 1) {
+ 			TrackingValues theRelation = new TrackingValues();
+			Vector3d co = null;
+			
+			//Log.d("gameScreen addmarker", "get to check");
+			
+			boolean succ = metaioSDK.getCosRelation(coodID, 3, theRelation);
+			if(succ) {
+				co = theRelation.getTranslation();
+				co.setZ(0);	
+				
+				//Log.d("gameScreen addmarker", "succ");
+				
+				if(co.getX() < range.getX()*-1 && co.getX() > 0 &&
+				   co.getY() < range.getY()*-1 && co.getY() > 0){
+					
+					//Log.d("gameScreen addmarker", "in range");
+					if(available[coodID - 1]) {
+	 					if(setPositionCount[coodID - 1] == 0) {
+	 						addedTowerPosition[coodID - 1] = new Vector3d(co);
+	 						setPositionCount[coodID - 1]++;
+			 			}
+			 			else{
+			 				if(Math.abs(co.getX() - addedTowerPosition[coodID - 1].getX())<=10 &&
+			 				   Math.abs(co.getY() - addedTowerPosition[coodID - 1].getY())<=10) {
+			 					setPositionCount[coodID - 1]++;
+			 					//Log.d("gameScreen addmarker", "coodID: " + coodID + "add 1, " + setPositionCount[coodID - 1]);
+			 				}else {
+			 					setPositionCount[coodID - 1] = 0;
+			 				}
+			 			}
+	 					
+	 					if(setPositionCount[coodID - 1] >= 15) {
+	 						Vector3d dontGC = new Vector3d(co);
+	 						OBHL.addPosition(dontGC);
+	 						if(coodID == 1) {
+	 							target1.setVisible(true);
+	 							target1.setTranslation(dontGC);
+	 						}
+	 						else {
+	 							target2.setVisible(true);
+	 							target2.setTranslation(dontGC);
+	 						}
+	 						available[coodID - 1] = false;
+	 						addedTowerPosition[coodID - 1] = dontGC;
+	 					}
+					}
+ 				}else if(!available[coodID - 1]){
+ 					//Log.d("gameScreen addmarker", "out of range" + co.toString() + range.toString());
+ 					//delete this spot
+ 					//available = true
+ 					//Log.d("gameScreen addmarker", "out of range, [" + target1.getTranslation().toString() + "], [" + addedTowerPosition[coodID-1].toString() + "]");
+ 					OBHL.removePosition(addedTowerPosition[coodID - 1]);
+ 					available[coodID - 1] = true;
+ 					
+ 					if(coodID == 1) {
+						target1.setVisible(false);
+						target1.setTranslation(new Vector3d(0, 0, 0));
+					}
+					else {
+						target2.setVisible(false);
+						target2.setTranslation(new Vector3d(0, 0, 0));
+					}
+ 				}
+			}
+ 		}
+	}
+	
 	int  myProgress = 0;
 	public void costAndBound(){
 		
@@ -254,7 +331,37 @@ public class GameScreenActivity extends ARViewActivity {
 	 	
 	 	blood_hun.setImageResource(Constant.images[blood/100%10]);
 	 	blood_ten.setImageResource(Constant.images[blood/10%10]);	
-	 	blood_one.setImageResource(Constant.images[blood%10]);	
+	 	blood_one.setImageResource(Constant.images[blood%10]);
+	 	
+	 	//0123
+	 	
+	 	/*
+	 	int coodSysNum = geometry.getCoordinateSystemID();
+		if(coodSysNum == 1 || coodSysNum == 2) {
+			boolean success;
+			TrackingValues theRelation = new TrackingValues();
+			Vector3d co;
+			
+			success = metaioSDK.getCosRelation(coodSysNum, 3, theRelation);
+			
+			if(success) {
+				co = theRelation.getTranslation();
+				co.setZ(0);
+				Vector3d fuckinGC = new Vector3d();
+				fuckinGC.setX(co.getX());
+				fuckinGC.setY(co.getY());
+				fuckinGC.setZ(0);
+				Log.d("ScreenAc onGeoTouch", "coodId: "+coodSysNum+", tran: " + fuckinGC);
+				de.setText("CoodSysNum: "+coodSysNum+", Position: "+fuckinGC.toString()+", Tower Set.");
+				OBHL.addPosition(fuckinGC);			
+			}
+		}
+	 	*/
+	 	if(gameStart) {
+	 		checkMarkerAdd(1);
+	 		checkMarkerAdd(2);
+	 	}
+	 	
 	}	
 	public void levelUpOnclick(View v){
 		
@@ -401,13 +508,14 @@ public class GameScreenActivity extends ARViewActivity {
 					success = metaioSDK.getCosRelation(3, 4, theRelation);
 					if(success) {
 						co = theRelation.getTranslation();
+						range = new Vector3d(co);
 					}
 								
 					enTran.setX(randInt(Math.abs((int)(co.getX()*0.6)), Math.abs((int)co.getX())));
 					enTran.setY(randInt(Math.abs((int)(co.getY()*0.6)), Math.abs((int)co.getY())));
 					enTran.setZ(0);
 					
-//					Log.d("pre-dd", "x = " + enTran.getX() + " y = " + enTran.getY() + " z = " + enTran.getZ());
+					//Log.d("pre-dd", "x = " + enTran.getX() + " y = " + enTran.getY() + " z = " + enTran.getZ());
 					
 					enTower.setTranslation(enTran);
 					enTower.setVisible(true);
@@ -429,6 +537,7 @@ public class GameScreenActivity extends ARViewActivity {
 				setEnTowerBtn.setVisibility(View.INVISIBLE);
 				OKBtn.setVisibility(View.INVISIBLE);
 				enProcess.startEnermyProcess();
+				gameStart = true;
 			}
 			
 		});
@@ -461,6 +570,7 @@ public class GameScreenActivity extends ARViewActivity {
 			String towerModel2 = AssetsManager.getAssetPath("FIRSTtower.obj");
 			String marginPic1 = AssetsManager.getAssetPath("side.png");
 			String marginPic2 = AssetsManager.getAssetPath("side2.png");
+			String spotPic = AssetsManager.getAssetPath("spot.png");
 			String smallTower = AssetsManager.getAssetPath("playerTower.obj");
 			tankModel = AssetsManager.getAssetPath("tankNorm.obj");
 			domdomModel = AssetsManager.getAssetPath("domdombone2.obj");
@@ -482,28 +592,39 @@ public class GameScreenActivity extends ARViewActivity {
 			enTower.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
 			enTower.setVisible(false);
 			
-
 			margin1 = metaioSDK.createGeometryFromImage(marginPic2);
 			margin1.setCoordinateSystemID(3);
 			margin1.setScale(5.0f);
-			margin1.setTranslation(new Vector3d(0, 0, 0));
+			margin1.setTranslation(new Vector3d(0, 0, -5));
 			
 			margin2 = metaioSDK.createGeometryFromImage(marginPic1);
 			margin2.setCoordinateSystemID(4);
 			margin2.setScale(5.0f);
-			margin2.setTranslation(new Vector3d(0, 0, 0));
+			margin2.setTranslation(new Vector3d(0, 0, -5));
+			
+			spot1 = metaioSDK.createGeometryFromImage(spotPic);
+			spot1.setCoordinateSystemID(1);
+			spot1.setScale(2.0f);
+			spot1.setTranslation(new Vector3d(0, 0, -5));
+			
+			spot2 = metaioSDK.createGeometryFromImage(spotPic);
+			spot2.setCoordinateSystemID(2);
+			spot2.setScale(2.0f);
+			spot2.setTranslation(new Vector3d(0, 0, -5));
 			
 			target1 = metaioSDK.createGeometry(smallTower);
-			target1.setCoordinateSystemID(1);
+			target1.setCoordinateSystemID(3);
 			target1.setScale(10.0f);
 			target1.setTranslation(new Vector3d(0, 0, 0));
 			target1.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
+			target1.setVisible(false);
 			
 			target2 = metaioSDK.createGeometry(smallTower);
-			target2.setCoordinateSystemID(2);
+			target2.setCoordinateSystemID(3);
 			target2.setScale(10.0f);
 			target2.setTranslation(new Vector3d(0, 0, 0));
 			target2.setRotation(new Rotation((float)(Math.PI/2), 0.0f, 0.0f));
+			target2.setVisible(false);
 			
 			//Log.d("what is the Path", tankModel);
 			enProcess = new EnermyProcess();
@@ -545,6 +666,7 @@ public class GameScreenActivity extends ARViewActivity {
 		//Log.d("moveStart","+++++++++++++++++++++++click+++++++++++++++++++");
 		//String tankModel = AssetsManager.getAssetPath("tankNorm.obj");
 		//OBHL.creatObject("tank", tankModel,1, 0, 0);
+		/*
 		int coodSysNum = geometry.getCoordinateSystemID();
 		if(coodSysNum == 1 || coodSysNum == 2) {
 			boolean success;
@@ -565,6 +687,7 @@ public class GameScreenActivity extends ARViewActivity {
 				OBHL.addPosition(fuckinGC);			
 			}
 		}
+		*/
 	}
 	
 	@Override
@@ -576,7 +699,7 @@ public class GameScreenActivity extends ARViewActivity {
 	public void onSurfaceCreated() {
 		super.onSurfaceCreated();
 		myHolder = this.mSurfaceView.getHolder();
-		Log.d("surface create", "createeeeeeeeeeeeeeeeee");
+		//Log.d("surface create", "createeeeeeeeeeeeeeeeee");
 	}
 	
 	final class MetaioSDKCallbackHandler extends IMetaioSDKCallback
@@ -591,7 +714,7 @@ public class GameScreenActivity extends ARViewActivity {
 				final TrackingValues v = trackingValues.get(i);
 				Log.d("pre-dd", "Tracking state for COS "+v.getCoordinateSystemID()+" is "+v.getState());
 				if(v.getState() == com.metaio.sdk.jni.ETRACKING_STATE.ETS_FOUND) {
-					Log.d("pre-dd", "found found");
+					//Log.d("pre-dd", "found found");
 					trackingState[v.getCoordinateSystemID() - 1] = 1;
 				}
 				else if(v.getState() == com.metaio.sdk.jni.ETRACKING_STATE.ETS_LOST) {

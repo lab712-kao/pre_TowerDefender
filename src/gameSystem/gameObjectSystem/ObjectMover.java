@@ -114,6 +114,11 @@ public class ObjectMover implements Runnable {
 //		pathPlaner.removePassPos(pos);
 		path.removePathPoint(pos);
 	}
+	
+	public void reovePosition(Vector3d pos){
+//		pathPlaner.removePassPos(pos);
+		path.removePathPoint(pos);
+	}
 	@Deprecated
 	private ArrayList getCube(BoundingBox box) {
 

@@ -94,6 +94,12 @@ public class ObjectHandler  {
 		}
 		return enermyBlood;
 	}
+	
+	public void removePosition(Vector3d pos) {
+		OBMO.reovePosition(pos);
+		OBME.reovePosition(pos);
+	}
+
 	public void endGame(){
 		if(end)
 			return;
@@ -108,5 +114,6 @@ public class ObjectHandler  {
 		view = null;
 		end = true;
 		System.gc();
+
 	}
 }
