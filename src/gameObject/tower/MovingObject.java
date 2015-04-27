@@ -134,13 +134,21 @@ public abstract class MovingObject extends DefaultObject {
 			return AT_END;
 
 		}else if(point.isIgnore()||t==1){
-			t=0.0f;
+			//t=0.0f;
 
-			lastTimePos = point.getPosition();
+			if(!point.isIgnore()) {
+				t = 0.0f;
+				lastTimePos = point.getPosition();
+			}
+			else {
+				t = 0.0f;
+				lastTimePos = this.getModelPosition();
+			}
+			
 			point = point.getNextPoint();
 			Log.d("moveingObject move", "in the not end");
 			while(point!=null&&point.isIgnore()){
-				lastTimePos = point.getPosition();
+				//lastTimePos = point.getPosition();
 				point = point.getNextPoint();	
 			}
 			if(point!=null)
@@ -175,12 +183,12 @@ public abstract class MovingObject extends DefaultObject {
 		if(point!=null){//the last point is at position end ,so if null that mean 'at end'
 			//lastTimePos = position;
 			lastPos = position;
-			
+			/*
 			Log.d("moveingObj move", "lastPos: "+lastTimePos.toString());
 			Log.d("moveingObj move", "nextPos "+point.getPosition().toString());
 			Log.d("moveingObj move", "startAng: "+startAng.toString());
 			Log.d("moveingObj move", "endAng: "+endAng.toString());
-			
+			*/
 			//Hermite p = (t,P1,P2,T1,T2)
 			Vector3d p = Hermite.evalHermite(t, lastTimePos, point.getPosition(), 
 				startAng, 
@@ -260,14 +268,14 @@ public abstract class MovingObject extends DefaultObject {
 		Math.cos(faceAngle);
 		*/
 		if(tmpModel != null) {
-			for(int i = 0; i < 10; i++) {
+			for(int i = 0; i < 25; i++) {
 				Vector3d calPos = tmpModel.getTranslation();
 				calPos.setX((float)(calPos.getX() + Math.cos(faceAngle)));
 				calPos.setY((float)(calPos.getY() + Math.sin(faceAngle)));
 				tmpModel.setTranslation(calPos);
 			}
 			
-			for(int i = 0; i < 10; i++) {
+			for(int i = 0; i < 25; i++) {
 				Vector3d calPos = tmpModel.getTranslation();
 				calPos.setX((float)(calPos.getX() - Math.cos(faceAngle)));
 				calPos.setY((float)(calPos.getY() - Math.sin(faceAngle)));

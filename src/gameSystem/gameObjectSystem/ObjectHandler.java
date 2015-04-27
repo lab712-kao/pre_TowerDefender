@@ -1,6 +1,5 @@
 package gameSystem.gameObjectSystem;
 
-import com.metaio.R.bool;
 import com.metaio.sdk.MetaioSurfaceView;
 import com.metaio.sdk.jni.IMetaioSDKAndroid;
 import com.metaio.sdk.jni.Vector3d;
@@ -95,6 +94,12 @@ public class ObjectHandler  {
 		}
 		return enermyBlood;
 	}
+	
+	public void removePosition(Vector3d pos) {
+		OBMO.reovePosition(pos);
+		OBME.reovePosition(pos);
+	}
+
 	public void endGame(){
 		if(end)
 			return;
@@ -109,5 +114,6 @@ public class ObjectHandler  {
 		view = null;
 		end = true;
 		System.gc();
+
 	}
 }

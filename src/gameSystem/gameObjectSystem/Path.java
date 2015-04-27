@@ -195,6 +195,18 @@ public class Path {
 		return way.get((i+1)%way.size());
 		
 	}
+	
+	public void removePathPoint(Vector3d point){
+		
+		Log.d("Path remove", "point:["+point.toString()+"]");
+		for(PathPoint p:way) {
+			Log.d("Path remove", "p:["+p.toString()+"]");
+			if(p.getPosition().equals(point)){
+				p.setIgnore(true);
+			}
+		}	
+	}
+	
 	public void removePathPoint(PathPoint point){
 		int i = way.indexOf(point);
 		if(i!=-1){//fake delete
