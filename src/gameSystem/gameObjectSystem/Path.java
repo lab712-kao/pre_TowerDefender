@@ -19,6 +19,7 @@ public class Path {
 		private boolean ignore = false;
 		private boolean xAscending = true;
 		private boolean yAscending = true;
+		private Effect effect = null;
 		
 		public PathPoint(Vector3d position,float angle){
 			this.position = position;
@@ -54,6 +55,12 @@ public class Path {
 		}
 		public PathPoint getNextPoint(){
 			return nextPoint;
+		}
+		public void setEffect(Effect effect){
+			this.effect = effect;
+		}
+		public Effect getEffect(){
+			return this.effect;
 		}
 		@Override
 		public int compare(PathPoint lhs, PathPoint rhs) {
@@ -125,22 +132,23 @@ public class Path {
 		compator = null;
 	}
 	
-	public void addPathPoint(Vector3d pos){
-		way.add(new PathPoint(pos, DEFAULT_ANGLE));
+	public PathPoint addPathPoint(Vector3d pos){
+		PathPoint newPathPoint = new PathPoint(pos, DEFAULT_ANGLE);
+		way.add(newPathPoint);
 		Log.d("Path addPathPoint", "way size: " + way.size());
 
 		calPath();
-//		for(int i = 0; i < way.size(); i++) {
-//			Log.d("Path addPathPoint", "way item"+"["+i+"]: "+way.get(i).position.toString());
-//		}
-		PathPoint p = getNextPathPoint(null);
+		
+		//debug message below
+		/*PathPoint p = getNextPathPoint(null);
 		int i = 0;
 		while(p!=null){
 			
 			Log.d("Path addPathPoint", "way item"+"["+i+"]: "+p.getPosition().toString());
 			p=p.getNextPoint();
 			i++;
-		}
+		}*/
+		return newPathPoint;
 	}
 	private float calAngle(Vector3d base,Vector3d A){
 		
