@@ -5,7 +5,7 @@ package gameSystem.gameObjectSystem;
 public class Effect {
 	
 	private String effectName;
-	public final int ZOOM = 1, SMALL = 2, HEAL = 3, DEAD = 4;
+	public final static int ZOOM = 1, SMALL = 2, HEAL = 3, DEAD = 4;
 	private int effectNumber;
 	private float powerOfEffect;
 	private String description;

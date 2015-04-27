@@ -1,6 +1,8 @@
 package gameObject.tower;
 
+import gameSystem.gameObjectSystem.Effect;
 import gameSystem.gameObjectSystem.Hermite;
+import gameSystem.gameObjectSystem.Path;
 import gameSystem.gameObjectSystem.Path.PathPoint;
 
 import android.util.Log;
@@ -219,6 +221,28 @@ public abstract class MovingObject extends DefaultObject {
 		//if return that mean should get nextPoint
 		return AT_END;
 	}
+	private void doEffect(){
+		PathPoint nowPoint = this.point;
+		if(nowPoint.getEffect()!=null && t>=1){
+			int effectNumber = nowPoint.getEffect().getEffectNumber();
+			switch (effectNumber) {
+			case Effect.ZOOM:
+				this.model.setScale(this.model.getScale().multiply(1.5f));
+				break;
+			case Effect.SMALL:
+				this.model.setScale(this.model.getScale().multiply(0.7f));
+				break;
+			case Effect.HEAL:
+				this.health*=2;
+				break;
+			case Effect.DEAD:
+				
+				break;
+			default:
+				break;
+			}
+		}
+	}
 	@Deprecated
 	public void move() {
 		float speedX = (float)(moveSpeed*Math.cos(faceAngle)+position.getX());
@@ -285,4 +309,5 @@ public abstract class MovingObject extends DefaultObject {
 		
 		tmpModel.setTranslation(tmpPos);
 	}
+	
 }
