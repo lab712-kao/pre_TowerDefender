@@ -170,8 +170,17 @@ public class GameScreenActivity extends ARViewActivity {
 		evilProgressBar.setX((Constant.imageSize[18][2]+10+(Constant.imageSize[18][0]-30)/2)*Constant.wRatio);
 		evilProgressBar.setY((Constant.imageSize[18][3]+58)*Constant.hRatio);
 		
+		setEnTowerBtn = (Button)findViewById(R.id.setEnTowerBtn);
+		OKBtn = (Button)findViewById(R.id.OKBtn);
+		OKBtn.setX(160);
+		OKBtn.setY(300);
 		
-		
+		setEnTowerBtn.setX(Constant.wRatio - 50);
+		setEnTowerBtn.setY(Constant.hRatio * 0.3f);
+		/*
+		OKBtn.setX(Constant.wRatio - 50);
+		OKBtn.setY(Constant.hRatio * 0.4f);
+		*/
 		num_hun = (ImageView)findViewById(R.id.cost_hun);
 		num_ten = (ImageView)findViewById(R.id.cost_ten);
 		num_one = (ImageView)findViewById(R.id.cost_single);
@@ -475,9 +484,6 @@ public class GameScreenActivity extends ARViewActivity {
 	}
 
 	private void setListener(){
-		
-		setEnTowerBtn = (Button)findViewById(R.id.setEnTowerBtn);
-		OKBtn = (Button)findViewById(R.id.OKBtn);
 		
 		setEnTowerBtn.setOnClickListener(new OnClickListener(){
 

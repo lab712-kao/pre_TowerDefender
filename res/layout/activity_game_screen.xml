@@ -161,22 +161,6 @@
         android:src="@drawable/button_sound_game"
         android:onClick="MusicControl"  />
 
-    <Button
-        android:id="@+id/setEnTowerBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="231dp"
-        android:layout_y="206dp"
-        android:text="setEnTower" />
-
-    <Button
-        android:id="@+id/OKBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="282dp"
-        android:layout_y="151dp"
-        android:text="OK" />
-
     <ProgressBar
         android:id="@+id/progress_blood"
         style="?android:attr/progressBarStyleHorizontal"
@@ -227,7 +211,6 @@
         android:layout_y="25dp"
         android:src="@drawable/num_zero" />
 
-
        <Button
            android:id="@+id/blood_minus"
            style="?android:attr/buttonStyleSmall"
@@ -236,7 +219,8 @@
            android:layout_x="224dp"
            android:layout_y="-13dp"
            android:onClick="minus_blood"
-           android:text="Blood_plyr" />
+           android:text="Blood_plyr"
+           android:visibility="invisible" />
 
        <Button
            android:id="@+id/blood_minus_evil"
@@ -246,7 +230,8 @@
            android:layout_x="334dp"
            android:layout_y="-13dp"
            android:onClick="minus_blood_evil"
-           android:text="Blood_evil" />
+           android:text="Blood_evil"
+           android:visibility="invisible" />
 
       <TextView
           android:id="@+id/textView1"
@@ -256,5 +241,20 @@
           android:layout_y="429dp"
           android:text="TextView" />
 
+      <Button
+          android:id="@+id/setEnTowerBtn"
+          android:layout_width="242dp"
+          android:layout_height="wrap_content"
+          android:layout_x="189dp"
+          android:layout_y="350dp"
+          android:text="setEnTower" />
+
+      <Button
+          android:id="@+id/OKBtn"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_x="215dp"
+          android:layout_y="300dp"
+          android:text="OK" />
   
 </AbsoluteLayout>

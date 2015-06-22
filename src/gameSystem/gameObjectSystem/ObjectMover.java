@@ -254,7 +254,7 @@ public class ObjectMover implements Runnable {
 		for( int i = objects.getIndexOf(movingObject, TYPE); i<objects.size(TYPE); i++ ){
 			if(objects.getIndexOf(movingObject, TYPE)==i)continue;
 
-			
+			if(inRange(movingObject.getModelPosition(), objects.seek(i, TYPE).getModelPosition(), 100))
 			if(!objects.seek(i, TYPE).isDead() && !movingObject.isDead()) {
 				if( objects.seek(i, TYPE).checkCollision(movingObject, 1) ){
 					//if collision unit is own unit and stop this movingObject move until startMove() << be called
@@ -268,6 +268,7 @@ public class ObjectMover implements Runnable {
 		
 		for( int i = 0; i<objects.size(OTHERIDTYPE); i++ ){
 			//if(objects.getIndexOf(movingObject, TYPE)==i)continue;
+			if(inRange(movingObject.getModelPosition(), objects.seek(i, OTHERIDTYPE).getModelPosition(), 100))
 			if(!objects.seek(i, OTHERIDTYPE).isDead() && !movingObject.isDead()) {
 				if( objects.seek(i, OTHERIDTYPE).checkCollision(movingObject, 1.3) ){
 					//if collision unit is enemy unit and stop this movingObject move until startMove() << be called
@@ -297,5 +298,12 @@ public class ObjectMover implements Runnable {
 
 	public int getEnBlood() {
 		return enermyBlood;
+	}
+	
+	private boolean inRange(Vector3d a, Vector3d b, int r) {
+		double xsqr = Math.pow(a.getX() - b.getX(), 2);
+		double ysqr = Math.pow(a.getY() - b.getY(), 2);
+		
+		return (xsqr + ysqr) < (r * r);
 	}
 }
